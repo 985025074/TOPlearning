@@ -1,0 +1,14 @@
+--2024-10-14 22:32:50--  https://unsplash.com/photos/Mv9hjnEUHR4/download?force=true
+Connecting to 127.0.0.1:15715... connected.
+Proxy request sent, awaiting response... 302 Found
+Location: https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=charlesdeluvio-Mv9hjnEUHR4-unsplash.jpg [following]
+--2024-10-14 22:32:56--  https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=charlesdeluvio-Mv9hjnEUHR4-unsplash.jpg
+Connecting to 127.0.0.1:15715... connected.
+Proxy request sent, awaiting response... 200 OK
+Length: 1202599 (1.1M) [image/jpeg]
+Saving to: ‘download?force=true’
+
+       downlo   0%       0  --.-KB/s                       downloa  26% 311.11K  1.34MB/s                 download?forc 100%   1.15M  3.92MB/s    in 0.3s      
+
+2024-10-14 22:32:57 (3.92 MB/s) - ‘download?force=true’ saved [1202599/1202599]
+
