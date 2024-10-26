@@ -185,5 +185,104 @@ border padding外面包的一层
 margin 隔离开CSS元素.相邻元素会collapse;
 box-sizing: border-box:
 默认情况下 修改width 和 height 属性指的是内容的大小，使用这个会使得大小为整个（包含border + padding + content）的大小。
-
-
+# margin 属性修改
+.box {
+    margin: <margin-top> || <margin-right> || <margin-bottom> || <margin-left>
+}</margin-left></margin-bottom></margin-right></margin-top>
+因此，如果仅定义一个值，则会将所有四个边距设置为相同的值。如果声明了三个值，则为 margin: [top] [left-and-right] [bottom]; 。
+或者使用：
+.box {
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+也可以类似上面图片一样使用auto 大多数情况下相当于0
+**在指定宽度下可以实现居中 居左 居右  margin-left:auto 左边拉满**
+**负边距可以拉近**
+# 12点17分 2024年10月21日
+# 重要属性之display
+block 另起一行 inline 内联。
+inline-block 内联 但是可以用padding + margin.
+# normal flow
+block 产生新行，宽度填充父空间，高度相当于内容
+inline 不产生新行 溢出时会。
+div 是块容器，span是内联容器。
+# inline-block 
+与 display: inline 相比，主要区别在于 inline-block 允许设置元素的宽度和高度。此外，使用 display: inline 时，上下边距(margin)和内边距(paddings)不会被遵守，而使用 inline-block 时它们会被遵守。
+不会遵守的意思是:
+inline padding效果是有的 但是heightwidith 按文字大小。
+inline-block padding 效果是有的 但是heightwidith 按整个大小，外面文字进不来.包括上下
+# 22点28分 2024年10月22日 抓紧时间！！！珍惜时间！！
+# flexbox
+https://internetingishard.netlify.app/html-and-css/flexbox/index.html  
+display: flex;this is called flex container.
+所有在其内部元素称为flex item.
+flex item can be flex container themselves.
+# 居中元素：
+  .menu-container{
+    display: flex;
+    justify-content: center;
+  }
+区别于使用margin 的 auto 方式 这种方式不是使用正对元素 而是在容器上操作。
+如果我们需要单独操作子类，使用align-self 去覆盖他
+# 可用属性：  
+flex-start   
+flex-end  
+center   
+space-between  顶到左右两边 尽可能远离但是均匀分配  
+space-around 多个项目均与分配  
+# flex 只会管辖一级子类
+也就是不会参与子item里的item
+# align-items 垂直方向的对齐（biaxis）
+flex-start
+...end
+cneter
+stretch 无视内容 拉伸 填满上下高度
+baseline
+# flex-wrap 换行
+防止溢出
+# flex-direction
+默认为row 水平向右
+column 垂直向下
+还有-reverse版本
+# flex-order
+  .first-item {
+    order: 1;
+  }
+  
+  .last-item {
+    order: -1;
+  }
+  操纵子类的顺序。可以跨行列工作
+  order 所有元素默认为0
+  越小拍在越前面。
+# flex-item
+flex:int 调整缩放权重
+flex initial
+回归height width 大小
+否则会被忽略
+flex:1 实际上是shorthand.
+flex: 1等于： flex-grow: 1 、 flex-shrink: 1 、 flex-basis: 0 。
+flex grow 放大因子。
+# flex shrink 缩小因子:
+  当所有flex item bigger than father 时候 所有有的都会缩小。
+  收缩比例 优于grow。
+  这里需要注意的一个重要含义是，当您指定flex-grow或flex-shrink时，flex 项目不一定遵循您给定的width值。在上面的示例中，所有 3 个 div 的宽度均为 250px，但当它们的父级足够大时，它们会增长以填充它。同样，当父级太小时，默认行为是它们缩小以适应。这不是一个错误，但如果您没有预料到它可能会造成混乱。
+  意思是说width height 属性不是单独起作用的
+  # flex basis 起始大小
+  如果flex-basis 为0（默认值）那么项目宽度将被忽略。使用auto 可以使得flex 检查项目大小 以影响前两个指标。
+  速记flex： basis 是0 否则是auto
+  # flex:auto
+  相当于它相当于flex-grow: 1 、 flex-shrink: 1和flex-basis: auto
+  在实践中，您可能不会对flex-grow 、 flex-shrink或flex-basis使用复杂的值。一般来说，您最有可能使用像flex: 1;这样的声明。使 div 均匀增长，并flex-shrink: 0来防止某些 div 收缩。
+  在一些情况下 很重要 如果盲目使用flex:1 可能导致塌缩
+   flex-basis指的主轴上的大小。当主轴为column的时候，那么就是上下方向的大小 也就是height 那么 所以height 大小会被忽略从而干扰发生坍缩
+# flex 中的auto margin
+产生一种类似嵌套div 的效果：
+  .signup {
+    margin-left: auto;
+  }
+# 00点23分 2024年10月27日
+flex cheatsheet:
+https://flexbox.malven.co/
