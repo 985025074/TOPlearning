@@ -303,3 +303,12 @@ flex 的一项非常有用的功能是gap属性。在 Flex 容器上设置gap会
 # 10点17分 2024年10月29日
 # usefull example of flexbox
 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical_use_cases_of_flexbox
+# 页脚设计
+利用没有设置flex1 默认值为0 1 auto的特点，设计非foot 元素为1 从而成为唯一能够增长的元素，把另一个元素寄到边上
+# 处理部分元素自带的padding + margin like ul ol
+# 我们通常不使用 flex: 0 0 auto
+因为我们需要借助flex 调整大小，取而代之我们用width min 和max限制
+# 简单总结：
+block normal flow 布局
+从上到下
+flex 按轴布局。
