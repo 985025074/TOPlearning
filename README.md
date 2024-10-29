@@ -225,7 +225,11 @@ flex item can be flex container themselves.
     justify-content: center;
   }
 区别于使用margin 的 auto 方式 这种方式不是使用正对元素 而是在容器上操作。
-如果我们需要单独操作子类，使用align-self 去覆盖他
+如果我们需要单独操作子类，使用align-self 去覆盖他.
+# 为什么没有align self?
+烤肉串 鸡尾酒的比喻：
+https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/
+但是可以有align-content;控制多个行flex环境
 # 可用属性：  
 flex-start   
 flex-end  
@@ -240,7 +244,7 @@ flex-start
 cneter
 stretch 无视内容 拉伸 填满上下高度
 baseline
-# flex-wrap 换行
+# flex-wrap 允许小于min-width的时候换行
 防止溢出
 # flex-direction
 默认为row 水平向右
@@ -270,6 +274,10 @@ flex grow 放大因子。
   收缩比例 优于grow。
   这里需要注意的一个重要含义是，当您指定flex-grow或flex-shrink时，flex 项目不一定遵循您给定的width值。在上面的示例中，所有 3 个 div 的宽度均为 250px，但当它们的父级足够大时，它们会增长以填充它。同样，当父级太小时，默认行为是它们缩小以适应。这不是一个错误，但如果您没有预料到它可能会造成混乱。
   意思是说width height 属性不是单独起作用的
+  祝天涯 还有个最小大小：min-width:
+  对于包含内容的设置为内容的大小，所以内容将会有可能溢出。
+
+
   # flex basis 起始大小
   如果flex-basis 为0（默认值）那么项目宽度将被忽略。使用auto 可以使得flex 检查项目大小 以影响前两个指标。
   速记flex： basis 是0 否则是auto
@@ -286,3 +294,12 @@ flex grow 放大因子。
 # 00点23分 2024年10月27日
 flex cheatsheet:
 https://flexbox.malven.co/
+# 23点49分 2024年10月28日
+# gap 提供边距
+flex 的一项非常有用的功能是gap属性。在 Flex 容器上设置gap会在 Flex 项目之间添加指定的空间，类似于为项目本身添加边距。 gap是一个新属性，因此它尚未出现在许多资源中，但它在所有现代浏览器中都能可靠地工作，因此使用安全且非常方便！将gap: 8px添加到上面的居中示例中会产生下面的结果。
+# width in flexbox(display:flex)
+超出大小将会被缩减 flow_shrink
+每一行成为一个新环境！
+# 10点17分 2024年10月29日
+# usefull example of flexbox
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical_use_cases_of_flexbox
