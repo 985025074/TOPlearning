@@ -53,21 +53,27 @@ body div.head{
     margin-right:auto;
     flex-shrink:0;
 }
-body div.show{
+.leftandright{
+    display: flex;
+    margin: 100px;
+    gap:50px;
+}
+div.show{
     flex:1;
     display:flex;
-    background-color: #1F2937;
+    background-color: hsl(215, 28%, 17%);
+    justify-content: center;
 
 }
 .show .left,.show .right{
     flex:1;
     display:flex;
     flex-direction: column;
-    margin:50px;
+    /* margin:50px; */
 }
 .show .up{
     display:flex;
-    flex:1;
+    flex:3;
 
     color: #f9faf8;
     font-family: "Roboto", sans-serif;
@@ -77,7 +83,7 @@ body div.show{
 }
 .show .down{
     display:flex;
-    flex:1;
+    flex:3;
 
     color: #f9faf8;
     font-family: "Roboto", sans-serif;
@@ -89,19 +95,30 @@ body div.show{
     flex:1 0 auto;
     display: flex;
     background-color:grey ;
-    margin-right:200px;
+
     justify-content: center;
     text-align: center;
     min-width: 500px;
+    max-width: 600px;
+}
+.show .left{
+    display: flex;
+    
+
+}
+.button{
+    flex:1;
+    display: flex;
+
 
 }
 .signup{
+
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-top:10px;
-    margin-bottom: 50px;
+
     margin-right: auto;
     background-color: #3882F6;
     color:white;

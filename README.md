@@ -312,3 +312,34 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Typical
 block normal flow 布局
 从上到下
 flex 按轴布局。
+# 项目学习：
+字体获取：https://fonts.google.com/selection/embed
+font-size调整字体大小
+font-weight调整粗细，注意有的宽度不被允许
+# anchor 美化：
+a{
+    color: #f9faf8;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+显示边框：
+/* for develop use */
+div{
+    background-color: rgba(255, 0, 0, 0.416);
+    border-color: rgb(0, 0, 0);
+    border:1px solid;
+}
+按钮设计：
+.signup{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top:10px;
+    margin-bottom: 50px;
+    margin-right: auto;
+    background-color: #3882F6;
+    color:white;
+    border-radius: 20px; 
+    
+}
