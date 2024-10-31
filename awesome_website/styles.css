@@ -10,11 +10,12 @@ body{
     flex-direction: column;
     height:100vh;
 }
+
 /* for develop use */
-div{
+/* div{
     border-color: rgb(0, 0, 0);
     border:1px solid;
-}
+} */
 .logo{
    
     /* for font */
@@ -53,27 +54,24 @@ body div.head{
     margin-right:auto;
     flex-shrink:0;
 }
-.leftandright{
-    display: flex;
-    margin: 100px;
-    gap:50px;
-}
-div.show{
-    flex:1;
+
+.show{
+    padding:50px;
     display:flex;
     background-color: hsl(215, 28%, 17%);
     justify-content: center;
+    gap:50px;
 
 }
 .show .left,.show .right{
-    flex:1;
     display:flex;
     flex-direction: column;
     /* margin:50px; */
 }
+.show .left{
+    justify-content: space-between;
+}
 .show .up{
-    display:flex;
-    flex:3;
 
     color: #f9faf8;
     font-family: "Roboto", sans-serif;
@@ -82,8 +80,6 @@ div.show{
     font-size:48px;
 }
 .show .down{
-    display:flex;
-    flex:3;
 
     color: #f9faf8;
     font-family: "Roboto", sans-serif;
@@ -92,26 +88,16 @@ div.show{
     font-size:18px;
 }
 .show .right{
-    flex:1 0 auto;
+    flex-shrink:0;
     display: flex;
-    background-color:grey ;
-
+    height:200px;
+    width: 300px;
     justify-content: center;
     text-align: center;
-    min-width: 500px;
-    max-width: 600px;
-}
-.show .left{
-    display: flex;
-    
 
 }
-.button{
-    flex:1;
-    display: flex;
 
 
-}
 .signup{
 
     padding-left: 30px;
@@ -125,14 +111,114 @@ div.show{
     border-radius: 20px; 
     
 }
-body div.quote{
-    flex:1;
+.windows{
+    display:flex;
+    flex-direction: column;
 }
-body div.design{
-    flex:1;
+.windows h1{
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom:auto;
+}
+.window{
+    width: 200px;
+    height: 200px;
+    border-radius:40px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(7, 118, 255);
+    display:flex;
+    overflow: hidden; 
+    justify-content: center;
+    align-items: center;
+}
+.window img{
+    width: 100%; 
+    height:auto;
+    object-fit: contain;
+}
+.windows_bounder{
+    margin-top:50px;
+    margin-bottom: 100px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap:wrap;
+    gap: 75px;
+
+}
+.window_article{
+    text-align: center;
+}
+.quote{
+    background-color: #E5E7EB;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 125px;
+
+    font-family: "Roboto", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size:36px;
+    color:#1F2937
+    
+}
+
+.quote_author{
+    align-self:flex-end;
+    font-weight: 700;
+    font-style: normal;
+}
+.design{
+    display:flex;
+    justify-content: center;
+    background-color: #f9faf8;
+}
+.design_text_container{
+    background-color: #3882F6;
+    display: flex;
+    margin: 100px;
+    border-radius: 30px;
+}
+.design_text{
+    margin:50px;
+}
+.design_title{
+    color:white;
+    font-family: "Roboto", serif;
+    font-weight: 700;
+    font-style: normal; 
+    font-size:20px;
+}
+.design .button{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:30px;
+}
+.design .button button{
+
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    background-color: #3882F6;
+    color:white;
+    border-radius: 20px; 
+    text-align: center;
+    white-space: nowrap;
+
 }
 .foot{
     flex:0;
     padding:20px;
+    display: flex;
+    justify-content: center;
+    background-color: #1F2937;
+    color:white
+
 }
 

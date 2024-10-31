@@ -343,3 +343,24 @@ div{
     border-radius: 20px; 
     
 }
+# 一些基本值
+flex：0 等价于0 1 auto 没设置的默认值
+flex:1 1 0
+# 把图片放在div：
+.window{
+    width: 200px;
+    height: 200px;
+    border-radius:40px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: rgb(7, 118, 255);
+    display:flex;
+    overflow: hidden; 
+    justify-content: center;
+    align-items: center;
+}
+.window img{
+    width: 100%; 
+    height:auto;
+    object-fit: contain;
+}
