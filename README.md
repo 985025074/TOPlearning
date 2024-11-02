@@ -364,3 +364,172 @@ flex:1 1 0
     height:auto;
     object-fit: contain;
 }
+# 17点29分 2024年10月31日
+javascrwipt 基础语法：
+外部导入：
+<!-- <script src="javascript.js"></script> -->
+变量命名：
+let sth = sth;
+常量命名
+connst sth = sth;
+严格模式：
+"use strict"；
+提供对于 num = 5；这样不声明的报错。
+大写与非大写常量，类似于C++ 中define的和const 的区别。
+# No type
+属于是无类型语言。
+精度：小数始终是double 类型。
+int 支持15为精度
+同样存在 不一定能精准表示的问题
+# 加法：
+数字和字符串 统一成字符串. 可使用Number()函数转换字符串到数字。（revser 运算 String()）
+或者使用一元加号+号。
+
+注意顺序 从左到右
+但是很奇怪的是 其余运算不会发生这种转换。例如除法剑法惩罚，都会变成数字。
+# 特殊运算结果：
+NaN
+Infinity
+16进制 0x开头
+# 转换进制
+name.toString(2) 二进制
+# typeof 输出类型
+数字都是number  无论整数还是小数
+# 四舍五入
+to fixed.
+# 严格等于 严格不等于
+=== ，!== 会判断类型
+# 支持使用逗号运算符
+# null undefined值
+null 是值，而undefined表示还未赋值(like void)
+^ typeof object |^ typeof undefined
+数值转换变换0    | 数值转换为NaN
+# 空白字符如\t\n 转换成0
+# strings
+三种 单引号 双引号 反引号
+前俩中差不多。
+反引号支持嵌入javascript
+let c = `${a}${b}`
+支持换行而不是用\n转义
+基本方法：
+访问字符：[] 或者 .at() <-支持附索引
+要注意string 默认是**只读的** 两者都不可以改变属性(下面所有函数都是，返回新的字符串)，其中at()抛出异常 like C++
+# 切片：
+slice(start, end) 如果只有一个元素 则从一个元素到末尾 支持夫索引
+substring(start, end) 不支持夫索引
+substr(start, length) 
+# 大小写转换
+toLowerCase()
+toUpperCase()
+# 字符串连接
+.concat(other string) like +;
+# 两侧删除空格
+.trim()
+.trimstart()
+.trimend()
+# 两边填充直到达到目标长度
+padStart(targetLength, padString)
+padEnd(targetLength, padString)
+# 重复
+sth.repeat(count)
+# 替换
+.replace(old,new);
+第一个匹配的old 将会被换成new
+支持正则表达式，这里不再深入研究。
+# 全部替换
+replaceAll(old new)
+# 分片 
+.split(separator)返回字符串数组
+# 文档
+https://www.w3schools.com/js/js_string_methods.asp
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+# 逻辑运算符中的特别之处：
+除了常用的||可用于if 。
+1. 可以用来获取最后一个真值，或者最后一个假值。
+2. 短路功能
+&& 同理
+Boolean 类型。
+所有算作假的：false undefined null  0 NaN或空字符串 ( '' ) 
+# if else + swicth
+完全跟C 语言 一样
+也有?运算符
+# F12调试 
+.hov 添加伪状态
+.cls 添加规则
+chrom 调试工具：https://www.theodinproject.com/lessons/foundations-javascript-developer-tools
+# 13点46分 2024年11月2日 
+我觉得最好用还是console
+
+大概有如下几种放啊:
+console.warn()
+console.error()
+console.info()
+console.log()
+console.assert()
+
+console.clear()
+console.log()
+console.dir()
+
+# 组内遍历：
+console.groupCollapsed(name)
+putout message here
+console.groupEnd(name)
+
+# 计数器
+console.count(label name)
+
+# 计时器
+console.time("name);
+console.timeend(name)
+
+# 函数的基本格式
+function functionName(parameter list...){
+
+}
+- 支持默认参数
+- 支持匿名函数对象创建
+- like C++'s lambda create method:
+()=>{}; no return so it is like this.
+if it has only one parameter,you can omit brackets
+if the main function has only one statement,you can omit the curly brackets.{}
+# definition confliction
+<!-- Excerpt from my HTML -->
+<script src="first.js"></script>
+<script src="second.js"></script>
+<script>
+  greeting();
+</script>
+computer decide the first.js as the final one.
+the parameter is the viarible in the brackets.
+the argument is the value passed to the function.
+
+# Default arguments evaluation:
+
+if the default argument contains a exression, it is evaluated when the function is called and the value is missing.
+# return nothing (return;)
+is equivalent to "return undefined;"
+# cross-line return
+add brackets.or it is truncated.:
+return
+ (some + long + expression + or + whatever * f(a) + f(b))
+return;
+ (some + long + expression + or + whatever * f(a) + f(b))
+
+ # function declaration  and function expression:
+ (区别于C++ 这里的declaration 实际上给了 definition)
+ function expression:
+ 创建完毕之后才可以调用：
+ 函数表达式在执行到达时创建，并且仅从那时起才可用。
+ function declaration:
+全局可用
+并且支持函数内部定义函数：C++ 不行！ 不过这样是类内允许访问的。
+# js 中的stack
+先创建内存区，然后在分配。 2阶段
+包括global级别 和 function级别
+# 参数传递说明：
+在 JavaScript 中，函数参数的传递方式取决于数据类型：
+
+基本数据类型（如：number、string、boolean、null、undefined、symbol）是通过值传递。这意味着在函数内部对参数的修改不会影响外部的变量。
+
+引用数据类型（如：对象、数组、函数）是通过引用传递。这意味着在函数内部对参数的修改会影响外部的变量，因为传递的是指向原始对象的引用。
