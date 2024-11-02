@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+
+<body>
+    <script>
+
+        function getComputerChoice() {
+            let choices = ["Rock", "Scissors", "Paper"];
+            let randomIndex = Math.floor(Math.random() * 3);//[0,3)
+            return choices[randomIndex];
+        }
+        function getHumanChoice() {
+            let result = prompt("Please choose Rock, Scissors or Paper:");
+            let q3 = (s) => {
+                s = s.toLowerCase();
+                return s[0].toUpperCase() + s.slice(1);
+            };
+            return q3(result);
+        }
+        function helperSCore(anotherPlayerChoice, result1, result2, result3) {
+            switch (anotherPlayerChoice) {
+                case "Rock":
+                    return result1;
+                    break;
+                case "Scissors":
+                    return result2;
+                    break;
+                case "Paper":
+                    return result3;
+                    break;
+            }
+        }
+        function playRound(computerChoice, humanChoice) {
+            switch (humanChoice) {
+                case "Rock":
+                    return helperSCore(computerChoice,0 , 1, -1);
+                case "Scissors":
+                    return helperSCore(computerChoice,-1 , 0, 1);
+                    break;
+                case "Paper":
+                    return helperSCore(computerChoice,1, -1, 0);
+                    break;
+            }
+        }
+        function playGame(){
+            let HumanScore = 0;
+            let ComputerScore = 0;
+            for(let i = 0; i < 5; i++){
+                let computerChoice = getComputerChoice();
+                let humanChoice = getHumanChoice();
+                console.log("Computer choice: " + computerChoice);
+                console.log("Human choice: " + humanChoice);
+                let result = playRound(computerChoice, humanChoice);
+                HumanScore += result;
+                ComputerScore -= result;
+            }
+            if(HumanScore > ComputerScore){
+                console.log("You win!");
+                console.log("Your score: " + HumanScore);
+                console.log("Computer score: " + ComputerScore);
+            }
+            else{
+                console.log("You lose!");
+                console.log("Your score: " + HumanScore);
+                console.log("Computer score: " + ComputerScore);
+            }
+        }
+        playGame();
+    </script>
+</body>
+
+</html>
