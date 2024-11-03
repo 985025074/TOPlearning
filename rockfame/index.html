@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
+    <style>
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding:10px;
+        }
+    </style>
 </head>
+<body >
+    <h1 style = "text-align:center">Easy Rock-Paper-Scissors Game</h1>
+    <div> 
+        <input placeholder="Your choice">
+    </div>
+    <div> 
+       <button >Submit</button>
+    </div>
+    <div>
+        <h2>History</h2>
+        <ul>
 
-<body>
+        </ul>
+    </div>
+    <div style ="flex-direction: column;">
+        <h2>Score</h2>
+        
+        HumanScore:<div id="HumanScore"></div>
+        ComputerScore:<div id="ComputerScore"></div>
+    </div>
     <script>
-
+        let HumanScore = 0;
+        let ComputerScore = 0;
+        let history = document.querySelector("ul");
+        let humanScore = document.querySelector("#HumanScore");
+        let computerScore = document.querySelector("#ComputerScore");
         function getComputerChoice() {
             let choices = ["Rock", "Scissors", "Paper"];
             let randomIndex = Math.floor(Math.random() * 3);//[0,3)
             return choices[randomIndex];
         }
-        function getHumanChoice() {
-            let result = prompt("Please choose Rock, Scissors or Paper:");
+        function getHumanChoice(result) {
             let q3 = (s) => {
                 s = s.toLowerCase();
                 return s[0].toUpperCase() + s.slice(1);
@@ -48,30 +76,79 @@
                     break;
             }
         }
-        function playGame(){
-            let HumanScore = 0;
-            let ComputerScore = 0;
-            for(let i = 0; i < 5; i++){
-                let computerChoice = getComputerChoice();
-                let humanChoice = getHumanChoice();
-                console.log("Computer choice: " + computerChoice);
-                console.log("Human choice: " + humanChoice);
-                let result = playRound(computerChoice, humanChoice);
-                HumanScore += result;
-                ComputerScore -= result;
+        function checkIsOver(Event){ //绑定在 submit 按钮上
+            if(HumanScore == 5){
+                alert("You Won the Game");
+                Event.target.disabled = true;
+                this.removeEventListener("updateScore", updateScore);
+                this.removeEventListener("updateScore", checkIsOver);
+                return;
             }
-            if(HumanScore > ComputerScore){
-                console.log("You win!");
-                console.log("Your score: " + HumanScore);
-                console.log("Computer score: " + ComputerScore);
+            else if(ComputerScore == 5){
+                alert("Computer Won the Game");
+                Event.target.disabled = true;
+                this.removeEventListener("updateScore", updateScore);
+                this.removeEventListener("updateScore", checkIsOver);
+                return;
             }
-            else{
-                console.log("You lose!");
-                console.log("Your score: " + HumanScore);
-                console.log("Computer score: " + ComputerScore);
+            
+        }
+        //自定义事件结构
+        //{ winner:"human"|computer|None，humanChoice:string, computerChoice:string,target:histroy,score}
+        function updateScore(Event) { //绑定在 body 上，分发给计分板+  history ,通过button 按钮分发。
+            console.log(Event);
+            Event = Event.detail;
+            switch(Event.mytarget){
+                case "history":
+                    console.log("histroy");
+                    let newItem = document.createElement("li");
+                    newItem.innerText = ` ${Event.humanChoice} VS ${Event.computerChoice},Winner is ${Event.winner}`;
+                    history.appendChild(newItem);
+                    break;
+                case "score":
+                console.log("score");
+                    if(Event.winner == "human"){
+                        HumanScore++;
+                        humanScore.textContent = HumanScore;
+                    }
+                    else if (Event.winner == "computer"){
+                        ComputerScore++;
+                        computerScore.textContent = ComputerScore;
+
+                    }
+                
             }
         }
-        playGame();
+        let body = document.querySelector("body");
+        let btn = document.querySelector("button");
+        body.addEventListener("updateScore", updateScore);
+        btn.addEventListener("click", onceGame);
+        btn.addEventListener("click", checkIsOver);
+        
+        function onceGame(){
+            let humanChoice = document.querySelector("input").value;
+            humanChoice = getHumanChoice(humanChoice);
+            let computerChoice = getComputerChoice();
+            let result = playRound(computerChoice, humanChoice);
+            console.log(`human choice: ${humanChoice}, computer choice: ${computerChoice}, result: ${result}`);
+            let toHsitory = new CustomEvent("updateScore",{detail:{
+                    "mytarget":"history",
+                    "humanChoice":humanChoice,    
+                    "computerChoice":computerChoice,
+                    "winner":result == 1? "human":result == -1? "computer": "tie"
+                }})
+            let toScore =new CustomEvent("updateScore",{detail:{
+                    "mytarget":"score",
+                    "humanChoice":humanChoice,    
+                    "computerChoice":computerChoice,
+                    "winner":result == 1? "human":result == -1? "computer": "tie"
+                }})
+                body.dispatchEvent(toHsitory);
+                if(result!=0){
+                    body.dispatchEvent(toScore);
+                }
+        }
+        
     </script>
 </body>
 
