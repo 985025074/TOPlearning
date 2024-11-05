@@ -1,0 +1,57 @@
+
+/* fonts */
+*,.itim-regular {
+    font-family: "Itim", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+}
+* {
+    margin: 0;
+    padding: 0;
+    border:0;
+    box-sizing: border-box;
+}
+a{
+    color: #000000;
+    text-decoration: none;
+    flex-shrink: 0;
+    background-color: none;
+    color-scheme: none;
+    background-color:transparent;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+
+}
+.foot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+    background-color: rgba(128, 128, 128, 0.503);
+}
+.painter{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    padding:50px;
+    gap:50px;
+    
+}
+.painter .canvas{
+    box-sizing: content-box;
+    flex: 0 0 auto;
+    width: 300px;
+    height: 300px;
+    display:flex;
+    flex-wrap: wrap;
+    border :1px solid #000000;
+}
+.painter .toolbar{
+    display: flex;
+    flex-direction: column;
+}

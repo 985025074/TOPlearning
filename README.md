@@ -533,3 +533,462 @@ return;
 基本数据类型（如：number、string、boolean、null、undefined、symbol）是通过值传递。这意味着在函数内部对参数的修改不会影响外部的变量。
 
 引用数据类型（如：对象、数组、函数）是通过引用传递。这意味着在函数内部对参数的修改会影响外部的变量，因为传递的是指向原始对象的引用。
+注意 不完全是引用，我觉得用指针的行为更好解释
+# 关于数组
+声明格式 const arr = [1,2,3];
+（或者使用new Array(1,2,3)，需要注意 当new （single）变量的时候意思是创建single个undefined 而不是有一个40元素的数组）
+const 的意思是引用为常量，不能修改。
+数组本省不能赋值为另一个数组。
+越界访问返回undefined
+## 接口：
+toString()
+转换成字符串
+.length()
+获取长度
+.foreach(func)
+use func foreach every element in the array.
+.map()
+.filter 过滤
+返回一个新的数组，使用func对每个元素进行操作。
+.push(elemt)
+添加元素 逆操作 .pop()
+.join(char) like toString 使用指定字符连接 默认是, 想成为空白使用''
+添加到首位：
+unshift()（push_front 和 pop-front）
+shift() 移出首位
+
+concat() 连接元素，但是返回新的数组 不是改变原数组
+splice:
+arr.splice(start[, deleteCount, elem1, ..., elemN])
+插入 删除 替换元素
+start开始，删除deletecount个 然后插入elem,注意，这是原地操作。改变原数组
+slice:
+arr.slice([start], [end]) 左闭右开，返回新的数组。
+concat 拼接：
+相当自由  arr.concat(args)
+通常，它只复制数组中的元素。其他对象，即使它们看起来像数组，也会作为一个整体添加：[ 1, 2, 3, { '1': 1 } ]
+但是如果一个类似数组的对象有一个特殊的Symbol.isConcatSpreadable属性，那么它会被concat视为一个数组：它的元素会被添加：
+args支持数字类型，以及数组
+> arr
+[ [ 0 ] ]
+> arr.forEach((a)=>a[0]+=1);
+undefined
+> arr
+[ [ 1 ] ]
+forEach 完整句法：
+arr.forEach(function(item, index, array) {
+  // ... do something with an item
+});
+indexof lastindexof 分别代表最先，最后的index，查找用,找到返回索引，否则-1：
+arr.indexOf(item, from) – 查找从索引from开始的item ，并返回找到它的索引，否则-1 。
+includes 确定元素是否在 返回true false:
+let arr = [1, 0, false];
+
+alert( arr.indexOf(0) ); // 1
+alert( arr.indexOf(false) ); // 2
+alert( arr.indexOf(null) ); // -1
+
+alert( arr.includes(1) ); // true
+** includes 可以正确处理Nan 而indexof 不行，意味着indexof nan 永远找不到，而includes可以显示正确的结果。**
+.find(): other alike:findindex,findlastindex
+let result = arr.find(function(item, index, array) {
+  // if true is returned, item is returned and iteration is stopped
+  // for falsy scenario returns undefined
+});
+.sort():
+就地排序。 按字符串序比较。 数字亦是如此。
+除非我们定义一个： 注意 这个顺序升序默认实现！！！！！ 不要搞bool
+function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
+let arr = [ 1, 2, 15 ];
+
+arr.sort(compareNumeric);
+
+alert(arr);
+宽泛的类型转换使得 上述函数可以只用a-b 这样简单的实现
+resverve()
+同样注意，就地反转
+split,join：切分合并
+reduce,reduceright 缩减
+let value = arr.reduce(function(accumulator, item, index, array) {
+  // ...
+}, [initial]);
+Fisher-Yates shuffle 。
+sum 和 reduce 可以用来创建对象
+# typeof arry is obj. Use Array.isArray()
+# this 调用成员函数：
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+    return user.age >= this.minAge && user.age < this.maxAge;
+  }
+};
+
+let users = [
+  {age: 16},
+  {age: 20},
+  {age: 23},
+  {age: 30}
+];
+
+// find users, for who army.canJoin returns true
+let soldiers = users.filter(army.canJoin, army);
+
+alert(soldiers.length); // 2
+alert(soldiers[0].age); // 20
+alert(soldiers[1].age); // 23
+
+
+# 更多接口见：https://www.w3schools.com/js/js_array_methods.asp https://javascript.info/array-methods
+typeof arr is object
+# 对象区别
+对象定义方式 const obj = {name: "John", age: 30, city: "New York"};就像字典一样 使用.xxx访问
+判断 .isArray()方法 。
+# DOM 是html 的真实印象
+> CSS 子选择器 只选择直接一级的
+句法：
+elemetn.querySelector(selector) 选择第一个
+elemetn.querySelectorAll(selector) 选择全部.返回一个nodeList,可以Array.from()转化为数组
+或者byid
+getItembyID
+#  元素创建：
+doucument.createElement(tagname,options) 创建元素
+# 插入到具体位置：
+parentNode.appendChild(newElement) 添加到末尾。
+parentNode.insertBefore(newElement,referenceElement) 插入到referenceElement之前。
+# 元素删除：
+parentNode.removeChild(element) 删除元素
+# 在JS 中访问 CSS属性 ：
+// adds the indicated style rule to the element in the div variable
+div.style.color = "blue";
+
+// adds several style rules
+div.style.cssText = "color: blue; background: white;";
+
+// adds several style rules
+div.setAttribute("style", "color: blue; background: white;");
+注意有横线的要这样：
+// dot notation with camelCase: works, accesses the div's background-color style
+div.style.backgroundColor;
+
+// bracket notation with kebab-case: also works
+div.style["background-color"];
+
+// bracket notation with camelCase: also works
+div.style["backgroundColor"];
+# 添加属性:
+// if id exists, update it to 'theDiv', else create an id with value "theDiv"
+div.setAttribute("id", "theDiv");
+
+// returns value of specified attribute, in this case "theDiv"
+div.getAttribute("id");
+
+// removes specified attribute
+div.removeAttribute("id");
+# 改变class 属性:
+// adds class "new" to your new div
+div.classList.add("new");
+
+// removes "new" class from div
+div.classList.remove("new");
+
+// if div doesn't have class "active" then add it, or if it does, then remove it
+div.classList.toggle("active");
+# 添加文字内容：
+// creates a text node containing "Hello World!" and inserts it in div
+div.textContent = "Hello World!";
+# innerHTML:
+内嵌HTML 有可能造成问题！js注入！
+# js 位置：
+最好放在后面，保证页面加载完成后执行
+或者用defer。在后台下载脚本，在DOM 准备好之后执行，并且保证顺序。
+
+<!-- <head>
+  <script src="js-file.js" defer></script>
+</head> -->
+还有个属性是async，不保证顺序（动态脚本，在JS中动态加载script是这种）
+https://javascript.info/script-async-defer#defer。
+# Events 事件处理：
+法1：直接在html标签上处理，像：on<event> onclick onmousexxx
+法2：通过在javascript中绑定事件处理函数，可以处理多个事件。
+sth.onclick = functionl
+法3 a容器类的addEventListener()方法，可以处理多个事件。
+element.addEventListener("click", function(){});
+回调对象可以包含参数。一个**event**本省的引用。（e.target）
+click 点击
+dblclick 双击
+keydown 按键
+keyup 按键
+其余的：https://www.w3schools.com/jsref/dom_obj_event.asp
+# event 模型：https://www.javascripttutorial.net/javascript-dom/javascript-events/
+bubble：从下往上 进行处理 具体的函数调用
+capture：从上往下 可以拦截 
+DOM level2 事件流模型三个阶段：
+捕捉 目标对象 冒泡
+相关属性：
+参见 上面tutorial
+sopPropagation 在bubbling 中进一步组织
+
+# 特殊事件：
+DOMContetnload:加载完html 且DOM 树构建完毕。 然而img and stylesheet 还没加载。
+load 挖宝气压变化在挖宝
+beforeunload:推出之前 可以用俩提示您是否要跳转，防止误触：
+unload 清理资源
+    <script>
+        addEventListener('DOMContentLoaded', (event) => {
+            console.log('The DOM is fully loaded.');
+        });
+
+        addEventListener('load', (event) => {
+            console.log('The page is fully loaded.');
+        });
+
+        addEventListener('beforeunload', (event) => {
+            // show the confirmation dialog
+            event.preventDefault();
+            // Google Chrome requires returnValue to be set.
+            event.returnValue = '';
+        });
+
+        addEventListener('unload', (event) => {
+            // send analytic data
+        });
+    </script>
+# 鼠标相关时间检测：
+mousedown mouseup click 三个按顺序发生 分别代表按下 释放和最终触发。
+如果在某个元素上按下鼠标按钮，请将鼠标光标移离该元素，然后释放鼠标按钮。唯一的mousedown事件在元素上触发。
+同样，如果您按下鼠标按钮，将鼠标移动到元素上，然后释放鼠标按钮，则元素上只会触发唯一的mouseup事件。
+以上情况此时click 不会触发：
+测试:
+  <!-- <button>Click me</button>aaaaaaaaaaaaaaaaaaa
+
+  <script>
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', () => {
+      console.log('Button clicked!');
+    });
+    btn.addEventListener('mousedown', () => {
+      console.log('Button mousedown!');
+    });
+    btn.addEventListener('mouseup', () => {
+      console.log('Button mouseup!');
+    });
+
+  </script>>
+</body> -->
+# doubleclick:
+ mousedown
+ mouseup
+ click
+ mousedown
+ mouseup
+ click
+ dblclick
+ 需要从上往下经理这么多才能触发dbclick,不要同时使用dbclick + click
+ # mousemove 检测移动时间：影响性能
+ # mouseover mouseout 移入和移出
+ # mouseenter 和moseleave 跟上面类似，但是子类不会bubble。
+ # 鼠标事件的event： 
+ 还有一个button属性 可以检测是那个按键按下的：
+         btn.addEventListener('mouseup', (e) => {
+            let msg = document.querySelector('#message');
+            switch (e.button) {
+                case 0:
+                    msg.textContent = 'Left mouse button clicked.';
+                    break;
+                case 1:
+                    msg.textContent = 'Middle mouse button clicked.';
+                    break;
+                case 2:
+                    msg.textContent = 'Right mouse button clicked.';
+                    break;
+                default:
+                    msg.textContent = `Unknown mouse button code: ${event.button}`;
+            }
+        });
+
+# 也可以检测shift这类按钮的按下与否，详细请查看：https://www.javascripttutorial.net/javascript-dom/javascript-mouse-events/
+# 获取按下时的屏幕坐标：
+screenX screenY  X->
+Y
+|
+V
+# 键盘事件族：（鼠标也可能触发）
+keydown 按下时候触发：按下时候持续触发。
+keyUp:释放触发
+keypress 字符触发：按下时候持续触发。
+类似鼠标 一次按下：
+keydown
+keypress
+keyup
+# 键盘event 对象重要属性：
+key codekey
+key属性返回已按下的字符，而code属性返回物理键代码。
+例如，如果按z字符键， event.key返回z且event.code返回KeyZ 。
+# 事件委托：
+借助父对象类处理子对象
+let menu = document.querySelector('#menu');
+
+menu.addEventListener('click', (event) => {
+    let target = event.target;
+
+    switch(target.id) {
+        case 'home':
+            console.log('Home menu item was clicked');
+            break;
+        case 'dashboard':
+            console.log('Dashboard menu item was clicked');
+            break;
+        case 'report':
+            console.log('Report menu item was clicked');
+            break;
+    }
+});
+# 人工触发事件：事件分发构造：
+let clickEvent = new Event('click');
+后面可以跟对象like:（下面是默认）
+
+{ bubbles: false, cancelable: false}
+分发触发事件
+element.dispatchEvent(event);
+如何判断用户触发还是代码？
+isTrusted:true 表示由用户触发，false 表示由代码触发。https://www.javascripttutorial.net/javascript-dom/javascript-dispatchevent/
+Event 是个基类，使用MouseEvent、KeyboardEvent等子类。可以提供更多属性传入：
+# 自定义事件：
+
+let event = new CustomEvent(eventType, options);
+let event = new CustomEvent('highlight', {
+    detail: {backgroundColor: 'yellow'} //自定义event 属性内核值
+
+});
+这种貌似只能用dispatcheventfire 触发.
+触发顺序 按我们的绑定顺序
+# let 对于对象默认创建引用 js 中大部分操作都是钱拷贝。
+注意 嵌套对象 由于是引用 所以是会共享的（浅拷贝原因），深拷贝的方法： structuredClone()。或者const ingredientsList = ["noodles", { list: ["eggs", "flour", "water"] }];
+const ingredientsListDeepCopy = JSON.parse(JSON.stringify(ingredientsList));
+# 错误：
+您提供的示例在预期输出中存在错误。在 JavaScript 中，当您将一个对象分配给另一个变量时，这两个变量都引用内存中的同一对象。因此，通过一个变量修改对象将反映在另一个变量中。
+`let person1 = { name: "Shameel", age: 29 };
+# 展开语法：
+...（ARR或者用STRING）
+# 抄了 公式化
+超不了 font awesome 不会
+<!-- <footer class="footer">
+      <p>
+        Copyright ©
+        <script>
+          document.write(new Date().getFullYear())
+        </script>2024
+        985025074
+      </p>
+      <a href="https://github.com/985025074" target="_blank">
+        <i class="fab fa-github" aria-hidden="true"></i></a>
+    </footer>
+
+    .fa-github {
+    color: var(--primary-dark);
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+} -->
+    <div class = "foot">
+        <a href="https://github.com/985025074 " target="_blank">
+            Copyright ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+            985025074
+        </a>
+    </div>
+
+    .foot{
+    flex:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+别忘记把body 设置为100 vh + display flex
+# 舒服的居中：
+    <h1 style = "font-size:75px; text-align: center;">Etch-a-Sketch</h1>
+
+# 奇怪bug：
+这个问题可能是因为在画布上双击并拖动时，浏览器误认为你正在尝试选中或拖拽内容，而当拖拽的动作不符合预期行为时，浏览器会显示一个“禁止”符号（通常是一个红色的禁止图标）。可以通过以下方式来避免这种情况：
+
+禁用默认的拖拽事件：为画布的 mousedown 事件添加一个阻止默认行为的处理程序，避免浏览器处理默认的拖拽事件。
+
+禁用选择行为：为画布元素添加样式 user-select: none;，避免在双击时选中内容。
+
+# 对象：
+声明语法：
+let user = new Object(); // "object constructor" syntax
+let user = {};  // "object literal" syntax
+没有python 和 C++ 那么严格：
+let user = {     // an object
+  name: "John",  // by key "name" store value "John"
+  age: 30        // by key "age" store value 30
+};
+key 可以不用""双引号
+属性删除方法:
+delete propertyname;
+### 计算出属性名，而不是直接使用compute property:
+加上【】
+bash 
+### 支持同名简写：
+let user = {
+  name,  // same as name:name
+  age: 30
+};
+# 属性名陈的限制： 没有，自动转化成字符串
+简而言之，属性名称没有限制。它们可以是任何字符串或符号（标识符的特殊类型，稍后介绍）。
+
+Other types are automatically converted to strings.
+其他类型会自动转换为字符
+# 测试属性是否存在 ===undefiend，或者用 sth in sth(特殊情况，被赋值为undefine 只能用这个)
+# 遍历键值对：
+for (key in object) {
+  // executes the body for each key among object properties
+}
+
+for (let key in user) {
+  // keys
+  alert( key );  // name, age, isAdmin
+  // values for the keys
+  alert( user[key] ); // John, 30, true
+}
+key 在循环内使用。
+## 循环的顺序？
+简短的答案是：“以特殊方式排序”：整数属性被排序，其他属性按创建顺序出现。详细信息如下。
+ “integer property” :
+ means "PureNumber" no any signs'
+ ## 成员函数语法：
+ object{
+  func(){
+    最简单的语法
+  }
+ }
+ 类似C++  如果不存在 使用 【】 会创建新的对象成员
+ ## 构造函数语法：
+ function Person(name) {
+  this.name = name;
+  this.introduceSelf = function () {
+    console.log(`Hi! I'm ${this.name}.`);
+  };
+}
+直接在this 上面设.
+然后 使用 new Person("John") 创建对象。
+# reduce
+常见的三剑客
+usagelike:
+```javascript
+  const arr = [1, 2, 3, 4, 5];
+  const productOfAllNums = arr.reduce((total, currentItem) => {
+    return total * currentItem;
+  }, 1);
+  console.log(productOfAllNums); // Outputs 120;
+  console.log(arr); // Outputs [1, 2, 3, 4, 5]
+  ```
+reduce (缩减方式,初始值)
