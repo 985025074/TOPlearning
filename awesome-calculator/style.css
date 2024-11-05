@@ -1,0 +1,93 @@
+
+/* fonts */
+*,.itim-regular {
+    font-family: "Itim", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+}
+* {
+    margin: 0;
+    padding: 0;
+    border:0;
+    box-sizing: border-box;
+}
+a{
+    color: #000000;
+    text-decoration: none;
+    flex-shrink: 0;
+    background-color: none;
+    color-scheme: none;
+    background-color:transparent;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+
+}
+.foot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:10px;
+    background-color: rgba(128, 128, 128, 0.503);
+}
+.Calculator{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    padding:50px;
+    gap:50px;
+    
+    
+}
+.CalculatorBoard{
+    background-color:rgba(128, 128, 128, 0.53);
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+.Display{
+    display: flex;
+    height: 50px;
+    width:400px;
+    align-self: center;
+    margin-top:30px;
+    margin-bottom: 30px;
+    background-color: aqua;
+    justify-content: flex-end;
+    font-size:50px;
+}
+.Buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:4px;
+    height: 300px;
+    width:500px;
+}
+div.Buttons button{
+    width: 160px;
+    height: 50px;
+    flex:1 1 auto;
+    background-color: white;
+    border:1px solid black;
+}
+div.Operators{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+}
+div.Operators button{
+    width: 160px;
+    height: 50px;
+    flex:1 1 auto;
+    background-color: white;
+    border:1px solid black;
+}
