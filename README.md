@@ -360,7 +360,7 @@ flex:1 1 0
     border-width: 5px;
     border-color: rgb(7, 118, 255);
     display:flex;
-    overflow: hidden; 
+    overflow: hidden; //超出就隐藏
     justify-content: center;
     align-items: center;
 }
@@ -996,4 +996,6 @@ usagelike:
   console.log(productOfAllNums); // Outputs 120;
   console.log(arr); // Outputs [1, 2, 3, 4, 5]
   ```
-reduce (缩减方式,初始值)
+reduce (缩减方式,初始值).
+```
+```

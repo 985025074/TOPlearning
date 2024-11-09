@@ -119,3 +119,79 @@ tbody tr:hover {
 }
 高亮列，再看看：https://css-tricks.com/complete-guide-table-element/
 真JB 烦 有空再看。
+# 恢复默认浏览器格式：
+.article :where(h1, h2, h3, h4, h5) {
+  all: revert;
+}
+# CSS 百分比指的是width = 100%父元素的100
+# 重置的说明：https://www.joshwcomeau.com/css/custom-css-reset/
+# 15点39分 2024年11月9日
+CSS 中的单位。
+绝对单位：始终用px。像素级别单位。
+相对单位：em rem 
+em 跟踪父元素的相对大小。
+rem 跟踪根元素：
+如果元素的font-size 16px;
+4em = 64px
+推荐使用rem
+# 视口单位
+vh vw =1%
+# 推荐使用方式：
+字体使用rem 
+其余使用px；
+如果出现破坏情况，使用rem
+# 字体的一些特殊效果：查看：
+https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-more-text-styles
+# backgroundc-color等一些特殊效果，查看
+https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-more-css-properties
+# 选择器：
+> 子类一级选择
++ 同级选择，延后一个
+~ 同级选择，后面所有兄弟选择器
+# CSS 特异值的计算
+查看图片https://i0.wp.com/css-tricks.com/wp-content/uploads/2021/01/specificity-calculationbase_rhrovi.png?w=570&ssl=1
+https://css-tricks.com/specifics-on-css-specificity/
+最前面的代表inline style  inline 具有最高优先级
+# ！important 规则
+附加 CSS 属性值的!important值是自动获胜。它甚至覆盖标记中的内联样式。覆盖 !important 值的唯一方法是使用稍后在 CSS 中声明的另一个 !important 规则，否则具有相同或较大的特异性值。您可以将其视为将 1,0,0,0,0 添加到特异性值。
+伪类 :not() 本身不添加任何特殊性，仅添加括号内的内容。
+伪元素（例如：first-line）得到 0,0,0,1，不像它们的伪类兄弟得到 0,0,1,0
+# 伪类选择器(0010)
+伪类是一个选择器，它选择处于特定状态的元素，例如它们是其类型的第一个元素，或者它们被鼠标指针悬停在其上。它们的表现就好像您已将类应用到文档的某些部分一样，通常可以帮助您减少标记中多余的类，并为您提供更灵活、可维护的代码。
+## 举例：
+:focus 焦点选择的元素
+:hover 鼠标悬停的元素
+:active 被激活的元素
+：root 很大程度上是html，但是特异性更高一点
+:first-child和:last-child将匹配第一个或最后一个同级元素。同样， :empty将匹配根本没有子元素的元素，而:only-child将匹配没有任何同级元素的元素。
+对于更动态的方法，我们可以使用:nth-child 。这是一个灵活的伪类，具有几种不同的用途。
+nth-of-type是几个同类的里的第几个，而nth-child是所有子元素里的第几个（包括非同类
+https://stackoverflow.com/questions/9313769/nth-of-type-vs-nth-child）。
+### nth_child()
+```CSS
+  .myList:nth-child(5) {/* Selects the 5th element with class myList */}
+
+  .myList:nth-child(3n) { /* Selects every 3rd element with class myList */}
+
+  .myList:nth-child(3n + 3) { /* Selects every 3rd element with class myList, beginning with the 3rd */}
+
+  .myList:nth-child(even) {/* Selects every even element with class myList */}
+```
+# pseudo-elements 伪元素(0001) 两个冒号
+
+::marker允许您自定义<li>元素的项目符号或数字的样式。
+::selection允许您在用户选择页面上的文本时更改突出显示。
+::first-letter和::first-line允许您（您猜对了！）为某些文本的第一个字母或第一个行提供特殊的样式。
+::before和::after允许我们使用 CSS（而不是 HTML）向页面添加额外的元素。使用它以各种方式装饰文本是一种常见的用例。
+# 属性选择器（0010）
+[]
+type[]
+允许键值对
+[kv]
+[key=value]
+
+[attribute^="value"] - ^=将从头开始匹配字符串。
+
+[attribute$="value"] - $=将从末尾开始匹配字符串。
+
+[attribute*="value"] - *=通配符选择器将匹配字符串内的任何位置。

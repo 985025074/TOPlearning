@@ -1,43 +1,14 @@
-html {
-  font-family: sans-serif;
-}
+@import "myreset/normal.css";
 
-table {
-  border-collapse: collapse;
-  border: 2px solid rgb(200,200,200);
-  letter-spacing: 1px;
-  font-size: 0.8rem;
+main,div{
+  border:1px solid black;
+  margin:1px;
+  padding:10px;
 }
-
-td, th {
-  border: 1px solid rgb(190,190,190);
-  padding: 10px 20px;
+*{
+  background-color: white;
 }
-
-th {
-  background-color: rgb(235,235,235);
-}
-
-td {
-  text-align: center;
-}
-
-tr:nth-child(even) td {
-  background-color: rgb(250,250,250);
-}
-
-tr:nth-child(odd) td {
-  background-color: rgb(245,245,245);
-}
-
-caption {
-  padding: 10px;
-}
-tbody {
-  font-size: 95%;
-  font-style: italic;
-}
-
-tfoot {
-  font-weight: bold;
+:nth-of-type(1) {
+  /* some rules */
+  background-color: red;
 }
