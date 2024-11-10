@@ -5,10 +5,16 @@ main,div{
   margin:1px;
   padding:10px;
 }
+:root{
+  --color:red;
+}
 *{
   background-color: white;
 }
-:nth-of-type(1) {
-  /* some rules */
-  background-color: red;
+div{
+  background-color: var(--color)!important;
+  background-color: aqua;
+}
+.icon{
+  background-color: blue;
 }

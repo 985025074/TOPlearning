@@ -195,3 +195,85 @@ type[]
 [attribute$="value"] - $=将从末尾开始匹配字符串。
 
 [attribute*="value"] - *=通配符选择器将匹配字符串内的任何位置。
+# 23点49分 2024年11月9日 CSS 定位：
+# 默认都是static
+# relative 相对定位
+作用：
+四个参数会起作用：
+top、bottom、left、right。
+relative to what? father element. 相对于文件流的位置
+absolute：
+不一定相对于父元素，而是相对于第一个非static 的父级别元素。 
+# fix 相对于view port 定位。从文件流中移走
+# sticky 定位。同样移走 不脱离文件流
+是static和fixed的结合。
+滚动起来，超出时是fixed（不会超出父元素），正常情况下是static
+
+https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/
+# position 的精彩用例：漂亮的底图案效果 + 跟随的导航栏
+https://www.youtube.com/watch?v=MxEtxo_AaZ4&t=2s
+使用了 -top来使得图片露出一个角。
+使用了overflow-x:hidden隐藏此时的滚动条。
+使用了 z-index-1置于底部。
+# 注意 非static 元素会默认显示再顶端。
+# background 常用属性：
+body{
+    background-image: url(background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+# 09点45分 2024年11月10日
+CSS func:
+calc 最基本的计算
+常用来制作动态的文字大小。
+max,min
+## 用例：
+适当宽度的width：
+p {
+  width: clamp(45ch, 50%, 75ch);
+}
+占据大部分内容的content：
+.content {
+  height: calc(100vh - 60px);
+}
+流畅的大小变动
+h1 {
+  font-size: clamp(1.75rem, 4vw + 1rem, 3rem);
+}
+自动调整的header：
+footer {
+  --contentWidth: 400px;
+  
+  background: lightcoral;
+  padding: 2rem max(2rem, 50vw - var(--contentWidth) / 2);
+}
+## CSS 变量用法：
+var(name,fallback);
+使用的值来自哪？
+负极最近的值。
+用两个破折号--不是@property定义的自定义属性始终继承其父级的值。
+## property 语法：
+@property --box-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: cornflowerblue;
+}
+每一行的意思：syntex 表示这个值怎么样才是合法的。（不合法就会变成默认值）
+inherit 表示是否可以继承，initial-value 表示默认值
+## 无效值的处理：
+替换成默认值。
+如果有继承，先继承，然后是默认值。
+
+## CSS 变量范围
+这是因为自定义属性的范围是由选择器确定的。此范围包括为其声明自定义属性的选择器以及该选择器的任何后代。如果您熟悉 JavaScript 中作用域的工作原理，这种行为应该感觉有点相似。
+例如：在root 上面声明变量就可以在全部对象共用。
+# 使用:root 实现主题切换：
+给所有的的颜色都使用变量，然后切换根的属性类，就可以实现主题切换。
+# 属性配合！important 可以 但是会有特殊的情况：
+1. 可以被覆盖(其他的普通property)。（正常应该不会）
+2. 但是仍然具有多个自变量中选择出来特异属性。
+# 有关于CSS 变量的文章，太长了https://css-tricks.com/a-complete-guide-to-custom-properties/
+
+# form 属性
