@@ -1,20 +1,68 @@
 @import "myreset/normal.css";
+body {
+  /* Center the form on the page */
+  text-align: center;
+}
 
-main,div{
-  border:1px solid black;
-  margin:1px;
-  padding:10px;
+form {
+  display: inline-block;
+  /* Form outline */
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
 }
-:root{
-  --color:red;
+
+p + p {
+  margin-top: 1em;
 }
-*{
-  background-color: white;
+
+label {
+  /* Uniform size & alignment */
+  display: inline-block;
+  min-width: 90px;
+  text-align: left;
 }
-div{
-  background-color: var(--color)!important;
-  background-color: aqua;
+
+input,
+textarea {
+  /* To make sure that all text fields have the same font settings
+     By default, text areas have a monospace font */
+  font: 1em sans-serif;
+  /* Uniform text field size */
+  width: 300px;
+  box-sizing: border-box;
+  /* Match form field borders */
+  border: 1px solid #999;
 }
-.icon{
-  background-color: blue;
+
+input:focus,
+textarea:focus {
+  /* Set the outline width and style */
+  outline-style: solid;
+  /* To give a little highlight on active elements */
+  outline-color: #000;
+}
+
+textarea {
+  /* Align multiline text fields with their labels */
+  vertical-align: top;
+  /* Provide space to type some text */
+  height: 5em;
+}
+
+.button {
+  /* Align buttons with the text fields */
+  padding-left: 90px; /* same size as the label elements */
+}
+
+button {
+  /* This extra margin represent roughly the same space as the space
+     between the labels and their text fields */
+  margin-left: 0.5em;
+}
+form{
+  text-align: left;
+}
+form input{
+  margin-left:5px;
 }

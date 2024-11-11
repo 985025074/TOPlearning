@@ -45,3 +45,25 @@ h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+/* 删除默认ul样式 */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width:auto;
+}
+li{
+  text-align: left;
+  width:auto;
+}
+label{
+  padding:0;
+  margin:0;
+  width:auto;
+  height:auto;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  border: none;
+}
