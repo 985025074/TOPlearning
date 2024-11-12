@@ -13,7 +13,11 @@ $自动跟随数字
 ^跳出 （或者用括号来限制！）
 
 remove tag:
-ctrl+k
+ctrl+k  .roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 wrap ：
 ctrl+shift+a
 可以实现，包括光标所在内容到最里层。
@@ -224,6 +228,11 @@ body{
     background-attachment: fixed;//不随页面滚动
     background-size: cover;
 }
+# 视频背景
+```html
+https://www.w3schools.com/howto/howto_css_fullscreen_video.asp
+
+```
 # 09点45分 2024年11月10日
 CSS func:
 calc 最基本的计算
