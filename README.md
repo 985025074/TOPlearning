@@ -236,6 +236,11 @@ flex item can be flex container themselves.
   }
 区别于使用margin 的 auto 方式 这种方式不是使用正对元素 而是在容器上操作。
 如果我们需要单独操作子类，使用align-self 去覆盖他.
+**重要**
+我们使用justify-content来控制组沿主轴的分布，并使用align-items来沿横轴单独定位每个项目。这是我们用 Flexbox 管理布局的两个主要属性。 也就是说 content是主轴上的所有元素（每一行独立.） 一起参与排序。
+items 则是在各自的福州上面排序。
+align-content:同一行元素一起按福州排序。
+align-items:同一行元素在各自的福州上排序
 # 为什么没有align self?
 烤肉串 鸡尾酒的比喻：
 https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/

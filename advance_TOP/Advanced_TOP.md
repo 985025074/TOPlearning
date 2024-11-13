@@ -38,6 +38,8 @@ viewbox: minx miny width height.
 不要inline!
 # SVG库
 https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-svg
+# 改变SVG颜色：
+https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
 # 表格
 table:
 tr
@@ -527,3 +529,153 @@ fiexed:不变
 原因是 在chrome 中如果不禁用 这个,那么字体无法调整
 
 
+# 22点33分 2024年11月12日 
+# grid
+```CSS
+还有一种叫做inline-grid
+.container {
+  display: grid; 
+  grid-template-columns: 50px 50px;
+  grid-template-rows: 50px 50px;
+}
+```
+支持为线命名：
+```CSS
+.container {
+  grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
+  grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+}
+```
+[]中可以空格隔开表示多个名
+这或许可以为我们在gird-column中带来方便。如果有重名使用[名称 计数]
+直接一级是item 跨级别不是
+
+## 支持简写
+```css
+grid-template: row/column;
+```
+## 隐式值：
+ grid-auto-rows: 50px;
+默认情况下添加隐式行吗，也就是一行一行躲起来。
+可以使用grid-auto-flow定义为列。
+# 行列间隙：
+column-gap row-gap
+gap
+无法处理gap：
+  就基于线的项目定位而言，间隙就像线获得了额外的宽度一样。从该行开始的任何内容都在间隙之后开始，您无法解决间隙或将任何东西放入其中。如果您希望排水沟的行为更像常规轨道，您当然可以为此目的定义一条轨道。
+# 实虚线代表显示创建，
+# 可以调整线来操做cell的大小：
+注释：默认情况下都是1个宽度。简单理解:end = start+1.
+另，支持负数表示倒数。（仅考虑显示网络）
+```css
+#living-room {
+  grid-column-start: 1;
+  grid-column-end: 6;
+ grid-row-start: 1;
+  grid-row-end: 3; 
+}
+```
+简单写版本：
+```CSS
+  grid-column: 4 / 6; 
+  grid-row: 3 / 6;
+```
+再次简写：
+```CSS
+#living-room {
+  grid-area: 1 / 1 / 3 / 6;
+}
+```
+还有一种更短的简写方式可以用起始线和结束线定位网格项。您可以使用grid-area将grid-row-start / grid-column-start / grid-row-end / grid-column-end组合成一行。
+左上角XY/右下角XY。
+另外，这里也支持跨单位访问只需要把第二个换成span num 即可。
+# grid area 甚至可以使用名称来布局：
+```css
+/* styles.css */
+
+#living-room {
+  grid-area: living-room;
+}
+
+```
+这是父容器内的：
+```CSS
+  grid-template-areas:
+    "living-room living-room living-room living-room living-room"
+    "living-room living-room living-room living-room living-room"
+    "bedroom bedroom bathroom kitchen kitchen"
+    "bedroom bedroom bathroom kitchen kitchen"
+    "closet closet bathroom kitchen kitchen"    
+```
+可用. 来表示空格子。
+此时 线会被自动命名：xx-start,xx-end
+# resize:both;
+允许用户调整大小。
+# 使用repeat 函数简化grid 重复列大小的涉及
+repeat(个数，大小)
+多个repeat 可以联用，空格隔开
+# 知名单位fr
+类似flex 按比例分配。
+最小是width:min-content：容纳内容大小的最小值。
+# 明确控制的方法 结合min max：
+```CSS
+.grid-container {
+  grid-template-rows: repeat(2, min(200px, 50%));
+  grid-template-columns: repeat(5, max(120px, 15%));
+}
+
+```
+min 控制最大
+max 控制最小
+# 同时控制 minmax()
+
+```CSS
+.grid-container {
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(5, minmax(150px, 200px));
+}
+```
+可以使用静态尺寸
+# clamp 全流程适用的自适应
+clamp(minimum-size, ideal-size, maximum-size)
+min 和 max 常常是静态值
+而 ideal-size 往往是动态值
+# auto-fit 和 auto-fill
+用例：
+```CSS
+.example {
+  display: grid;
+  width: 1000px;
+  grid-template-columns: repeat(auto-fit, 200px);
+}
+```
+这里的auto-fit返回当前大小/200px 的值
+配合min-max 完全释放天性：
+```CSS
+.grid-container {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+```
+尽可能多的列，并且不超出！ 完全自适应！
+## 内部实现机理：
+首先根据最小尺寸算出来 最多的行列睡，然后根据剩余空间去最大分配。
+效果：均匀分配。
+## auto fill 的区别
+autofill会为可能的新空间保留
+auto-fit也会增加列 但是被折叠 是显示列
+# justify-item：
+<!-- 也支持这个，start,end,center,stretch -->
+这里的意思是在每个单元格内部的排序！！！！ 回顾flexbox
+# justify-content:
+这个才是我们在flex-box中用多个
+# align-items alignself align-content
+记住 content 所有人一起来，items 在内部排序
+# 可使用safe 关键词修饰：保证不会丢失 类似wrap
+# grid-column中引用线，支持引用隐式线。
+# grid 与flex的比较
+flex:本质上是在一个维度中布局。
+当确定 一个行的大小时某个的什么关系 用grid
+flex每个项目大小却决于各个item like nav
+选择关键：是否依赖于内部内容的大小？
+grid:多列展示
