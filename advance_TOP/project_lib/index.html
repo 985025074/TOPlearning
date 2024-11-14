@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #cbd5e1;
+        }
+
+        header {
+            padding: 1%;
+            background-color: greenyellow;
+            color: white;
+            text-align: center;
+        }
+
+        footer {
+            padding: 0.5%;
+            background-color: lightgrey;
+            color: white;
+            text-align: center;
+        }
+
+        .addbutton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            width: 100%;
+            border: none;
+            color: white;
+        }
+
+        .books {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 30%));
+            grid-gap: 20px;
+            grid-auto-rows: 200px;
+        }
+
+        .book {
+            font-size: 0.9rem;
+            padding: 10px;
+            display: grid;
+            grid-template-rows: 1fr 2fr 1fr;
+            background-color: #f8fafc;
+            border: 1px solid lightgrey;
+            border-left: palegoldenrod 20px solid;
+            border-radius: 3%;
+        }
+
+        dialog {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+        }
+
+        form {
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input {
+            width: 50%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to our library</h1>
+    </header>
+    <div class="addbutton">
+        <button>Add Book</button>
+    </div>
+    <dialog id="addbook">
+        <form action="" method="dialog">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+            <label for="pages">Pages:</label>
+            <input type="number" id="pages" name="pages" required>
+            <button type="submit">Add</button>
+        </form>
+    </dialog>
+    <div class="books">
+        <div class="book">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga incidunt laborum, aperiam labore iusto
+            consequuntur? Esse, quae dolores hic consectetur sit distinctio labore ab a molestias laudantium, voluptas
+            tempore maiores.
+        </div>
+    </div>
+    <footer>
+        Copyright © 2024 Shiyicong
+    </footer>
+    <script>
+        let lib = [];
+        function Book(title, author, pages) {
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+            this.read = false;
+        }
+
+        let addbtn = document.querySelector('.addbutton button');
+        let dialog = document.querySelector('#addbook');
+        let diaglogbutton = document.querySelector('dialog button');
+        let inputtitle = document.querySelector('#title');
+        let inputauthor = document.querySelector('#author');
+        let inputpages = document.querySelector('#pages');
+        let books = document.querySelector('.books');
+        addbtn.addEventListener('click', function () {
+            dialog.show();
+        });
+        diaglogbutton.addEventListener('click', function (event) {
+            event.preventDefault();
+            let newBook = new Book(inputtitle.value, inputauthor.value, inputpages.value);
+            inputauthor.value = '';
+            inputtitle.value = '';
+            inputpages.value = '';
+            lib.push(newBook);
+            //create new book
+            let newBookElement = document.createElement('div');
+            newBookElement.classList.add('book');
+            newBookElement.innerHTML = `
+            <h2>${newBook.title}</h2>
+            <p>Author: ${newBook.author}</p>
+            <p>Pages: ${newBook.pages}</p>
+            <button id="read">Read</button>
+            <button id="delete">Delete</button>
+            `;
+            newBookElement.querySelector('button#read ').addEventListener('click', function () {
+                if (!newBook.read) {
+                    newBook.read = true;
+                    newBookElement.style.backgroundColor = 'lightgreen';
+                }
+                else {
+                    newBook.read = false;
+                    newBookElement.style.backgroundColor = 'white';
+                }
+
+            });
+            newBookElement.querySelector('button#delete').addEventListener('click', function () {
+                books.removeChild(newBookElement);
+
+            });
+            //add to books
+            books.appendChild(newBookElement);
+            dialog.close();
+        });
+
+
+    </script>
+</body>
+
+</html>

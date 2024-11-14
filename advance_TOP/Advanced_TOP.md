@@ -679,3 +679,134 @@ flex:本质上是在一个维度中布局。
 flex每个项目大小却决于各个item like nav
 选择关键：是否依赖于内部内容的大小？
 grid:多列展示
+
+
+# 注解：ts 中 js 构造函数的体现：
+```typescript
+type _Player={
+    name:string;
+    age:string;
+}
+function Player(this:_Player){
+    this.name="123";
+    this.age="123";
+}
+let a = new (Player as unknown as {new():_Player})();
+
+```
+需要强行说明这个函数符合这个签名。
+# js 原型：
+在原型上面添加函数：
+```js
+Player.prototype.sayHello = function() {
+   console.log("Hello, I'm a player!");
+};
+
+player1.sayHello(); // logs "Hello, I'm a player!"
+player2.sayHello(); // logs "Hello, I'm a player!"
+```
+原型可以用：Object.getPrototypeOf() | Player.prototype
+在原型上面定义只有一份.
+大概原理是：先看自己有没有定义，如果有用自己，反之用原型递归，按这个链去查炸
+# sth.prototype
+除开方法 + 箭头函数 都有这个属性。
+一般在构造函数中使用
+# 原型操作重要函数：
+Object.setPrototypeOf(Player.prototype, Person.prototype);
+设置Player.prototype的原型为 Person.prototype
+Object.getPrototypeOf(player1); 
+xx.isPrototypeof(sth)
+y instance of prototype prototype 是否产生了y?
+# 万物之处：
+null->Object.prototype->具体对象（Object
+array:
+null->object.prototype -> array.prototype -> sth
+xx.prototype == xx类的原型
+# 注释：在创建所有对象之前使用！ 提高效率
+# 构造函数A.call()在当前B函数里调用一次A,但不会连接原型
+# this 不受原型的影响（关于this 的一切 重要）。
+最早哪个地方就是this 指向。这保证继承方法修改子对象状态，，而不是父对象。 全局对象是window。
+全局函数调用：是全局对象
+方法调用：注意 方法也是“属性” 函数属性，因而可以被保存：
+let brand = car.getBrand;
+console.log(brand()); // undefined 这样是合理的。
+然而此时this undefined 。
+除非bind：
+```js
+let brand = car.getBrand.bind(car);//不一定要同个对象
+console.log(brand()); // Honda
+
+```
+构造函数调用：如果忽略new 变成第一种调用，this 变成全局对象。反之 则是创建一个新的对象
+显示检查：
+```js
+function Car(brand) {
+    if (!(this instanceof Car)) {
+        throw Error('Must use the new operator to call the function');
+    }
+    this.brand = brand;
+}
+function Car(brand) {
+    if (!new.target) {
+        throw Error('Must use the new operator to call the function');
+    }
+    this.brand = brand;
+}
+```
+间接调用：显示指定this
+funcname.call() .apply()这种 （区别apply第二参数是数组）
+箭头函数不会创建上下文因此如果使用这个创建上下文会造成问题。
+```javascript
+function Car() {
+  this.speed = 120;
+}
+
+Car.prototype.getSpeed = () => {
+  return this.speed;
+};
+
+var car = new Car();
+console.log(car.getSpeed()); // 👉 undefined
+
+这里的car 调用的是全局上下文window
+```
+https://www.javascripttutorial.net/javascript-this/
+# 循环遍历键值对语法回顾：
+```js
+# 遍历键值对：
+for (key in object) {
+  // executes the body for each key among object properties
+}
+
+for (let key in user) {
+  // keys
+  alert( key );  // name, age, isAdmin
+  // values for the keys
+  alert( user[key] ); // John, 30, true
+}
+key 在循环内使用。
+```
+如何排除继承而来的属性？
+sth.hasOwnProperty("属性名")
+```js
+let animal = {
+  eats: true
+};
+
+let rabbit = {
+  jumps: true,
+  __proto__: animal
+};
+
+for(let prop in rabbit) {
+  let isOwn = rabbit.hasOwnProperty(prop);
+
+  if (isOwn) {
+    alert(`Our: ${prop}`); // Our: jumps
+  } else {
+    alert(`Inherited: ${prop}`); // Inherited: eats
+  }
+}
+```
+hasOwnProperty不可迭代，保证不会出现在子类的遍历中。所有函数like
+# 尽量属性单独，方法公用 除非是this.value 这样的赋值 可以保证单独赋值
