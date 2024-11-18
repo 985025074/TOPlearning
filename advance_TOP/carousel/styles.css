@@ -1,0 +1,54 @@
+@import "normal.css";
+
+body{
+  height:100vh;
+  width:100vw;
+  background-color: lightgrey;
+}
+.carousel{
+  position:relative;
+  height:100vh;
+  width:100vw;
+}
+.carousel .slide{
+  position:absolute;
+  inset:0;
+  height:100%;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out 0s;
+
+
+}
+.carousel .slide.active{
+  transition-delay: 0.2s;
+  opacity: 1;
+}
+.carousel button{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  padding:2rem;
+  font-size: 2rem;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: .25rem;
+  z-index:10;
+}
+.carousel button:hover{
+  background-color: rgba(0,0,0,0.1);
+}
+.carousel button.prev{
+  left:1rem;
+}
+.carousel button.next{
+  right:1rem;
+}
+.slide img{
+  display:block;
+  height:100%;
+  width:auto;
+  object-fit: cover;
+  object-position: center;
+}
