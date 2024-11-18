@@ -379,6 +379,13 @@ flex:1 1 0
     height:auto;
     object-fit: contain;
 }
+# object-fit:
+fill:拉伸以填充会失真 
+contain:保持宽高比填充  为了不被建材，留下空白 
+cover:保持宽高比填充 不介意超出 
+# object-position：
+指定位置：left center right top bottom 
+
 # 17点29分 2024年10月31日
 javascrwipt 基础语法：
 外部导入：
@@ -722,7 +729,9 @@ div.textContent = "Hello World!";
 # js 位置：
 最好放在后面，保证页面加载完成后执行
 或者用defer。在后台下载脚本，在DOM 准备好之后执行，并且保证顺序。
-
+不同于img 这种也有src 的 这种往往会自动异步执行
+async 加载完就马上执行 所以才会无法保证顺序
+defer 等待html 执行完毕。并且保证顺序
 <!-- <head>
   <script src="js-file.js" defer></script>
 </head> -->

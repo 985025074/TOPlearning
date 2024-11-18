@@ -1,4 +1,4 @@
 //忽略typescript文件夹下所有文件
 /typescript/
 //忽略node_modules文件夹下所有文件
-/node_modules/
+node_modules/
