@@ -1,0 +1,67 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+}
+header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgb(224, 85, 85);
+    padding:10px;
+}
+header h3{
+    margin-left:10%;
+}
+#content{
+    --bar-gap:50px;
+    --item-gap:40px;
+    flex:1;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+#content .sidebar{
+    display: grid;
+    padding:50px;
+    grid-auto-rows: var(--bar-gap);
+    border: 1px solid black
+}
+
+#content .list{
+    display: grid;
+    grid-auto-rows: var(--item-gap);
+    padding:50px;
+}
+#contetn .card input[type="radio"]{
+
+}
+#content .card{
+    display: flex;
+    border: 1px solid black;
+    justify-content: flex-start;
+    align-items: center;
+    padding:10px;
+}
+dialog{
+    position: absolute;
+    top:30%;
+    padding-left:100px;
+    padding-right:100px;
+    padding-top:50px;
+    padding-bottom:50px;
+}
+form{
+    font-size:1.5rem;
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+form button{
+    margin-top: 20px;
+    flex:0 1 auto;
+    align-self:center;
+    width: 100px;
+    background-color: rgb(79, 187, 187);
+
+}
