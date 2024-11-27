@@ -423,7 +423,7 @@ to fixed.
 === ，!== 会判断类型
 # 支持使用逗号运算符
 # null undefined值
-null 是值，而undefined表示还未赋值(like void)
+null 是值，而undefined表示还未赋值(like void) 
 ^ typeof object |^ typeof undefined
 数值转换变换0    | 数值转换为NaN
 # 空白字符如\t\n 转换成0
@@ -739,9 +739,14 @@ defer 等待html 执行完毕。并且保证顺序
 https://javascript.info/script-async-defer#defer。
 # Events 事件处理：
 法1：直接在html标签上处理，像：on<event> onclick onmousexxx
+
 法2：通过在javascript中绑定事件处理函数，可以处理多个事件。
 sth.onclick = functionl
+
 法3 a容器类的addEventListener()方法，可以处理多个事件。
+先绑定先触发.
+阻止方法：
+使用 stopImmediatePropagation() 可以阻止同一事件的后续监听器触发（包括同一阶段的其他监听器）。
 element.addEventListener("click", function(){});
 回调对象可以包含参数。一个**event**本省的引用。（e.target）
 click 点击
@@ -757,7 +762,23 @@ DOM level2 事件流模型三个阶段：
 相关属性：
 参见 上面tutorial
 sopPropagation 在bubbling 中进一步组织
+阻止冒泡：
+```js
+const parent = document.getElementById('parent');
+const child = document.getElementById('child');
 
+// 父级监听器
+parent.addEventListener('click', () => {
+  console.log('Parent Clicked');
+});
+
+// 子级监听器
+child.addEventListener('click', (event) => {
+  console.log('Child Clicked');
+  event.stopPropagation(); // 阻止事件冒泡到父元素
+});
+
+```
 # 特殊事件：
 DOMContetnload:加载完html 且DOM 树构建完毕。 然而img and stylesheet 还没加载。
 load 挖宝气压变化在挖宝

@@ -2,3 +2,5 @@
 /typescript/
 //忽略node_modules文件夹下所有文件
 node_modules/
+.vscode/
+.vscode

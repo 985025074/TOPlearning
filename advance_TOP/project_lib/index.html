@@ -121,6 +121,7 @@
     <footer>
         Copyright © 2024 Shiyicong
     </footer>
+    <script src="check.js"></script>
     <script>
         let lib = [];
         function Book(title, author, pages) {
@@ -132,6 +133,7 @@
 
         let addbtn = document.querySelector('.addbutton button');
         let dialog = document.querySelector('#addbook');
+       
         let diaglogbutton = document.querySelector('dialog button');
         let inputtitle = document.querySelector('#title');
         let inputauthor = document.querySelector('#author');
@@ -140,7 +142,7 @@
         addbtn.addEventListener('click', function () {
             dialog.show();
         });
-        diaglogbutton.addEventListener('click', function (event) {
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
             let newBook = new Book(inputtitle.value, inputauthor.value, inputpages.value);
             inputauthor.value = '';
@@ -179,6 +181,7 @@
 
 
     </script>
+
 </body>
 
 </html>

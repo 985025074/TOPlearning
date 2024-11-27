@@ -1,0 +1,60 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+}
+h1{
+    padding:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+#buttons{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 150px;
+}
+#buttons button{
+    padding: 20px;
+    font-size:1.5rem;
+    opacity: 50%;
+
+}    
+#content{
+    margin-top:50px;
+    flex:1;
+    background-color: lightgray;
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+}
+#content .boardcontainer{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+#content .boardcontainer .board{
+    background-color: whitesmoke;
+    display:grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(10,1fr);
+}
+#content .boardcontainer .ships{
+    border: 1px solid black;
+    padding:20px;
+}
+#content .boardcontainer .ships.hasShip{
+    border: 1px solid lightblue;
+    padding:20px;
+    background-color: rgba(0,0,0,0.1);
+}
+#content .boardcontainer .ships.beHit{
+    background-color: green;
+}
+#content .boardcontainer .ships.beHitRight{
+    background-color: purple;
+}
+

@@ -550,12 +550,15 @@ margin-right: auto;
 margin auto 也可以用于 绝对居中。
 这个元素的必须有一个固定的宽度和高度
 这个元素必须是绝对定位 position: absolute
+
 # 绝对居中最佳实现：
+
 结合使用：top: 50% + transform: translateY(-50%)
 为了让元素 垂直居中 于其父容器，你通常需要结合 top: 50% 和 transform: translateY(-50%)。这样做的效果是：
 
 top: 50% 将元素的顶部对齐到父容器的中间。
 transform: translateY(-50%) 将元素向上移动自身高度的 50%，从而使元素的 中心 对齐父容器的中心。
+
 # flexbox 中的使用：
 
 在 flex 布局的父元素内，给子元素的 margin 设置为 auto 会让这个子元素被 "推到" 对应的另一边，这在有些应用场景下是非常有用的。比如， 如果一个 flex 布局的元素设置成 margin-left: auto， 那么它就会被 “推到” 最右边。
@@ -1279,9 +1282,10 @@ extends === setPrototypeOf
 
 # 支持 static
 
-# ES6 支持了 module
+# ES6 支持了  module
 
 what is module
+注意ES6的语法支持：https://stackoverflow.com/questions/39436322/node-js-syntaxerror-unexpected-token-import 以及转换到commonjs 的说明 
 
 # 模块模式的缘来：
 
@@ -1754,30 +1758,608 @@ transition: <property> <duration> <timing-function> <delay>;
 # 元素是否符合？
 
 .match("query) 严格匹配！要小心
-或者用closest("query")
-
+或者用 closest("query")
 
 # 操作 classlist
 
 add
 Remove
 toggle
+
 # dropdownmenu:
+
 https://www.youtube.com/watch?v=S-VeYcOCFZw
+
 # good icons:
+
 www.toptal.com
+
 # CSS cursor:
+
 cursor:default
 pointer 可点击
-move可拖动
-text文本选择
-wait等待
+move 可拖动
+text 文本选择
+wait 等待
+
 # 图像轮播技术：
+
 按钮技术。hover + focus
-##  解决同时淡入淡出
-## 重温block inline  inline block区别：
+
+## 解决同时淡入淡出
+
+## 重温 block inline inline block 区别：
+
 重要：inline 不可以设置宽高，根据内容自动调整
 inline-block 可以设置宽高。margin padding 会影响位置。
-img 默认inline！！ 重要。
-# 一个奇怪的bug:
-设置了绝对定位 left:50%后图片缩小，原因是 li的宽度是auto？不清楚为什么会这样
+img 默认 inline！！ 重要。
+
+# 一个奇怪的 bug:
+
+设置了绝对定位 left:50%后图片缩小，原因是 li 的宽度是 auto？不清楚为什么会这样
+
+# 自定义表单验证：
+
+<form novalidate> 首先form 后加上这个
+阻止内置的验证消息 不影响CSS 和 API ：
+validationMessage
+validity 描述状态：
+都是bool 值
+patternMismatch ：如果值与指定的pattern不匹配则返回true ，如果匹配则返回false 。如果为 true，则该元素与:invalid CSS 伪类匹配。
+
+tooLong ：如果值大于 maxlength 属性指定的最大长度，则返回 true ；如果小于或等于最大值，则返回 false 。如果为 true，则该元素与:invalid CSS 伪类匹配。
+
+tooShort ：如果值短于 minlength 属性指定的最小长度，则返回 true ；如果大于或等于最小值，则返回 false 。如果为 true，则该元素与:invalid CSS 伪类匹配。
+
+rangeOverflow ：如果值大于 max 属性指定的最大值，则返回 true ；如果小于或等于最大值，则返回 false 。如果为 true，则该元素与:invalid 和:out-of-range CSS 伪类匹配。
+
+rangeUnderflow ：如果值小于 min 属性指定的最小值，则返回 true ；如果大于或等于最小值，则返回 false 。如果为 true，则该元素与:invalid 和:out-of-range CSS 伪类匹配。
+
+typeMismatch ：如果值不符合所需语法（当 type 为 email 或 url 时），则返回 true ，如果语法正确，则返回 false 。如果为 true ，则该元素与:invalid CSS 伪类匹配。
+
+**valid** ：如果元素满足其所有验证约束，则返回 true ，因此被视为有效；如果未满足任何约束，则返回 false 。如果为 true，则该元素与:valid CSS 伪类匹配；否则:invalid CSS 伪类。
+
+valueMissing ：如果元素具有 required 属性但没有值，则返回 true ，否则返回 false 。如果为 true，则该元素与:invalid CSS 伪类匹配。
+
+willValidate ：如果提交表单时将验证元素，则返回 true ；否则为 false 。
+
+checkValidity() ：如果元素的值不存在有效性问题，则返回 true ；否则为 false 。如果元素无效，此方法还会在元素上触发 invalid 事件。
+reportValidity() ：使用事件报告无效字段。此方法与 onSubmit 事件处理程序中的 preventDefault()结合使用非常有用。
+setCustomValidity(message) ：向元素添加自定义错误消息；如果设置自定义错误消息，则该元素被视为无效，并显示指定的错误。这使您可以使用 JavaScript 代码来建立除标准 HTML 验证约束提供的验证失败之外的验证失败。报告问题时会向用户显示该消息。
+设置例子：
+
+```js
+const email = document.getElementById("mail");
+
+email.addEventListener("input", (event) => {
+  if (email.validity.typeMismatch) {
+    email.setCustomValidity("I am expecting an email address!");
+  } else {
+    email.setCustomValidity("");
+  }
+});
+```
+
+对输入框执行检查
+
+# 扩展内置：
+
+```js
+const email = document.getElementById("mail");
+
+email.addEventListener("input", (event) => {
+  // Validate with the built-in constraints
+  email.setCustomValidity("");
+  if (!email.validity.valid) {
+    return;
+  }
+
+  // Extend with a custom constraints
+  if (!email.value.endsWith("@example.com")) {
+    email.setCustomValidity("Please enter an email address of @example.com");
+  }
+});
+如果不符合 内置 那么直接返回
+```
+
+# 请参考：
+
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_forms_using_javascript
+
+# 内在约束： https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation
+
+1. 从 type 限制
+   如果不符合 显示 type typeMismatch
+2. other
+pattern 正则表达式约束 显示patternMismatch
+min max 数字约束>
+required
+
+# 约束验证的过程
+1. checkValidity()
+2. 提交时候
+3. submit 事件默认不会进行validity验证 click 会
+4. min max length 编程方式设置的无效
+# 另一个容易出现的错误：
+一旦设好custoMvalidty 如果不及时清除会组织后续事件！click =》submit  submit 里面设计好，然后如果click 里面不清楚，会无效！ input 也是！
+# checkvalidty 和 reportvalidty 区别：
+report 会显示错误信息。
+
+# 如果你需要转译到低版本jshttps://www.theodinproject.com/lessons/node-path-javascript-what-is-es6：
+查看：
+https://github.com/babel/babel-loader
+# 异步 简单理解，调用后不会马上执行
+
+# promise 两个的函数作为参数 resolve and reject
+
+promise.thn() run if finish and success
+可以后跟catch（）if reject
+# 组合promise
+promises.all([promise Array]).then  等待allpromise finish
+promise.race() wait just one return as soon as it one finished
+# 嵌套：
+```js
+new Promise(function(resolve, reject) { 
+	// A mock async action using setTimeout
+	setTimeout(function() { resolve(10); }, 3000);
+})
+.then(function(num) { console.log('first then: ', num); return num * 2; })
+.then(function(num) { console.log('second then: ', num); return num * 2; })
+.then(function(num) { console.log('last then: ', num);});
+
+// From the console:
+// first then:  10
+// second then:  20
+// last then:  40
+```
+注意顺序 从最里面的resolve 开始then 起
+.finally() 无论正确与否 都会触发
+# 异步原理：
+  # async callback
+  解决sync 的 长延时问题
+  # taskqueue: 注意stak 空了才会从队列推入！（防止破坏已有）
+  意味着timeout 不是代表刚好那么多time执行。是加入taskqueue时间
+  # render 为例 给了render 一些挤兑进入的时间，异步的队列，和render队列同时进入。
+  # 不要阻塞callstack or equally that is eventloop
+  # js 是单线程 但是浏览器不是：
+  事件循环，查看对战 是否为空，如果为空，把任务放到堆栈上运行。定期查看.
+  https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html
+  # then 和 catch 这种异步callback 加另外一个mircor queue 优先考虑
+  # resolve 和reject 只允许有一个 多余的会被忽略
+  # then(实际上两个函数)分别处理resolve + reject
+
+  # Cross Origin Request
+  通过js的 fetcg 进行跨网站访问时，浏览器会先发送一个请求带上origin名臣，问目标服务器是否可以通过
+  服务器会返回一个包含Access-control-allow Origin:源名
+  如果包含这个，说明访问被允许：
+  example:
+  200 OK
+Content-Type:text/html; charset=UTF-8
+Access-Control-Allow-Origin: https://javascript.info.
+一些请求不需要这要的请求：像Get post head 方法 + 安全标头 https://javascript.info/fetch-crossorigin。
+要访问别的 都要经过上述询问。
+200 OK
+Content-Type:text/html; charset=UTF-8
+Content-Length: 12345
+Content-Encoding: gzip
+API-Key: 2c9de507f2c54aa1
+Access-Control-Allow-Origin: https://javascript.info
+Access-Control-Expose-Headers: Content-Encoding,API-Key
+经过这样的请求，那么可以了。
+# 请求协议详细解释
+预检请求： preflight request:
+Access-Control-Request-Method header has the method of the unsafe request.
+Access-Control-Request-Headers header provides a comma-separated list of its unsafe HTTP-headers.
+Origin header tells from where the request came. (such as https://javascript.info)
+如果服务器同意那么返回 200+
+同样的三个字段。
+# 这是由浏览器自动完成的：
+详细过程示例：
+真正请求尝试
+```js
+let response = await fetch('https://site.com/service.json', {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    'API-Key': 'secret'
+  }
+});
+```
+浏览器代理：
+```response
+OPTIONS /service.json
+Host: site.com
+Origin: https://javascript.info
+Access-Control-Request-Method: PATCH
+Access-Control-Request-Headers: Content-Type,API-Key
+```
+服务器响应：
+```response
+200 OK
+Access-Control-Allow-Origin: https://javascript.info
+Access-Control-Allow-Methods: PUT,PATCH,DELETE
+Access-Control-Allow-Headers: API-Key,Content-Type,If-Modified-Since,Cache-Control
+Access-Control-Max-Age: 86400
+```
+可能还会包含一个Max-age 表示缓存有效时间
+
+然后发送著请求：
+注意此时请求仍然包含Origin.
+且 相应也包含一个Access-Control-Allow-Origin: https://javascript.info(注意 这个即使是安全请求也会返回)
+js 只能获取这个请求，或者报错。
+# js的请求默认不带coockie等
+如果要带：
+fetch('http://another.com', {
+  credentials: "include"
+});
+这个也需要经历preflight.服务器端也需要发送一个特别字段表示允许：详细查看上面连接
+# fetch 详细解释：
+返回值是一个promise
+返回之后第一步往往是response.json()处理成json
+fetch 接受UR：  字符串 字符串+选项 Request（同一个request 不能fetch 两边）
+like
+```js
+const response = await fetch("https://example.org/post", {
+  method: "POST",
+ body: 字符串 JSON化的
+  headers: {
+    "Content-Type": "application/json",
+  },
+
+ }
+);
+```
+或者这样添加headers:
+```js
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+然后在正文里这样：
+const response =await(,{
+  headers:myHeaders
+})
+```
+## 特殊字段：
+mode：cors default;
+mode:same-origin 不允许跨域 只允许同域名
+还有一个可能之no-cors 区别是？TODO
+## credetntials:
+omit：禁止浏览器发送凭据
+include
+same-origin
+## 实用类之request
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+二者构造函数完全相同
+请求可取消 详细查看.
+支持复用请求
+```js
+async function post(request) {
+  try {
+    const response = await fetch(request);
+    const result = await response.json();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+const request1 = new Request("https://example.org/post", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ username: "example1" }),
+});
+
+const request2 = new Request(request1, {
+  body: JSON.stringify({ username: "example2" }),
+});
+
+post(request1);
+post(request2);
+
+```
+# fetch 返回的promise 叫做response。
+有的即使是访问失败如404 也有response .reject的是一些网络错误等等
+记得检查response.status 200说明正确访问
+也可以检查repsonse.ok bool 值
+另一个属性：
+response.type.
+basic.同源请求。
+cors 跨域请求
+opaque no-cors跨域简单请求
+response.headers 返回headers 对象
+headers 接口大致查看：
+append
+DELETE
+forEach
+get
+keys
+使用。get()获取属性 更多详细查看https://developer.mozilla.org/en-US/docs/Web/API/Headers
+# 正文 重要
+response.json()
+注意 这是异步的
+# 异步函数：
+async before function
+里面有 await
+就是异步函数。
+自动返回promise。
+意思是说，return sth === resolve sth
+throw sth === reject sth
+这就是个语法糖。
+await 后面跟一个 异步操作。直到完成 await promise ==
+promise.then(return Value).
+# 处理async 中的reject/异常
+.catch()
+或者try catch
+  try {
+    const people = await server.getPeople();
+    const person = people.find(person => { return person.name === name });
+    return person;
+  } catch (error) {
+    // Handle the error any way you'd like
+  }
+# 牢记是语法糖
+# thenlike 也可以await
+```js
+class Thenable {
+  constructor(num) {
+    this.num = num;
+  }
+  then(resolve, reject) {
+    alert(resolve);
+    // resolve with this.num*2 after 1000ms
+    setTimeout(() => resolve(this.num * 2), 1000); // (*)
+  }
+}
+
+async function f() {
+  // waits for 1 second, then result becomes 2
+  let result = await new Thenable(1);
+  alert(result);
+}
+
+f();
+```
+# 异常处理：
+async function f() {
+  throw new Error("Whoops!");
+}
+完全相同，内部一旦 出现reject 直接throw
+async function f() {
+  await Promise.reject(new Error("Whoops!"));
+}
+解决：
+可以在内部使用trycath 或者在外部使用.catch() （语法糖！！别忘了）
+# 警告 不要在外面使用try_catch！ 
+# 处理异常
+function catchError(fn){
+  return fn(same agrs){
+    return fn(args).catch();
+  }
+}
+# 
+# git 
+## git commit -a 
+撤销重做，牢记不要推送之后再修改，会造成云端和本地不一致
+# jest：
+配置eslint 推荐使用一个插件.
+详细查看jest文档：https://jestjs.io/docs/
+装一个插件，在eslint里导入全局变量。
+# jest 用法;
+```js
+test('object assignment', () => {
+  const data = {one: 1};
+  data['two'] = 2;
+  expect(data).toEqual({one: 1, two: 2});
+});
+```
+expect是一个期望对象。
+# 断言
+toBe 相当于 object.is()
+object.is特例：
+
+与 === 的区别
+Object.is 的行为与 === 类似，但在以下两种情况下有不同的表现：
+
+- NaN 比较
+  NaN 和自身并不相等 (NaN === NaN 为 false)。
+  但是 Object.is(NaN, NaN) 返回 true。
+- 正负零的比较
+  === 认为 +0 和 -0 是相等的 (+0 === -0 为 true)。
+  但是 Object.is(+0, -0) 返回 false。
+
+toEqual 会有递归检查每个值。注意忽略undefiend
+toEqual会忽略具有undefined属性、 undefined数组项、数组稀疏或对象类型不匹配的对象键。要考虑这些，请改用toStrictEqual 。
+
+.not.toBe() 表示相反
+更严格的 如果要判断针对 null undefined true 建议查看：https://jestjs.io/docs/using-matchers
+# 数字判断：
+toEqualto 
+toBeGreaterThan
+toBeLessThan
+....
+浮点数 toBeCloseTo
+# 正则表达 字符串
+.toMatch
+# 对于数组等可迭代对象
+是否包含？
+toContain(sth)
+# 异步测试
+如果里面有异步操作。
+请把test后的测试函数也改成async
+```js
+test('the data is peanut butter', async () => {
+  const data = await fetchData();
+  expect(data).toBe('peanut butter');
+});
+
+test('the fetch fails with an error', async () => {
+  expect.assertions(1);
+  try {
+    await fetchData();
+  } catch (error) {
+    expect(error).toMatch('error');
+  }
+});
+```
+先await 结果再去断言
+或者 return 一个promise，在promise的then 里进行断言
+# 希望失败的：
+加上assertion确保断言被解析到
+```js
+test('the fetch fails with an error', () => {
+  expect.assertions(1);
+  return fetchData().catch(error => expect(error).toMatch('error'));
+});
+```
+# 基于回调的测试： 测试回调代码中的数据是否正确，查看：
+
+https://jestjs.io/docs/asynchronous
+# 在测试前的一些开始 结束工作：
+```js
+beforeEach(() => {
+  initializeCityDatabase();
+});
+
+afterEach(() => {
+  clearCityDatabase();
+});
+```
+在这两个函数里注册回调
+一次性的：
+```js
+beforeAll(() => {
+  return initializeCityDatabase();
+});
+
+afterAll(() => {
+  return clearCityDatabase();
+});
+
+test('city database has Vienna', () => {
+  expect(isCity('Vienna')).toBeTruthy();
+});
+
+test('city database has San Juan', () => {
+  expect(isCity('San Juan')).toBeTruthy();
+});
+```
+# 套组
+describe.
+descirb中的函数会在所有测试前运行。无论这些describe的顺序如何，test内部按顺序：
+```js
+describe('describe outer', () => {
+  console.log('describe outer-a');
+
+  describe('describe inner 1', () => {
+    console.log('describe inner 1');
+
+    test('test 1', () => console.log('test 1'));
+  });
+
+  console.log('describe outer-b');
+
+  test('test 2', () => console.log('test 2'));
+
+  describe('describe inner 2', () => {
+    console.log('describe inner 2');
+
+    test('test 3', () => console.log('test 3'));
+  });
+
+  console.log('describe outer-c');
+});
+
+// describe outer-a
+// describe inner 1
+// describe outer-b
+// describe inner 2
+// describe outer-c
+// test 1
+// test 2
+// test 3
+```
+所以要设置setup 请在对应函数里设置/
+# 只运行一个
+test后面加上.only()
+# mock 函数
+const mockCallback = jest.fn(x => 42 + x);
+这个函数如果用在要测试的函数里，会记录一些列数据
+重要属性.mock
+## mock属性使用用例 
+```js
+// The function was called exactly once
+expect(someMockFunction.mock.calls).toHaveLength(1);
+
+// The first arg of the first call to the function was 'first arg'
+expect(someMockFunction.mock.calls[0][0]).toBe('first arg');
+
+// The second arg of the first call to the function was 'second arg'
+expect(someMockFunction.mock.calls[0][1]).toBe('second arg');
+
+// The return value of the first call to the function was 'return value'
+expect(someMockFunction.mock.results[0].value).toBe('return value');
+
+// The function was called with a certain `this` context: the `element` object.
+expect(someMockFunction.mock.contexts[0]).toBe(element);
+
+// This function was instantiated exactly twice
+expect(someMockFunction.mock.instances.length).toBe(2);
+
+// The object returned by the first instantiation of this function
+// had a `name` property whose value was set to 'test'
+expect(someMockFunction.mock.instances[0].name).toBe('test');
+
+// The first argument of the last call to the function was 'test'
+expect(someMockFunction.mock.lastCall[0]).toBe('test');
+
+```
+## 设置特定返回值：
+```js
+const myMock = jest.fn();
+console.log(myMock());
+// > undefined
+
+myMock.mockReturnValueOnce(10).mockReturnValueOnce('x').mockReturnValue(true);
+
+console.log(myMock(), myMock(), myMock(), myMock());
+```
+## 模拟moudle
+模拟fetch:
+```js
+import axios from 'axios';
+import Users from './users';
+
+jest.mock('axios');
+
+test('should fetch users', () => {
+  const users = [{name: 'Bob'}];
+  const resp = {data: users};
+  axios.get.mockResolvedValue(resp);
+
+  // or you could use the following depending on your use case:
+  // axios.get.mockImplementation(() => Promise.resolve(resp))
+
+  return Users.all().then(data => expect(data).toEqual(users));
+});
+```
+# 纯函数：
+1. 保证结果一致。在参数一致的情况下。 不能依赖外部变量
+2. 不产生副作用。如IO 
+纯函数便于测试
+# 测试的基本原则：
+测试纯函数
+测试非纯函数+可被观测的side effect
+不要测试私有方法
+不要限制内部实现，限制接口
+有副作用的要谨慎测试 可能限制实现
+# 注意js 中的引用 通过本身去访问属性 才算引用，修改本身无效。
+# 拖动属性制作：
+draggable="true"
+有一个dragstart dragend.
+drag over持续发生  preventdefault 可以加一个，不然无法拖动到现存元素
+获取屏幕y e.clienty 这是视口坐标。page 是页面坐标
+
+尝试模仿。
+getClientDOMRect() 获取元素位置 视口坐标
+https://www.youtube.com/watch?v=jfYWwQrtzzY
