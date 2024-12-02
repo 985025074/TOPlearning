@@ -280,9 +280,12 @@ type[]
 作用：
 四个参数会起作用：
 top、bottom、left、right。
-relative to what? father element. 相对于文件流的位置
+relative to what? father element. **相对于文件流的位置**
+其他元素看待它好像还在。
 absolute：
-不一定相对于父元素，而是相对于第一个非 static 的父级别元素。
+不一定相对于父元素，而是**相对于第一个非 static 的父级别元素**。
+其他元素看待它已经不在了，文件流中移走
+https://www.youtube.com/watch?v=jx5jmI0UlXU
 
 # fix 相对于 view port 定位。从文件流中移走
 
@@ -302,7 +305,7 @@ https://www.youtube.com/watch?v=MxEtxo_AaZ4&t=2s
 
 # 注意 非 static 元素会默认显示再顶端。
 
-# background 常用属性：
+# background 常用属性/背景图片使用：
 
 body{
 background-image: url(background.jpg);
@@ -617,12 +620,13 @@ pattern
 
 # 媒体查询：
 
-@media mediatype and feature{
+@media mediatype (not and only or( ,)) feature{
 rules
 }
 mediatype:
 only screen “媒体类型”意味着所包含的样式只能应用于带有屏幕的设备（与打印文档相反，例如在浏览器中按 Cmd+P 时）。 min-width 和 max-width 部分称为“媒体功能”，它们指定您要定位的设备尺寸。
-
+meida type:
+print screen all
 ## 大概两种布局：
 
 fluid:大小随着变动. 在移动设备上使用 限定一个范围。
@@ -884,7 +888,8 @@ auto-fit 也会增加列 但是被折叠 是显示列
 这里的意思是在每个单元格内部的排序！！！！ 回顾 flexbox
 
 # justify-content:
-
+图示请查看
+https://css-tricks.com/snippets/css/complete-guide-grid/#prop-align-content
 这个才是我们在 flex-box 中用多个
 
 # align-items alignself align-content
@@ -1716,7 +1721,7 @@ npm install --save-dev eslint-config-prettier
 top:100%?
 foucus or hover?
 opacity 实现渐进效果
-Pointer-events:none;查询据说为了不叫胡
+Pointer-events:none;防止鼠标交互发生,传递到下位元素
 
 # transform:对原进行变换
 
@@ -2363,3 +2368,415 @@ drag over持续发生  preventdefault 可以加一个，不然无法拖动到现
 尝试模仿。
 getClientDOMRect() 获取元素位置 视口坐标
 https://www.youtube.com/watch?v=jfYWwQrtzzY
+# transform不影响自然文档流
+- 不脱离，同样不影响他人。
+- 另外重要的一点，百分比代表自身大小
+有一些不能使用transform non-replaced inline。
+non-replaced 指的是内容就是元素内部。
+ “Non-replaced” refers to elements whose content is contained within the HTML document
+## transform rotate:
+rotate(sth deg)
+## 缩放：
+scale：
+scaleX
+scaleY
+scale(X,Y)
+# 倾斜
+skewX()
+skewY()
+skew
+# translate 移动
+translateX
+translateY
+translate(X,Y)
+
+# 注意顺序是从右到左！ 依次执行，先平移在旋转，可能导致变换中心没有变动，变成一个45度大角度旋转
+# perspective
+三维变换
+ transform: perspective();
+ 注意 连接时候perspective 必须放在前面
+ 后面常常配合旋转等。
+ 数字越大表示从越远的地方看，3d 效果越不好https://3dtransforms.desandro.com/perspective
+# rotate3d
+三维旋转 https://theodinproject.com/lessons/node-path-advanced-html-and-css-transforms
+ # 轴的说明：
+ 坐标空间是一个有两个轴的坐标系：X轴水平向右增大； Y轴垂直向下增加。三维变换函数将此坐标空间扩展为三维，添加垂直于屏幕平面的 Z 轴，该轴朝观察者方向增加。
+ # transform 很好的资料
+ https://www.joshwcomeau.com/css/transforms/
+ transform 会导致内部文本挤压。产生一个关闭电视的神奇效果
+ # tranform origin 重要 变换原点
+ 注意 变换远点始终不变
+ transform-origin: x-axis y-axis z-axis;
+
+ # transition 过度
+ # z-index 大的在上面
+ # stacking context
+ z-index仅在同一级别的stacking context work.
+ 会创建上下文的情形：
+ position relative | absolute + z-idnex;
+ opcacity<1
+ position 为fixed sticky
+ https://www.joshwcomeau.com/css/stacking-contexts/ 
+ look this
+ 注意 堆栈上下文 。底层重绘会导致上层也重绘
+ # z index 不一定依赖于position
+ 如果实现flex grid 配合使用 z-inde也可也
+ # 创建堆叠上下文：
+ .wrapper {
+  isolation: isolate;
+}
+# transition:
+# 为了效率 尽量使用transform+ opacity 其余的会影响效率。
+反之 height 的效率十分差
+# timing function:
+linear
+ease-out 刚开始块 后来满，适合东西进入
+ease-in 反过来
+ease-in-out 上述的组合
+ease 默认值 类似ease-in-out 稍微陡峭一点
+自定义速度函数：贝塞尔曲线：
+https://www.joshwcomeau.com/animation/css-transitions/
+# 通常动画都是60fps
+浏览器对于内容有四个部分工作
+style
+layout 
+paint
+composite
+# 始终是GPU
+willchange硬件加速
+.btn {
+  will-change: transform;
+}
+# 效果器和触发器分离 可以防止 快速触发动画
+https://www.joshwcomeau.com/animation/css-transitions/
+```css
+<button class="btn">
+  <span class="background">
+    Hello World
+  </span>
+</button>
+
+<style>
+  .background {
+    will-change: transform;
+    transition: transform 450ms;
+  }
+  
+  .btn:hover .background { btn是触发器  内部background是效果器
+    transition: transform 150ms;
+    transform: translateY(-10px);
+  }
+  
+  /* Toggle me on for a clue! */
+  .btn {
+    outline: auto; 
+  }
+</style>
+```
+# 查看repaint 区域：
+使用esc 打开 打开左边工具三个点 里的rendering painting tool 可以显示paint。
+# zindex:
+relative元素默认比static zindex大
+默认后面的元素遮掩前面的 想想他的zindex为0
+可以变成负的，这样会跑到下面去
+# 动画
+属性一览：
+```css
+#ball {
+  /* ... other CSS properties ... */
+  animation-duration: 2s; 动画时间
+  animation-name: change-color;
+  animation-iteration-count: infinite; 运行几次？
+  animation-direction: alternate;
+}
+```
+具体动画的形式：
+```css
+@keyframes change-color {
+  from { //指示动画事件 0妙处 0% 
+    background-color: red;
+  }
+
+  to { //2妙处 200%
+    background-color: green;
+  }
+}
+```
+可以用百分比
+支持多个值。
+```css
+animation-name: fadeInOut, moveLeft300px, bounce;
+animation-duration: 2.5s, 5s, 1s;
+animation-iteration-count: 2, 1, 5;
+
+```
+infinite + alternate:
+会来回，如果配合次数 那就是来回算一次iter
+direction可选的其他选项reverse。
+
+动画事件
+```js
+const element = document.getElementById("watch-me");
+element.addEventListener("animationstart", listener, false);
+element.addEventListener("animationend", listener, false);
+element.addEventListener("animationiteration", listener, false);
+
+element.className = "slide-in";
+
+```
+注意这里类的设置放在后面。保证 事件绑定之后，动画才开始。
+# 淡入淡出 配合display彻底消失
+注意！ display配合transition是不行的！
+```js
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    display: block;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+function showHide() {
+  if (divElem.classList[0] === "fade-in") {
+    divElem.classList.remove("fade-in");
+    divElem.classList.add("fade-out");
+  } else {
+    divElem.classList.remove("fade-out");
+    divElem.classList.add("fade-in");
+  }
+}
+```
+注意他不是最后突然消失出现，做了优化
+# keyframe 细节：
+没有cascade，按照最后一个
+但是内部出现相同百分比值 出现级联，覆盖现象
+# animation 同样支持事件函数：
+animation-timing-function
+注意正对的是每一段，而不是总体
+# shorthand:
+延迟时间出现在持续时间之后，其余顺序无所谓
+.box {
+  animation: grow-and-shrink 2000ms ease-in-out infinite alternate;
+  animation-delay: 500ms;
+}
+# 另外注意的一点。
+animation的属性一旦时间结束就会结束。
+解决方法，在普通属性中加入结束值。
+或者：
+  animation-fill-mode: forwards;
+# 添加animation-delay同样可能导致提前出现问题：
+  使用backward。理解方法：fill 根据动画值 向动画出现前填充，之后填充。
+  或者both 双向填充
+# 为什么keyframe 优先使用
+规范规定的。据说有8论比较。
+# 可以配合变量
+# a11y:
+https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-the-web-content-accessibility-guidelines-wcag
+https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-semantic-html
+# nav footer aside
+主要内容header main
+# use button instead of div
+语义 + 聚焦功能
+div 可以通过添加tagindex获得聚焦功能
+tabindex:
+正整数：tabindex="1"、tabindex="2" 等，数字越大，焦点越早获得。当用户按 Tab 键时，元素会依次获得焦点，数字越小的元素会优先获得焦点。
+但是不推荐，推荐重组dom
+0：tabindex="0" 表示元素按默认顺序获得焦点，这通常用于那些可以获得焦点的元素，如 <a> 或 <button> 等。
+负数：tabindex="-1" 使元素不能通过 Tab 键获得焦点，但仍然可以通过 JavaScript 或其他方式设置焦点。
+隐藏内容记得加上这个tabindex=-1
+或者使用 display:none;
+visibility:hidden
+# 使用的链接形式最好是：
+```html
+<!-- Example 1: Now the user is aware that this link will open or download a PDF file. -->
+<a href='...'>2021 Sign Up Statistics (PDF, 1MB)</a>
+
+<!-- Example 2: And now the user knows this link opens in a new tab! -->
+<a href='...'>GitHub (opens in new tab)</a>
+
+```
+保证语义
+# 可以focus  可以tab切换上去并且勇敢键盘操作
+tab顺序取决于DOM 与CSS 无关。造成奇怪的顺序情况
+# 保留 或者 替换 焦点样式
+# ARIA 人工语义元素：
+Always use native HTML elements and attributes over ARIA when possible.
+尽可能使用原生 HTML 元素和属性而不是 ARIA。
+
+Never change native semantics, unless you have no other choice.
+永远不要改变本机语义，除非你别无选择。
+
+All interactive ARIA controls must be usable with a keyboard.
+所有交互式 ARIA 控件都必须可通过键盘使用。
+
+Never use role='presentation' or aria-hidden='true' on focusable elements.
+切勿在可聚焦元素上使用role='presentation'或aria-hidden='true' 。
+
+All interactive elements must have an accessible name.
+所有交互元素都必须有一个易于访问的名
+# aria-label:
+常用于button label.
+注意div span 无效
+让屏幕阅读器读出来这个。
+# aia-labelledby 
+覆盖label + aira labelledby/
+连接多个有id 的标签的语义，同一个不能多次传入，不同的可以
+```html
+h2 id='label'>Shirts</h2>
+
+<!-- And here's the labeled element. Note the order of the ID references passed in -->
+<button type='button' id='shop-btn' aria-labelledby='label shop-btn'>Shop Now</button>
+```
+发音是连接的：
+shirts shop Now。
+类似label 中的for id 组合。
+没有focus功能，同时支持隐藏元素的输出
+# aria-describedby
+屏幕阅读器主要读两部分，Name description
+这个就是修改description的
+```html
+<label>Password:
+  <input type='password' aria-describedby='password-requirements' />
+</label>
+
+<!-- Meaningful text + ARIA! -->
+<span id='password-requirements'>Password must be at least 10 characters long.</span>
+
+```
+# aria-hidden:
+不会读出的部分内容。
+```html
+<!-- Example 1 -->
+<button type='button'>
+  <span class='material-icons'>add</span>
+  Add Book
+</button>
+
+<!-- Example 2 -->
+<button type='button'>
+  <span class='material-icons' aria-hidden='true'>add</span>
+  Add Book
+</button>
+
+```
+父类遮掩子类
+https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-accessibility-auditing
+# x响应式设计：
+默认html 就是响应式的
+首先加上这个：
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+这个保证网页初始宽度设置为设备宽度。防止手机浏览器自行调整。
+## 避免使用固定大小：
+px是不好的。
+使用max-width代替传统的width 和 height
+太小的时候：max-width自动缩小以适应。太大的时候不会超出
+min-height:字体过大的时候防止溢出的
+### Avoid heights altogether 完全避免高度
+转而使用填充。
+### 固定width不好说 一般而言 小的比较合适
+# 不用百分比默认也可以获得一定的responseive：
+https://codyloyd.com/2021/percentages/
+
+如果使用百分比： margin 两侧会发生变换。
+例子：文章中的padding 定死了，从而在缩小的时候导致margin 也会发生变换。
+默认去掉width 的效果也不错。
+注意区别于2100%width。原因是 有的是content box 你这样设置会导致超出。 如果是border-box 那也无所谓 一样的。
+# 图像响应式
+不要同时设置宽度高度，使用一个auto
+另一种： resolution swicth + art direction:
+前者根据设备分辨率和屏幕尺寸加载不同版本
+后者根据屏幕进行裁剪上面的不同版本
+根据尺寸调整的例子：
+```html
+
+<img
+  srcset="elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w"
+  sizes="(max-width: 600px) 480px,
+         800px"
+  src="elva-fairy-800w.jpg"
+  alt="Elva dressed as a fairy" />
+
+```
+srcset 格式 文件名+空格+宽度
+注意是w单位，固有宽度 intrinsic width
+
+sizes条件：
+media选择+空格+图像宽度。注意排序，以及默认选项的位置
+## 分辨率切换的例子：
+```html
+<img
+  srcset="elva-fairy-320w.jpg, elva-fairy-480w.jpg 1.5x, elva-fairy-640w.jpg 2x"//可供选择的版本
+  src="elva-fairy-640w.jpg"//默认选择
+  alt="Elva dressed as a fairy" />
+
+```
+后面的倍率是一种分辨率指示器:
+
+在 <img> 标签的 srcset 属性中，1x 和 1.5x 是 像素密度描述符（Pixel Density Descriptors），用于告诉浏览器这些图片适合不同的屏幕像素密度（也叫设备像素比，Device Pixel Ratio，简称 DPR）。
+
+1. 什么是像素密度描述符？
+1x：表示图片适合 标准屏幕（DPR = 1）的设备。
+1.5x：表示图片适合 DPR = 1.5 的屏幕，例如一些中分辨率屏幕。
+2x：表示图片适合 高分辨率屏幕（DPR = 2），例如 Retina 屏幕。
+2. 设备像素比 (DPR)
+设备像素比是设备实际像素与 CSS 像素的比值。不同的设备可能有不同的 DPR：
+
+DPR = 1：1 个 CSS 像素等于 1 个物理像素（标准屏幕）。
+DPR = 2：1 个 CSS 像素等于 2 个物理像素（如 Retina 屏幕）。
+DPR = 3：1 个 CSS 像素等于 3 个物理像素（如一些高端手机屏幕）。
+## 提供不同裁剪版本呢：
+```html
+<picture>
+  <source media="(max-width: 799px)" srcset="elva-480w-close-portrait.jpg" />
+  <source media="(min-width: 800px)" srcset="elva-800w.jpg" />
+  <img src="elva-800w.jpg" alt="Chris standing up holding his daughter Elva" />
+</picture>
+
+```
+# 整个body 弄个display
+里面的grid 可能出现问题
+# 制作中间布局，推荐用margin 而不是padding:
+制作边框内嵌 文字使用padding
+# clip-path 制作div 形状喵喵工具：
+https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
+# float:https://internetingishard.netlify.app/html-and-css/floats/#after-a-float
+float:left right 浮动父元素的左右测，后续元素会上来
+多个float 会叠加。注意float 会删除文件流。
+# 如何避免元素围绕浮动？：
+claer:both;
+清除左右。
+或者仅仅清楚一边。
+# 如果一个容器内所有元素都是浮动的 高度为0.为此可以通过添加overflow:hidden,恢复实际高度。
+典型结构：
+nav
+content 
+  具体内容
+footer
+# 不要使用浮动+ flexbox;
+transform 等变换动作 都是在flex  浮动 出现之后的
+# 使用object position 和 fit 要小心：
+.work img.projectimage {
+  height:100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+}
+如果没有指定本省的size 无效

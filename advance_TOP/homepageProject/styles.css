@@ -1,0 +1,197 @@
+@import "normal.css";
+@import "fonts.css";
+* {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  --headimage-height: 300px;
+  --headimage-width: auto;
+  --max-width: 1200px;
+  --global-margin: 50px;
+}
+/* body处理 */
+main,
+header {
+  padding-top: var(--global-margin);
+  margin-left: var(--global-margin);
+  margin-right: var(--global-margin);
+}
+/* header 处理*/
+header {
+  position: relative;
+  overflow: visible;
+}
+
+/* 卡片处理 */
+.work {
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.work .imgcontainer {
+  width: 100%;
+  height: 50%;
+}
+.work img.projectimage {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+}
+.work a {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 100px;
+  gap: 10px;
+}
+.work h4 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  text-align: center;
+}
+.works {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+  grid-auto-rows: 400px;
+  gap: 10px;
+
+  /* justify-content: center; */
+}
+
+/* 头像处理 */
+div.headimage {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+h1.author {
+  position: absolute;
+  bottom: 0%;
+}
+
+/* 背景的提醒 */
+
+.trapezoid {
+  z-index: -1;
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 300px; /* 设置梯形的高度 */
+  background-color: #3498db;
+  clip-path: polygon(0 0, 100% 0, 100% 20%, 0% 100%); /* 形成梯形 */
+}
+/* 图标相关 */
+img.headimage {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.work a img,
+.icons img {
+  height: 20px;
+  width: auto;
+}
+/* 页脚处理 */
+footer {
+  background-color: #3498db;
+  padding-left: var(--global-margin);
+  padding-right: var(--global-margin);
+  color: white;
+  overflow: hidden;
+  display: flex;
+}
+footer img.footimage {
+  margin-left: auto;
+  height: 500px;
+  width: 500px;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* 手机 */
+@media (max-width: 768px) {
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .work {
+    max-width: 300px;
+  }
+  .works {
+    justify-content: center;
+  }
+  img.headimage {
+    height: 200px;
+    width: auto;
+  }
+  /* footer处理 */
+  footer {
+    padding: 0;
+    flex-direction: column;
+  }
+  footer .text{
+    padding-left: var(--global-margin);
+    padding-right: var(--global-margin);
+  }
+  footer img.footimage {
+    width: 100%;
+    height: auto;
+  }
+}
+/* 平板 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1.author {
+    position: absolute;
+    top: 0%;
+    left: 90%;
+  }
+  div.headimage {
+    float: left;
+    /* transform: scale(1.5,1.5);
+    transform-origin: right bottom; */
+    transform: translate(-15%, -15%);
+  }
+  img.headimage {
+    height: 200px;
+    width: auto;
+  }
+}
+/* 电脑 */
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+/* 电脑平板通用 */
+@media (min-width: 769px) and (max-width: 1024px), (min-width: 1024px) {
+  .aboutme {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    border-radius: 8px; /* 可选：添加圆角效果，使阴影更加柔和 */
+  }
+}

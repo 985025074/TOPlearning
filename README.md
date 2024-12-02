@@ -379,13 +379,28 @@ flex:1 1 0
     height:auto;
     object-fit: contain;
 }
-# object-fit:
+# object-fit:调整图片填充方案
+
 fill:拉伸以填充会失真 
 contain:保持宽高比填充  为了不被建材，留下空白 
 cover:保持宽高比填充 不介意超出 
-# object-position：
+
+background 有一个类似版本叫做：
+background-size.
+## 二者的区别：
+object-fit是替换元素 使用
+background-size是背景图片使用
+## 详细说明：
+以background-size为例。
+可以使用宽高值。 或者关机子：
+contain:保持宽高比。 可能repeat
+cover：改变宽高比
+
+# object-position： 调整图片位置
 指定位置：left center right top bottom 
 
+background 有一个类似版本叫做：
+background-position
 # 17点29分 2024年10月31日
 javascrwipt 基础语法：
 外部导入：
