@@ -2780,3 +2780,598 @@ transform 等变换动作 都是在flex  浮动 出现之后的
   overflow: hidden;
 }
 如果没有指定本省的size 无效
+
+# React Part:
+
+React组件必须要大写.
+React的语法：
+1. 多组件不可以，必须一个组件： <>叫做fragment 片段
+```jsx
+function App() {
+  // Could replace <></> with <div></div>
+  return (
+    <>
+      <h1>Example h1</h1>
+      <h2>Example h2</h2>
+    </>
+  );
+}
+```
+2. 必须显示关闭标签：
+即使是img input
+3. 使用驼峰命名,而不是破折号：
+```jsx
+function App() {
+  return (
+  <div className="container">
+    <svg>
+      <circle cx="25" cy="75" r="20" stroke="green" strokeWidth="2" />
+    </svg>
+  </div>
+  );
+}
+
+```
+由于历史原因， aria-*和data-*属性的编写方式与 HTML 中一样，带有破折号.
+另外 className === class
+4. 转换器
+https://transform.tools/html-to-jsx
+
+## 一些语法：
+- 内容不需要引号
+  属性需要。like html.
+- 变量值：需要用{}
+  任何 JavaScript 表达式都可以在大括号之间工作
+  - 注意 标签不行。<{tag}>不行
+- 对象双括号（临时对象的情况下如style={{red=123}}），别忘记仍然是驼峰法。
+
+
+# React has the ability to render Arrays:
+```jsx
+function App() {
+  const animals = ["Lion", "Cow", "Snake", "Lizard"];
+
+  return (
+    <div>
+      <h1>Animals: </h1>
+      <ul>
+        {animals.map((animal) => {
+          return <li key={animal}>{animal}</li>;
+        })}
+      </ul>
+    </div>
+  );
+}
+
+```
+the code is the same if we change  "{...map}" to a speific Array {Array}.
+**NOTE**:note that we add key to the li tag. that is important if we want the list to be dynamic.
+# how to pass argument:
+```jsx
+function ListItem(props) {
+  return <li>{props.animal}</li>
+}
+
+function List(props) {
+  return (
+    <ul>
+      {props.animals.map((animal) => {
+        return <ListItem key={animal} animal={animal} />;
+      })}
+    </ul>
+  );
+}
+
+function App() {
+  const animals = ["Lion", "Cow", "Snake", "Lizard"];
+
+  return (
+    <div>
+      <h1>Animals: </h1>
+      <List animals={animals} />
+    </div>
+  );
+}
+```
+the name of the attirbute is not opnonated,you can change it.
+but as we use "prop.animals " in List we need to define it "animals". 
+**Key**: the the prop argument is the dict of all the attribute in html tag.
+# conditional render:
+&&:
+in js, if the let value is false, the whole expr is false.
+Otherwise,it return the right value.
+**React won't render false,null undefined.**
+**Don’t put numbers on the left side of &&.**
+this is because it will render 0.
+# add guard to component:
+```jsx
+function List(props) {
+  if (!props.animals) {
+    return <div>Loading...</div>;
+  }
+
+  if (props.animals.length === 0) {
+    return <div>There are no animals in the list!</div>;
+  }
+
+  return (
+    <ul>
+      {props.animals.map((animal) => {
+        return <li key={animal}>{animal}</li>;
+      })}
+    </ul>
+  );
+}
+
+function App() {
+  const animals = [];
+
+  return (
+    <div>
+      <h1>Animals: </h1>
+      <List animals={animals} />
+    </div>
+  );
+}
+
+
+```
+
+# JSX context should be wrapped in branket!
+(
+  JSX
+);
+# JSX  can contain multiline of bracket in one tag:
+```jsx
+function Item({ name, importance }) {
+  return (
+    <li className="item">
+      {name}
+      {importance!=0&&" "}
+      {importance!=0&&importance}
+    </li>
+  );
+}
+
+```
+# arrow function review:
+()=>returnvalue;
+()=>{return returnvalue}
+you must write return explicitly if your => is followed by a  curly brace!
+# if you want to render multiline at one time :
+The short <>...</> Fragment syntax won’t let you pass a key, so you need to either group them into a single <div>, or use the slightly longer and more explicit <Fragment> syntax:
+**Fragment won't show in the final DOM**
+# rule of the key:
+constant.
+unique.
+Another Things need to concern:
+**Note that your components won’t receive key as a prop. It’s only used as a hint by React itself. If your component needs an ID, you have to pass it as a separate prop: <Profile key={id} userId={id} />.**
+KEY WONT BE PASSED
+# sth from doc:
+```JSX
+import { recipes } from './data.js';
+
+function Recipe({ id, name, ingredients }) {
+  return (
+    <div>
+      <h2>{name}</h2>
+      <ul>
+        {ingredients.map(ingredient =>
+          <li key={ingredient}>
+            {ingredient}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+export default function RecipeList() {
+  return (
+    <div>
+      <h1>Recipes</h1>
+      {recipes.map(recipe =>
+        <Recipe {...recipe} key={recipe.id} />
+      )}
+    </div>
+  );
+}
+
+```
+note where add key.
+you have a array of Recipe. SO you need add it out.
+ {...recipe} is a shortcut for passing all property 
+ # remember:add key in the ~~outest~~ "Array"opponenet
+ outermost innermost NOT outest 
+ ```jsx
+ import { Fragment } from 'react';
+
+const poem = {
+  lines: [
+    'I write, erase, rewrite',
+    'Erase again, and then',
+    'A poppy blooms.'
+  ]
+};
+
+export default function Poem() {
+  return (
+    <article>
+      {poem.lines.map((line, i) =>
+        <Fragment key={i}>
+          {i > 0 && <hr />}
+          <p>{line}</p>
+        </Fragment>
+      )}
+    </article>
+  );
+}
+
+ ```
+ # 键值创建的方便函数：
+ crypto.randomUUID() function 。
+ 使用键值的好处：只会在键值发生变换的时候渲染变化部分
+ 注意，不要即时渲染，也就是不要：key={生成随机ID}
+ # key的使用时机：
+ 适用场景：
+重新渲染时：只有在列表重新渲染时，key 才会被用来匹配元素。初次渲染时，key 并不起作用。
+邻近元素的同类型：当一组“同类型”的元素（如多个 <li>、多个 <div>）在列表中并排存在时，key 用于区分它们。
+这种胶片做平坦列表
+
+平坦的列表：强调“平坦的列表”是因为嵌套结构的处理稍微复杂一些（嵌套时需要对子元素递归分配 key）。
+# re render 具体流程：
+1. 如果key 存在，使用。
+2. 如果不再，使用默认index
+
+ 删除所有移除的key
+ 安装新的key 新建之前不存在key的项目
+
+ 保留旧的项目（根据key 保留）
+ https://www.developerway.com/posts/react-key-attribute
+ 如果使用index 进行重新排序，相当于每个tag 原地重新渲染。
+ 如果使用独特id 那么相当于交换位置。
+ # 使用index 比较合适的时机：
+ 分页器。如果每个物品不同id 那么每次换页都是重新渲染所有
+ 反之，如果只使用index 那么指示渲染部分
+ # react 渲染算法reconition:
+ ```jsx jsx这样的对象 经过React就像是：
+ const Input = () => {
+  return (
+    <>
+      <label htmlFor={id}>{label}</label>
+      <input type="text" id={id} />
+    </>
+  );
+};
+ [
+  {
+    type: 'label',
+    ... // other stuff
+  },
+  {
+    type: 'input',
+    ... // other stuff
+  }
+]
+ ```
+ 如果是生层次组件：
+ ```jsx
+ {
+  type: Input, // reference to that Input function we declared earlier
+  ... // other stuff
+}
+ ```
+ 会迭代调用=>
+ const Component = () => {
+  return (
+    <div>
+      <Input placeholder="Text1" id="1" />
+      <Input placeholder="Text2" id="2" />
+    </div>
+  );
+};
+最终返回这个树：
+```jsx
+{
+  type: 'div',
+  props: {
+    // children are props!
+    children: [
+      {
+        type: Input,
+        props: { id: "1", placeholder: "Text1" }
+      },
+      {
+        type: Input,
+        props: { id: "2", placeholder: "Text2" }
+      }
+    ]
+  }
+}
+```
+## 重新渲染的时候：
+从变动状态的地方开始遍历。
+首先比较type 如果type相同，那么就是之前所说的更新。
+如果不同，那么就是卸载+删除 unmount.
+## 奇怪的反转问题：
+https://www.developerway.com/posts/reconciliation-in-react
+原因就是type 相同，从而使用了同一个input 只更新了一下内容而已.
+## 解决方式
+数组，这里指的是：
+React 的 JSX 语法允许在 <></> 或任何容器组件（比如 <div>）中放置多个子元素。虽然我们在编写代码时直接写成多个 JSX 标签，React 在内部会将这些标签转换成一个包含这些元素的数组。这样，React 就可以对这些子元素进行遍历、渲染以及更新。
+这种情况下会遍历过去，然后检查前后属性，按照前面规则，更新还是重载。
+### 使用数组可以解决
+### 另一个解决方式：key
+为什么要用key的原因也在这里：
+jsx数组树会返回这样一个对象
+[
+  { type: Input }, // "2" data item now, but React doesn't know that
+  { type: Input }, // "1" data item now, but React doesn't know that
+];
+为了区分哪一个哪一个素以要key
+[
+  { type: Input, key: '2' }, // "2" data item, React knows that because of "key"
+  { type: Input, key: '1' }, // "1" data item, React knows that because of "key"
+];
+### 通过数组创建的是动态的 而外面的不是，可以区分
+```
+
+  // the entire dynamic array is the first position in the children's array
+  [
+    { type: Input, key: 1 },
+    { type: Input, key: 2 },
+  ],
+  {
+    type: Input, // this is our manual Input after the array
+  },
+];
+
+``` 
+# 不能在component 内部定义component:
+https://www.developerway.com/posts/reconciliation-in-react
+原自于函数比较始终是false
+# 参数化组件：
+```jsx
+function Button({ text, color, fontSize }) {
+  const buttonStyle = {
+    color: color,
+    fontSize: fontSize + "px"
+  };
+
+  return <button style={buttonStyle}>{text}</button>;
+}
+
+export default function App() {
+  return (
+    <div>
+      <Button text="Click Me!" color="blue" fontSize={12} />
+      <Button text="Don't Click Me!" color="red" fontSize={12} />
+      <Button text="Click Me!" color="blue" fontSize={20} />
+    </div>
+  );
+}
+
+```
+解耦格式 更简单
+## 提供默认值有两种格式：
+1. 参数默认值。
+2. 外置一个defaulProps
+```jsx
+function Button({ text, color, fontSize }) {
+  const buttonStyle = {
+    color: color,
+    fontSize: fontSize + "px"
+  };
+
+  return <button style={buttonStyle}>{text}</button>;
+}
+
+Button.defaultProps = {
+  text: "Click Me!",
+  color: "blue",
+  fontSize: 12
+};
+
+export default function App() {
+  return (
+    <div>
+      <Button />
+      <Button text="Don't Click Me!" color="red" />
+      <Button fontSize={20} />
+    </div>
+  );
+}
+```
+## 传递函数 固定的好说，传递遍历即可
+带参数的？
+传递闭包(curry)
+function curry(parameter){
+  return ()=>{
+    func(parameter);
+  }
+}
+## 传递组件作为参数。注意这个组件属性叫做children
+```jsx
+import Avatar from './Avatar.js';
+
+function Card({ children }) {
+  return (
+    <div className="card">
+      {children}
+    </div>
+  );
+}
+
+export default function Profile() {
+  return (
+    <Card>
+      <Avatar
+        size={100}
+        person={{ 
+          name: 'Katsuko Saruhashi',
+          imageId: 'YfeOqp2'
+        }}
+      />
+    </Card>
+  );
+```
+# React 实现组件变化的机制：
+注意，组件本省并不可辨，只是传递的属性变了
+# State:
+代码格式
+```jsx
+const [stateValue, setStateValue] = useState(initialValue);
+
+// adapted for our use case:
+const [backgroundColor, setBackgroundColor] = useState(initialColor);
+
+```
+# re-render and reconciliation:
+https://www.theodinproject.com/lessons/node-path-react-new-introduction-to-state
+# 关于闭包在React中的亮点说明：
+
+Local variables don’t persist between renders. 
+When React renders this component a second time, it renders it from scratch—it doesn’t consider any changes to the local variables.
+传统闭包无效。整个函数重新调用
+对局部变量的更改不会触发渲染。 
+React 没有意识到它需要使用新数据再次渲染组件。
+# Use State 两个返回值的意义。
+1. 在渲染之间保存的值。
+2. 触发渲染
+# 使用 from official doc:
+import { useState } from 'react';
+# use l类函数称之为hook
+仅在渲染时候可用。
+Hooks（以use开头的函数）只能在组件或您自己的 Hooks 的顶层调用。
+您不能在条件、循环或其他嵌套函数内调用 Hook。挂钩是函数，但将它们视为有关组件需求的无条件声明会很有帮助。您可以在组件顶部“使用”React 功能，
+类似于在文件顶部“导入”模块的方式
+# 把hook 的用法看成是导入XXX 始终在component 顶部使用 不要再循环或者if中使用
+请记住，必须无条件调用 Hook，并且始终以相同的顺序调用！
+# state  内部机理：
+```js
+let componentHooks = [];
+let currentHookIndex = 0;
+// How useState works inside React (simplified).
+function useState(initialState) {
+  let pair = componentHooks[currentHookIndex];
+  if (pair) {
+    // This is not the first render,
+    // so the state pair already exists.
+    // Return it and prepare for next Hook call.
+    currentHookIndex++;
+    return pair;
+  }
+
+  // This is the first time we're rendering,
+  // so create a state pair and store it.
+  pair = [initialState, setState];
+
+  function setState(nextState) {
+    // When the user requests a state change,
+    // put the new value into the pair.
+    pair[0] = nextState;
+    updateDOM();
+  }
+
+  // Store the pair for future renders
+  // and prepare for the next Hook call.
+  componentHooks[currentHookIndex] = pair;
+  currentHookIndex++;
+  return pair;
+}
+
+```
+注意 state 是每个组件私有的
+# React内部渲染：
+https://medium.com/javarevisited/react-reconciliation-algorithm-86e3e22c1b40
+通过操作虚拟DOM整个中间层很好的优化了性能
+# 使用STATE 注意事项：
+如果操作的是对象。想要set 能够触发出rerender:
+```jsx
+function Person() {
+  const [person, setPerson] = useState({ name: "John", age: 100 });
+
+  // BAD - Don't do this!
+  const handleIncreaseAge = () => {
+    // mutating the current state object
+    person.age = person.age + 1;
+    setPerson(person);
+  };
+
+  // GOOD - Do this!
+  const handleIncreaseAge = () => {
+    // copy the existing person object into a new object
+    // while updating the age property
+    **注意这里的这种更新方式 ...展开，然后覆写**
+    const newPerson = { ...person, age: person.age + 1 };
+    setPerson(newPerson);
+  };
+
+  return (
+    <>
+      <h1>{person.name}</h1>
+      <h2>{person.age}</h2>
+      <button onClick={handleIncreaseAge}>Increase age</button>
+    </>
+  );
+}
+
+```
+必须传递新对象，否则根据object.is无法触发rerender.
+# Set之后马上渲染吗？
+不是，queue
+# State在单个render的处理：
+调用函数，函数返回JSX片段，React会处理（下一次render）.
+核心就是：
+Setting state only changes it for the next render. 
+这就是所谓state is a snapshot的核心含义。
+状态值在一个已经render好的component 里是不会变得。
+## 如果想要改变呢？
+使用state updater:
+具体而言 就是传入回调。
+```jsx
+const handleIncreaseAge = () => {
+  setPerson((prevPerson) => ({ ...prevPerson, age: prevPerson.age + 1 }));
+  setPerson((prevPerson) => ({ ...prevPerson, age: prevPerson.age + 1 }));
+};
+
+```
+回调参数就是那个hook variable。
+
+### 注意 就算是这样React也会替我们尽力合并成单次。
+人为获取input值得实时方式：
+```jsx
+function CustomInput() {
+  const [value, setValue] = useState("");
+
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+    />
+  );
+}
+
+```
+# State 原则：
+## 尽量分组。
+## 不要出现矛盾情况。如果某两个是同方向或者反方向，尽量放到一个变量里，避免出现之变动一个
+另一个忘记变了。
+## 不要复制prop 值到 State
+```jsx
+function Message({ initialColor }) {
+  // The `color` state variable holds the *first* value of `initialColor`.
+  // Further changes to the `initialColor` prop are ignored.
+  const [color, setColor] = useState(initialColor);
+```
+要搞清楚，状态变量的初始值只会在第一次调用的时候有用。
+## 不要重复状态。
+这样的话要同时修改两个 很麻烦。
+### 不要记录object 记录id
+否则 === 容易出错
+## 避免嵌套。使用子数组的方式扁平化：
+https://react.dev/learn/choosing-the-state-structure。
+
+## is missing in prop validation 
+查一下怎么搞

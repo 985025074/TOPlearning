@@ -1,0 +1,44 @@
+.cv header{
+    background-color: 
+    #0e374e;
+    color: white;
+    text-align: center;
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:5px;
+}
+.cv header .information{
+    display: flex;
+    gap:50px;
+}
+.cv header .infoItem{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+
+}
+/* 条目 */
+.cv main{
+    padding:20px;
+    background-color: white;
+    text-align: center;
+}
+.cv main h3.smalltitle {
+    background-color: #0e374e12;
+}
+.cv main p.where {
+    font-weight: bold;
+}
+.cv main>div .item{
+    display: flex;
+
+}
+.cv main>div .item>div{
+    flex:1;
+}
+.cv main>div .item>div:last-child{
+    text-align: left;
+}

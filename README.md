@@ -1054,3 +1054,14 @@ usagelike:
 reduce (缩减方式,初始值).
 ```
 ```
+# 永远不要改变hook的state 变量，始终创建一个新的变量，如果出现嵌套修改的，多层次展开，具体查看：https://react.dev/learn/updating-objects-in-state#updating-a-nested-object
+# 比较object 本省有风险
+# 注意jsx 混合js 要把jsx()括号括起来
+# 共享状态
+转移到夫级别，子级别多一个prop参数。
+# controlled？
+指的是表征由prop 完全控制的组件。
+如果一些组件本身有State叫做不受控制
+# 创建REact项目：
+npm create vite@latest . -- --template react
+npm install
