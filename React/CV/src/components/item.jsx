@@ -6,7 +6,7 @@ function InnerItem({time, where, description}) {
   return (
     <div className="item">
       <div>
-        <p className="time">P{time}</p>
+        <p className="time">{time}</p>
       </div>
       <div>
         <p className="where">{where}</p>

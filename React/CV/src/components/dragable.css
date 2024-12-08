@@ -1,0 +1,57 @@
+
+.dragable .nothidden {
+  display: flex;
+  justify-content: space- between;
+}
+.dragable i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    transform : rotate(180deg);
+    transition: transform 0.3s ease-in-out;
+}
+.dragable.show i {
+    transform : rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.dragable.notshow .hidden{
+    animation: hidden 0.5s ease-in-out both  ;
+ }
+.dragable.show .hidden{
+   animation: showhidden 0.5s ease-in-out both ;
+}
+.dragable.unclick .hidden{
+    display: none;
+}
+@keyframes showhidden{
+    from{
+        pointer-events: none;
+        visibility:hidden;
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to{
+        pointer-events: auto;
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+@keyframes hidden{
+
+   from{
+        pointer-events: auto;
+        display: block;
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    to{
+        pointer-events: none;
+        display: none;
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+

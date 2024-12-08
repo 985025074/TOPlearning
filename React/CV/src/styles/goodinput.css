@@ -1,0 +1,11 @@
+input{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f3f4f6;
+    outline:none; /* remove default focus */
+}
+input:focus{
+    border:1px solid #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 添加阴影效果 */
+    transition: border .25s, box-shadow .25s;
+}
