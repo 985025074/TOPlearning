@@ -3284,7 +3284,8 @@ function useState(initialState) {
 注意 state 是每个组件私有的
 # React内部渲染：
 https://medium.com/javarevisited/react-reconciliation-algorithm-86e3e22c1b40
-通过操作虚拟DOM整个中间层很好的优化了性能
+通过操作虚拟DOM整个中间层很好的优化了性能.
+
 # 使用STATE 注意事项：
 如果操作的是对象。想要set 能够触发出rerender:
 ```jsx
@@ -3375,3 +3376,422 @@ https://react.dev/learn/choosing-the-state-structure。
 
 ## is missing in prop validation 
 查一下怎么搞
+
+# FUCK YOU VITE 
+逆天VITE 服务器不报错，在浏览器的console 才报错。
+有些错误要去console
+# 动画是进入的时候播放一次 transition
+# CSS 导入问题 子文件导入CSS 会影响夫文件吗：
+与 JavaScript 不同，CSS 是通过文件引入的，且如果一个 CSS 文件 A 被 B 导入了，文件 A 中的样式会被添加到文件 B 的样式中。但父文件并不会自动得到子文件中 @import 的文件的样式。并且是子文件优先?先加载夫文件,在加载子文件（GPT）
+# Another hook function:effect:
+useEffect有连个个参数：
+绑定者，依赖者，析构函数（绑定这返回）
+绑定者会在第一次render后运行。 
+默认情况下，每次render都会启用一次effect
+除非我们指定第二个参数依赖数组，可以在这些依赖项变动的时候重新启动
+析构函数：两个运行时机：组件写在，或者下一个effect 产生之前。
+# effect:
+```jsx
+Effects let you specify side effects that are caused by rendering itself, rather than by a particular event. Sending a message in the chat is an event because it is directly caused by the user clicking a specific button. However, setting up a server connection is an Effect because it should happen no matter which interaction caused the component to appear. Effects run at the end of a commit after the screen updates. This is a good time to synchronize the React components with some external system (like network or a third-party library).
+```
+effect处理的是组件的出现（render 引起的副作用）
+do sth impure which cant be do in render
+## 不需要的场景：
+渲染期间就可以得出结果。
+# 组件的生命周期：
+添加的时候安装（mount） 
+state 被设置 或者new prop 传入会更新 (update)
+组件移除 被卸载（unmount）
+# effect 作用机理
+每次渲染查看依赖项数组
+代码中的每个效果都应该代表一个单独且独立的同步过程。
+如果为[]那么就是mount 一次，demount 一次 update 不变
+但是 如果是development不一定，可能有多次。如strictMode的一次检查（在devekop过程中，React 总是重新安装每个组件一次。）。
+# reactive value:
+渲染期间变动值。
+# 哪些值不能作为react dependecy:
+全局变量，以及通过全局变量访问
+# effect 存在的意义：
+一个组件已经产生了，仍然需要运行一些代码
+# React effect TIPS:
+1. Don't transform data which is used to update component in effect.
+DIRECTYLY IN component code to solve it.
+Because: it runs twice! first,it run due to prop or state change. then it run because the effect!
+```jsx
+function Form() {
+  const [firstName, setFirstName] = useState('Taylor');
+  const [lastName, setLastName] = useState('Swift');
+
+  // 🔴 Avoid: redundant state and unnecessary Effect
+  const [fullName, setFullName] = useState('');
+  useEffect(() => {
+    setFullName(firstName + ' ' + lastName);
+  }, [firstName, lastName]);
+  // ...
+}
+```
+A way to measure time:
+```jsx
+console.time('filter array');
+const visibleTodos = getFilteredTodos(todos, filter);
+console.timeEnd('filter array');
+```
+2. if you want to cache expensive calculation:
+the best way is to use **useMem** instead of effect.
+the inner func won't rerun until the dependency array'selement changed.
+3. reseting state when prop change.
+dont use effect. there is a easier way to solve this:
+use a key which is the same to the prop. 
+**By passing a diffrent a key,it will be seen as two diffrent components.Thus,all the state will be cleaned**
+the upper occasion can be concluded: dont change state in effect. ALWAYS:reset by key.and cal during rendering.
+if  you want to change state :
+
+```jsx
+When you update a component during rendering, React throws away the returned JSX and immediately retries rendering. To avoid very slow cascading retries, React only lets you update the same component’s state during a render. If you update another component’s state during a render, you’ll see an error. A condition like items !== prevItems is necessary to avoid loops. You may adjust state like this, but any other side effects (like changing the DOM or setting timeouts) should stay in event handlers or Effects to keep components pure.
+```
+通过这种方式，setSelection 是在渲染时直接调用的。React 会在 return 语句执行后立即重新渲染 List，此时 React 尚未渲染子组件或更新 DOM，因此子组件可以跳过渲染旧的 selection 值。
+React 渲染流程：
+计算函数： React 执行组件代码，生成虚拟 DOM。
+返回 JSX： React 将 JSX 转换为虚拟 DOM。
+Diff 比较： React 比较新旧虚拟 DOM，找出差异。
+更新 DOM： React 更新真实 DOM，并运行副作用代码。
+因此 如果在函数中途触发新render 不会进行DOM更新。取而代之的是，如果你在effect中触发，那么会进行DOM 更新。
+4. run once:
+just use a top variable to follow this.
+
+5. dont pass data from child to parent
+6. useignoreTo ignore:
+```jsx
+function SearchResults({ query }) {
+  const [page, setPage] = useState(1);
+  const params = new URLSearchParams({ query, page });
+  const results = useData(`/api/search?${params}`);
+
+  function handleNextPageClick() {
+    setPage(page + 1);
+  }
+  // ...
+}
+
+function useData(url) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    let ignore = false;
+    fetch(url)
+      .then(response => response.json())
+      .then(json => {
+        if (!ignore) {
+          setData(json);
+        }
+      });
+    return () => {
+      ignore = true; // 清理过时的请求
+    };
+  }, [url]);
+
+  return data;
+}
+
+```
+例如，当您快速输入 "hello" 时，query 会依次变为 "h", "he", "hel", "hell", 和 "hello"，这会触发多次数据获取。由于无法保证请求的响应顺序，可能会出现 "hell" 的响应晚于 "hello" 的响应，最终显示的结果可能是错误的。
+# 无线effect避免：
+1. 使用ref
+const ref = useRef(0)
+ref.current++;不会update 组件
+2. 使用primitive:
+使用object 导致对象每次都不一样.
+# React 环境搭建：
+npm create vite@latest . -- --template react
+# strict模式执行两次造成的问题
+注意 strict模式的重复执行 导致回调出现多次。为此使用ignore。
+先运行渲染阶段的jsx 再运行effect.
+# ref
+ref 是一个escape hatch
+{
+  current: initial
+}
+example:
+```jsx
+import { useState, useRef } from 'react';
+
+export default function Stopwatch() {
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
+  const intervalRef = useRef(null);
+
+  function handleStart() {
+    setStartTime(Date.now());
+    setNow(Date.now());
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setNow(Date.now());
+    }, 10);
+  }
+
+  function handleStop() {
+    clearInterval(intervalRef.current);
+  }
+
+  let secondsPassed = 0;
+  if (startTime != null && now != null) {
+    secondsPassed = (now - startTime) / 1000;
+  }
+
+  return (
+    <>
+      <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
+      <button onClick={handleStart}>
+        Start
+      </button>
+      <button onClick={handleStop}>
+        Stop
+      </button>
+    </>
+  );
+}
+
+```
+ref store the IntervalId and when the stop is pressed,it clear by the id
+# diffrence between ref and state:
+-  ref is mutable while state is immutable and you must change it by its set function.
+- ref is a varible that dosnt involve render.
+so you shouldnt operate it while render.
+state is the oppsite. you can operate it but it is a snapshot of every render.
+```jsx
+import { useRef } from 'react';
+
+export default function Counter() {
+  let countRef = useRef(0);
+
+  function handleClick() {
+    // This doesn't re-render the component!
+    countRef.current = countRef.current + 1;
+  }
+
+  return (
+    <button onClick={handleClick}>
+      You clicked {countRef.current} times
+    </button>
+  );
+}
+
+```
+hey you use ref here.and the ref wont re-render so the val wont change.
+# when to use ref:
+interval ID.
+DOMS
+# two key rules:
+- dont use ref too much.
+- dont use it during rendering.
+# note that ref is a escape hatch,it is diffrent from state:
+it is not a snap shot. it changed immediately.
+# React render:
+三个步骤：
+trigger
+render（run code）
+commit to dom
+## trigger:
+2 resons:
+initial trigger，
+component's ancestor's or itself's state changed.
+### root's initial render,thus render every thing:
+```jsx
+import Image from './Image.js';
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'))
+root.render(<Image />);
+```
+### when state chanegd.
+the render queued.
+## specified render:
+run code:
+recursively:
+if the component return otehr component,React keeps render the component,until there is nothing.
+### TIPS:
+render func should be pure func.
+dont cause side effect. dont change global var.
+**this is why STrict Mode executes twice: to find some impure function.**
+# future READ:https://legacy.reactjs.org/docs/optimizing-performance.html
+for better performance
+
+# commit to DOM.
+hey mention here is virtual dom. react will choose the most minimal way to change DOM tree.
+there is a pitfall:dom tree includes component's type if type dosen'tchange,it will remain the state of the old component
+# the browser painting the website. finally
+# 批处理（batch process）
+only when all then code of the render solved,will the ul changed.
+however multi click isnt the smae 
+
+thinking it as a queue:(all the state change store in a queue`)
+including state updater(must be pure)
+# PITFALL of effect:
+The behaviors without the dependency array and with an empty [] dependency array are different:
+```jsx
+useEffect(() => {
+  // This runs after every render
+});
+
+useEffect(() => {
+  // This runs only on mount (when the component appears)
+}, []);
+
+useEffect(() => {
+  // This runs on mount *and also* if either a or b have changed since the last render
+}, [a, b]);
+```
+# strictMode 运行两次effect的解决：
+是如何修复效果，而不是避免运行两次
+通常是实现清理函数接口。
+## 对于普通器具：
+比较好处理，对于网络请求：
+```jsx
+useEffect(() => {
+  let ignore = false;
+
+  async function startFetching() {
+    const json = await fetchTodos(userId);
+    if (!ignore) {
+      setTodos(json);
+    }
+  }
+
+  startFetching();
+
+  return () => {
+    ignore = true;
+  };
+}, [userId]);
+```
+ignore 解决。
+# 只执行一次 可以在全局写：
+```jsx
+if (typeof window !== 'undefined') { // Check if we're running in the browser.
+  checkAuthToken();
+  loadDataFromLocalStorage();
+}
+
+function App() {
+  // ...
+}
+```
+# ignore 无法解决的，买两次物品。
+使用event 逻辑
+# 基于类的component:老式代码：
+```jsx
+import { Component } from "react";
+
+class ClassInput extends Component {
+  // Some code goes here
+}
+
+/*
+  This can also be written as:
+
+  import React from 'react';
+  class ClassInput extends React.Component {}
+  export default ClassInput;
+
+  instead of destructuring the `Component` during import
+*/
+
+export default ClassInput;
+
+```
+## 构造函数：别忘记super传递：
+```jsx
+  constructor(props) {
+    super(props);
+  }
+    constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: [],
+      inputVal: "",
+    };
+  }
+```
+另外，state 也要在这个地方设置.
+除此之外，事件监听器也要在这里绑定：
+```jsx
+   this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(e) {
+    this.setState((state) => ({
+      ...state,
+      inputVal: e.target.value,
+    }));
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState((state) => ({
+      todos: state.todos.concat(state.inputVal),
+      inputVal: "",
+    }));
+  }
+```
+## render方法：具体渲染组件：
+```jsx
+  render() {
+    return (
+      <section>
+        <h3>{this.props.name}</h3>
+        {/* The input field to enter To-Do's */}
+        <form>
+          <label htmlFor="task-entry">Enter a task: </label>
+          <input type="text" name="task-entry" />
+          <button type="submit">Submit</button>
+        </form>
+        <h4>All the tasks!</h4>
+        {/* The list of all the To-Do's, displayed */}
+        <ul></ul>
+      </section>
+    );
+  }
+}
+```
+# todoLists中的一个解决：
+要求edit现存任务。
+切换状态不难满足，创建一个state 来决定渲染什么类型的框。
+使用autoFocus+一个状态配合，来autoFocus,但是这有一个问题，无法输入中文，会被打断
+原因是受控组件，下放state 是否能够解决？
+## 更好的解决方案：
+子组件保存状态。从而不会重新渲染。
+```jsx
+function MyInput({ todo, deleteClick, setState, oldState, index }) {
+  let [inputVal, setInputVal] = useState(todo);
+
+  return (
+    <>
+      <li key={todo}>
+        {
+          <input
+            value={inputVal}
+            onChange={(e) => {
+              setInputVal(e.target.value);
+            }}
+          />
+        }
+        <button onClick={deleteClick}>Delete</button>
+        <button
+          onClick={() => {
+            let newTodos = [...oldState.todos];
+            newTodos[index] = inputVal;
+            let newEdit = [...oldState.edit];
+            newEdit[index] = false;
+            setState({ ...oldState, todos: newTodos, edit: newEdit });
+          }}
+        >
+          Submit
+        </button>
+      </li>
+    </>
+  );
+}
+```
