@@ -627,6 +627,7 @@ mediatype:
 only screen “媒体类型”意味着所包含的样式只能应用于带有屏幕的设备（与打印文档相反，例如在浏览器中按 Cmd+P 时）。 min-width 和 max-width 部分称为“媒体功能”，它们指定您要定位的设备尺寸。
 meida type:
 print screen all
+
 ## 大概两种布局：
 
 fluid:大小随着变动. 在移动设备上使用 限定一个范围。
@@ -888,6 +889,7 @@ auto-fit 也会增加列 但是被折叠 是显示列
 这里的意思是在每个单元格内部的排序！！！！ 回顾 flexbox
 
 # justify-content:
+
 图示请查看
 https://css-tricks.com/snippets/css/complete-guide-grid/#prop-align-content
 这个才是我们在 flex-box 中用多个
@@ -1287,10 +1289,10 @@ extends === setPrototypeOf
 
 # 支持 static
 
-# ES6 支持了  module
+# ES6 支持了 module
 
 what is module
-注意ES6的语法支持：https://stackoverflow.com/questions/39436322/node-js-syntaxerror-unexpected-token-import 以及转换到commonjs 的说明 
+注意 ES6 的语法支持：https://stackoverflow.com/questions/39436322/node-js-syntaxerror-unexpected-token-import 以及转换到 commonjs 的说明
 
 # 模块模式的缘来：
 
@@ -1876,72 +1878,107 @@ https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation#validating_
 1. 从 type 限制
    如果不符合 显示 type typeMismatch
 2. other
-pattern 正则表达式约束 显示patternMismatch
-min max 数字约束>
-required
+   pattern 正则表达式约束 显示 patternMismatch
+   min max 数字约束>
+   required
 
 # 约束验证的过程
+
 1. checkValidity()
 2. 提交时候
-3. submit 事件默认不会进行validity验证 click 会
+3. submit 事件默认不会进行 validity 验证 click 会
 4. min max length 编程方式设置的无效
+
 # 另一个容易出现的错误：
-一旦设好custoMvalidty 如果不及时清除会组织后续事件！click =》submit  submit 里面设计好，然后如果click 里面不清楚，会无效！ input 也是！
+
+一旦设好 custoMvalidty 如果不及时清除会组织后续事件！click =》submit submit 里面设计好，然后如果 click 里面不清楚，会无效！ input 也是！
+
 # checkvalidty 和 reportvalidty 区别：
+
 report 会显示错误信息。
 
-# 如果你需要转译到低版本jshttps://www.theodinproject.com/lessons/node-path-javascript-what-is-es6：
+# 如果你需要转译到低版本 jshttps://www.theodinproject.com/lessons/node-path-javascript-what-is-es6：
+
 查看：
 https://github.com/babel/babel-loader
+
 # 异步 简单理解，调用后不会马上执行
 
 # promise 两个的函数作为参数 resolve and reject
 
 promise.thn() run if finish and success
-可以后跟catch（）if reject
-# 组合promise
-promises.all([promise Array]).then  等待allpromise finish
+可以后跟 catch（）if reject
+
+# 组合 promise
+
+promises.all([promise Array]).then 等待 allpromise finish
 promise.race() wait just one return as soon as it one finished
+
 # 嵌套：
+
 ```js
-new Promise(function(resolve, reject) { 
-	// A mock async action using setTimeout
-	setTimeout(function() { resolve(10); }, 3000);
+new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve(10);
+  }, 3000);
 })
-.then(function(num) { console.log('first then: ', num); return num * 2; })
-.then(function(num) { console.log('second then: ', num); return num * 2; })
-.then(function(num) { console.log('last then: ', num);});
+  .then(function (num) {
+    console.log("first then: ", num);
+    return num * 2;
+  })
+  .then(function (num) {
+    console.log("second then: ", num);
+    return num * 2;
+  })
+  .then(function (num) {
+    console.log("last then: ", num);
+  });
 
 // From the console:
 // first then:  10
 // second then:  20
 // last then:  40
 ```
-注意顺序 从最里面的resolve 开始then 起
-.finally() 无论正确与否 都会触发
-# 异步原理：
-  # async callback
-  解决sync 的 长延时问题
-  # taskqueue: 注意stak 空了才会从队列推入！（防止破坏已有）
-  意味着timeout 不是代表刚好那么多time执行。是加入taskqueue时间
-  # render 为例 给了render 一些挤兑进入的时间，异步的队列，和render队列同时进入。
-  # 不要阻塞callstack or equally that is eventloop
-  # js 是单线程 但是浏览器不是：
-  事件循环，查看对战 是否为空，如果为空，把任务放到堆栈上运行。定期查看.
-  https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html
-  # then 和 catch 这种异步callback 加另外一个mircor queue 优先考虑
-  # resolve 和reject 只允许有一个 多余的会被忽略
-  # then(实际上两个函数)分别处理resolve + reject
 
-  # Cross Origin Request
-  通过js的 fetcg 进行跨网站访问时，浏览器会先发送一个请求带上origin名臣，问目标服务器是否可以通过
-  服务器会返回一个包含Access-control-allow Origin:源名
-  如果包含这个，说明访问被允许：
-  example:
-  200 OK
+注意顺序 从最里面的 resolve 开始 then 起
+.finally() 无论正确与否 都会触发
+
+# 异步原理：
+
+# async callback
+
+解决 sync 的 长延时问题
+
+# taskqueue: 注意 stak 空了才会从队列推入！（防止破坏已有）
+
+意味着 timeout 不是代表刚好那么多 time 执行。是加入 taskqueue 时间
+
+# render 为例 给了 render 一些挤兑进入的时间，异步的队列，和 render 队列同时进入。
+
+# 不要阻塞 callstack or equally that is eventloop
+
+# js 是单线程 但是浏览器不是：
+
+事件循环，查看对战 是否为空，如果为空，把任务放到堆栈上运行。定期查看.
+https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html
+
+# then 和 catch 这种异步 callback 加另外一个 mircor queue 优先考虑
+
+# resolve 和 reject 只允许有一个 多余的会被忽略
+
+# then(实际上两个函数)分别处理 resolve + reject
+
+# Cross Origin Request
+
+通过 js 的 fetcg 进行跨网站访问时，浏览器会先发送一个请求带上 origin 名臣，问目标服务器是否可以通过
+服务器会返回一个包含 Access-control-allow Origin:源名
+如果包含这个，说明访问被允许：
+example:
+200 OK
 Content-Type:text/html; charset=UTF-8
 Access-Control-Allow-Origin: https://javascript.info.
-一些请求不需要这要的请求：像Get post head 方法 + 安全标头 https://javascript.info/fetch-crossorigin。
+一些请求不需要这要的请求：像 Get post head 方法 + 安全标头 https://javascript.info/fetch-crossorigin。
 要访问别的 都要经过上述询问。
 200 OK
 Content-Type:text/html; charset=UTF-8
@@ -1951,26 +1988,33 @@ API-Key: 2c9de507f2c54aa1
 Access-Control-Allow-Origin: https://javascript.info
 Access-Control-Expose-Headers: Content-Encoding,API-Key
 经过这样的请求，那么可以了。
+
 # 请求协议详细解释
+
 预检请求： preflight request:
 Access-Control-Request-Method header has the method of the unsafe request.
 Access-Control-Request-Headers header provides a comma-separated list of its unsafe HTTP-headers.
 Origin header tells from where the request came. (such as https://javascript.info)
 如果服务器同意那么返回 200+
 同样的三个字段。
+
 # 这是由浏览器自动完成的：
+
 详细过程示例：
 真正请求尝试
+
 ```js
-let response = await fetch('https://site.com/service.json', {
-  method: 'PATCH',
+let response = await fetch("https://site.com/service.json", {
+  method: "PATCH",
   headers: {
-    'Content-Type': 'application/json',
-    'API-Key': 'secret'
-  }
+    "Content-Type": "application/json",
+    "API-Key": "secret",
+  },
 });
 ```
+
 浏览器代理：
+
 ```response
 OPTIONS /service.json
 Host: site.com
@@ -1978,7 +2022,9 @@ Origin: https://javascript.info
 Access-Control-Request-Method: PATCH
 Access-Control-Request-Headers: Content-Type,API-Key
 ```
+
 服务器响应：
+
 ```response
 200 OK
 Access-Control-Allow-Origin: https://javascript.info
@@ -1986,23 +2032,29 @@ Access-Control-Allow-Methods: PUT,PATCH,DELETE
 Access-Control-Allow-Headers: API-Key,Content-Type,If-Modified-Since,Cache-Control
 Access-Control-Max-Age: 86400
 ```
-可能还会包含一个Max-age 表示缓存有效时间
+
+可能还会包含一个 Max-age 表示缓存有效时间
 
 然后发送著请求：
-注意此时请求仍然包含Origin.
-且 相应也包含一个Access-Control-Allow-Origin: https://javascript.info(注意 这个即使是安全请求也会返回)
+注意此时请求仍然包含 Origin.
+且 相应也包含一个 Access-Control-Allow-Origin: https://javascript.info(注意 这个即使是安全请求也会返回)
 js 只能获取这个请求，或者报错。
-# js的请求默认不带coockie等
+
+# js 的请求默认不带 coockie 等
+
 如果要带：
 fetch('http://another.com', {
-  credentials: "include"
+credentials: "include"
 });
-这个也需要经历preflight.服务器端也需要发送一个特别字段表示允许：详细查看上面连接
+这个也需要经历 preflight.服务器端也需要发送一个特别字段表示允许：详细查看上面连接
+
 # fetch 详细解释：
-返回值是一个promise
-返回之后第一步往往是response.json()处理成json
-fetch 接受UR：  字符串 字符串+选项 Request（同一个request 不能fetch 两边）
+
+返回值是一个 promise
+返回之后第一步往往是 response.json()处理成 json
+fetch 接受 UR： 字符串 字符串+选项 Request（同一个 request 不能 fetch 两边）
 like
+
 ```js
 const response = await fetch("https://example.org/post", {
   method: "POST",
@@ -2014,7 +2066,9 @@ const response = await fetch("https://example.org/post", {
  }
 );
 ```
-或者这样添加headers:
+
+或者这样添加 headers:
+
 ```js
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
@@ -2023,19 +2077,26 @@ const response =await(,{
   headers:myHeaders
 })
 ```
+
 ## 特殊字段：
+
 mode：cors default;
 mode:same-origin 不允许跨域 只允许同域名
-还有一个可能之no-cors 区别是？TODO
+还有一个可能之 no-cors 区别是？TODO
+
 ## credetntials:
+
 omit：禁止浏览器发送凭据
 include
 same-origin
-## 实用类之request
+
+## 实用类之 request
+
 https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 二者构造函数完全相同
 请求可取消 详细查看.
 支持复用请求
+
 ```js
 async function post(request) {
   try {
@@ -2061,18 +2122,19 @@ const request2 = new Request(request1, {
 
 post(request1);
 post(request2);
-
 ```
-# fetch 返回的promise 叫做response。
-有的即使是访问失败如404 也有response .reject的是一些网络错误等等
-记得检查response.status 200说明正确访问
-也可以检查repsonse.ok bool 值
+
+# fetch 返回的 promise 叫做 response。
+
+有的即使是访问失败如 404 也有 response .reject 的是一些网络错误等等
+记得检查 response.status 200 说明正确访问
+也可以检查 repsonse.ok bool 值
 另一个属性：
 response.type.
 basic.同源请求。
 cors 跨域请求
-opaque no-cors跨域简单请求
-response.headers 返回headers 对象
+opaque no-cors 跨域简单请求
+response.headers 返回 headers 对象
 headers 接口大致查看：
 append
 DELETE
@@ -2080,31 +2142,40 @@ forEach
 get
 keys
 使用。get()获取属性 更多详细查看https://developer.mozilla.org/en-US/docs/Web/API/Headers
+
 # 正文 重要
+
 response.json()
 注意 这是异步的
+
 # 异步函数：
+
 async before function
 里面有 await
 就是异步函数。
-自动返回promise。
+自动返回 promise。
 意思是说，return sth === resolve sth
 throw sth === reject sth
 这就是个语法糖。
 await 后面跟一个 异步操作。直到完成 await promise ==
 promise.then(return Value).
-# 处理async 中的reject/异常
+
+# 处理 async 中的 reject/异常
+
 .catch()
-或者try catch
-  try {
-    const people = await server.getPeople();
-    const person = people.find(person => { return person.name === name });
-    return person;
-  } catch (error) {
-    // Handle the error any way you'd like
-  }
+或者 try catch
+try {
+const people = await server.getPeople();
+const person = people.find(person => { return person.name === name });
+return person;
+} catch (error) {
+// Handle the error any way you'd like
+}
+
 # 牢记是语法糖
-# thenlike 也可以await
+
+# thenlike 也可以 await
+
 ```js
 class Thenable {
   constructor(num) {
@@ -2125,43 +2196,59 @@ async function f() {
 
 f();
 ```
+
 # 异常处理：
+
 async function f() {
-  throw new Error("Whoops!");
+throw new Error("Whoops!");
 }
-完全相同，内部一旦 出现reject 直接throw
+完全相同，内部一旦 出现 reject 直接 throw
 async function f() {
-  await Promise.reject(new Error("Whoops!"));
+await Promise.reject(new Error("Whoops!"));
 }
 解决：
-可以在内部使用trycath 或者在外部使用.catch() （语法糖！！别忘了）
-# 警告 不要在外面使用try_catch！ 
+可以在内部使用 trycath 或者在外部使用.catch() （语法糖！！别忘了）
+
+# 警告 不要在外面使用 try_catch！
+
 # 处理异常
+
 function catchError(fn){
-  return fn(same agrs){
-    return fn(args).catch();
-  }
+return fn(same agrs){
+return fn(args).catch();
 }
-# 
-# git 
-## git commit -a 
+}
+
+#
+
+# git
+
+## git commit -a
+
 撤销重做，牢记不要推送之后再修改，会造成云端和本地不一致
+
 # jest：
-配置eslint 推荐使用一个插件.
-详细查看jest文档：https://jestjs.io/docs/
-装一个插件，在eslint里导入全局变量。
+
+配置 eslint 推荐使用一个插件.
+详细查看 jest 文档：https://jestjs.io/docs/
+装一个插件，在 eslint 里导入全局变量。
+
 # jest 用法;
+
 ```js
-test('object assignment', () => {
-  const data = {one: 1};
-  data['two'] = 2;
-  expect(data).toEqual({one: 1, two: 2});
+test("object assignment", () => {
+  const data = { one: 1 };
+  data["two"] = 2;
+  expect(data).toEqual({ one: 1, two: 2 });
 });
 ```
-expect是一个期望对象。
+
+expect 是一个期望对象。
+
 # 断言
+
 toBe 相当于 object.is()
-object.is特例：
+object.is 特例：
 
 与 === 的区别
 Object.is 的行为与 === 类似，但在以下两种情况下有不同的表现：
@@ -2173,54 +2260,70 @@ Object.is 的行为与 === 类似，但在以下两种情况下有不同的表�
   === 认为 +0 和 -0 是相等的 (+0 === -0 为 true)。
   但是 Object.is(+0, -0) 返回 false。
 
-toEqual 会有递归检查每个值。注意忽略undefiend
-toEqual会忽略具有undefined属性、 undefined数组项、数组稀疏或对象类型不匹配的对象键。要考虑这些，请改用toStrictEqual 。
+toEqual 会有递归检查每个值。注意忽略 undefiend
+toEqual 会忽略具有 undefined 属性、 undefined 数组项、数组稀疏或对象类型不匹配的对象键。要考虑这些，请改用 toStrictEqual 。
 
 .not.toBe() 表示相反
 更严格的 如果要判断针对 null undefined true 建议查看：https://jestjs.io/docs/using-matchers
+
 # 数字判断：
-toEqualto 
+
+toEqualto
 toBeGreaterThan
 toBeLessThan
 ....
 浮点数 toBeCloseTo
+
 # 正则表达 字符串
+
 .toMatch
+
 # 对于数组等可迭代对象
+
 是否包含？
 toContain(sth)
+
 # 异步测试
+
 如果里面有异步操作。
-请把test后的测试函数也改成async
+请把 test 后的测试函数也改成 async
+
 ```js
-test('the data is peanut butter', async () => {
+test("the data is peanut butter", async () => {
   const data = await fetchData();
-  expect(data).toBe('peanut butter');
+  expect(data).toBe("peanut butter");
 });
 
-test('the fetch fails with an error', async () => {
+test("the fetch fails with an error", async () => {
   expect.assertions(1);
   try {
     await fetchData();
   } catch (error) {
-    expect(error).toMatch('error');
+    expect(error).toMatch("error");
   }
 });
 ```
-先await 结果再去断言
-或者 return 一个promise，在promise的then 里进行断言
+
+先 await 结果再去断言
+或者 return 一个 promise，在 promise 的 then 里进行断言
+
 # 希望失败的：
-加上assertion确保断言被解析到
+
+加上 assertion 确保断言被解析到
+
 ```js
-test('the fetch fails with an error', () => {
+test("the fetch fails with an error", () => {
   expect.assertions(1);
-  return fetchData().catch(error => expect(error).toMatch('error'));
+  return fetchData().catch((error) => expect(error).toMatch("error"));
 });
 ```
+
 # 基于回调的测试： 测试回调代码中的数据是否正确，查看：
 
 https://jestjs.io/docs/asynchronous
+
 # 在测试前的一些开始 结束工作：
+
 ```js
 beforeEach(() => {
   initializeCityDatabase();
@@ -2230,8 +2333,10 @@ afterEach(() => {
   clearCityDatabase();
 });
 ```
+
 在这两个函数里注册回调
-一次性的：
+一次性的，在所有测试前执行一次：
+
 ```js
 beforeAll(() => {
   return initializeCityDatabase();
@@ -2241,38 +2346,41 @@ afterAll(() => {
   return clearCityDatabase();
 });
 
-test('city database has Vienna', () => {
-  expect(isCity('Vienna')).toBeTruthy();
+test("city database has Vienna", () => {
+  expect(isCity("Vienna")).toBeTruthy();
 });
 
-test('city database has San Juan', () => {
-  expect(isCity('San Juan')).toBeTruthy();
+test("city database has San Juan", () => {
+  expect(isCity("San Juan")).toBeTruthy();
 });
 ```
+
 # 套组
+
 describe.
-descirb中的函数会在所有测试前运行。无论这些describe的顺序如何，test内部按顺序：
+descirb 中的函数会在所有测试前运行。无论这些 describe 的顺序如何，test 内部按顺序：
+
 ```js
-describe('describe outer', () => {
-  console.log('describe outer-a');
+describe("describe outer", () => {
+  console.log("describe outer-a");
 
-  describe('describe inner 1', () => {
-    console.log('describe inner 1');
+  describe("describe inner 1", () => {
+    console.log("describe inner 1");
 
-    test('test 1', () => console.log('test 1'));
+    test("test 1", () => console.log("test 1"));
   });
 
-  console.log('describe outer-b');
+  console.log("describe outer-b");
 
-  test('test 2', () => console.log('test 2'));
+  test("test 2", () => console.log("test 2"));
 
-  describe('describe inner 2', () => {
-    console.log('describe inner 2');
+  describe("describe inner 2", () => {
+    console.log("describe inner 2");
 
-    test('test 3', () => console.log('test 3'));
+    test("test 3", () => console.log("test 3"));
   });
 
-  console.log('describe outer-c');
+  console.log("describe outer-c");
 });
 
 // describe outer-a
@@ -2284,26 +2392,33 @@ describe('describe outer', () => {
 // test 2
 // test 3
 ```
-所以要设置setup 请在对应函数里设置/
+
+所以要设置 setup 请在对应函数里设置/
+
 # 只运行一个
-test后面加上.only()
+
+test 后面加上.only()
+
 # mock 函数
+
 const mockCallback = jest.fn(x => 42 + x);
 这个函数如果用在要测试的函数里，会记录一些列数据
 重要属性.mock
-## mock属性使用用例 
+
+## mock 属性使用用例
+
 ```js
 // The function was called exactly once
 expect(someMockFunction.mock.calls).toHaveLength(1);
 
 // The first arg of the first call to the function was 'first arg'
-expect(someMockFunction.mock.calls[0][0]).toBe('first arg');
+expect(someMockFunction.mock.calls[0][0]).toBe("first arg");
 
 // The second arg of the first call to the function was 'second arg'
-expect(someMockFunction.mock.calls[0][1]).toBe('second arg');
+expect(someMockFunction.mock.calls[0][1]).toBe("second arg");
 
 // The return value of the first call to the function was 'return value'
-expect(someMockFunction.mock.results[0].value).toBe('return value');
+expect(someMockFunction.mock.results[0].value).toBe("return value");
 
 // The function was called with a certain `this` context: the `element` object.
 expect(someMockFunction.mock.contexts[0]).toBe(element);
@@ -2313,142 +2428,192 @@ expect(someMockFunction.mock.instances.length).toBe(2);
 
 // The object returned by the first instantiation of this function
 // had a `name` property whose value was set to 'test'
-expect(someMockFunction.mock.instances[0].name).toBe('test');
+expect(someMockFunction.mock.instances[0].name).toBe("test");
 
 // The first argument of the last call to the function was 'test'
-expect(someMockFunction.mock.lastCall[0]).toBe('test');
-
+expect(someMockFunction.mock.lastCall[0]).toBe("test");
 ```
+
 ## 设置特定返回值：
+
 ```js
 const myMock = jest.fn();
 console.log(myMock());
 // > undefined
 
-myMock.mockReturnValueOnce(10).mockReturnValueOnce('x').mockReturnValue(true);
+myMock.mockReturnValueOnce(10).mockReturnValueOnce("x").mockReturnValue(true);
 
 console.log(myMock(), myMock(), myMock(), myMock());
 ```
-## 模拟moudle
-模拟fetch:
+
+## 模拟 moudle
+
+模拟 fetch:
+
 ```js
-import axios from 'axios';
-import Users from './users';
+import axios from "axios";
+import Users from "./users";
 
-jest.mock('axios');
+jest.mock("axios");
 
-test('should fetch users', () => {
-  const users = [{name: 'Bob'}];
-  const resp = {data: users};
+test("should fetch users", () => {
+  const users = [{ name: "Bob" }];
+  const resp = { data: users };
   axios.get.mockResolvedValue(resp);
 
   // or you could use the following depending on your use case:
   // axios.get.mockImplementation(() => Promise.resolve(resp))
 
-  return Users.all().then(data => expect(data).toEqual(users));
+  return Users.all().then((data) => expect(data).toEqual(users));
 });
 ```
+
 # 纯函数：
+
 1. 保证结果一致。在参数一致的情况下。 不能依赖外部变量
-2. 不产生副作用。如IO 
-纯函数便于测试
+2. 不产生副作用。如 IO
+   纯函数便于测试
+
 # 测试的基本原则：
+
 测试纯函数
-测试非纯函数+可被观测的side effect
+测试非纯函数+可被观测的 side effect
 不要测试私有方法
 不要限制内部实现，限制接口
 有副作用的要谨慎测试 可能限制实现
-# 注意js 中的引用 通过本身去访问属性 才算引用，修改本身无效。
+
+# 注意 js 中的引用 通过本身去访问属性 才算引用，修改本身无效。
+
 # 拖动属性制作：
+
 draggable="true"
-有一个dragstart dragend.
-drag over持续发生  preventdefault 可以加一个，不然无法拖动到现存元素
-获取屏幕y e.clienty 这是视口坐标。page 是页面坐标
+有一个 dragstart dragend.
+drag over 持续发生 preventdefault 可以加一个，不然无法拖动到现存元素
+获取屏幕 y e.clienty 这是视口坐标。page 是页面坐标
 
 尝试模仿。
 getClientDOMRect() 获取元素位置 视口坐标
 https://www.youtube.com/watch?v=jfYWwQrtzzY
-# transform不影响自然文档流
+
+# transform 不影响自然文档流
+
 - 不脱离，同样不影响他人。
 - 另外重要的一点，百分比代表自身大小
-有一些不能使用transform non-replaced inline。
-non-replaced 指的是内容就是元素内部。
- “Non-replaced” refers to elements whose content is contained within the HTML document
+  有一些不能使用 transform non-replaced inline。
+  non-replaced 指的是内容就是元素内部。
+  “Non-replaced” refers to elements whose content is contained within the HTML document
+
 ## transform rotate:
+
 rotate(sth deg)
+
 ## 缩放：
+
 scale：
 scaleX
 scaleY
 scale(X,Y)
+
 # 倾斜
+
 skewX()
 skewY()
 skew
+
 # translate 移动
+
 translateX
 translateY
 translate(X,Y)
 
-# 注意顺序是从右到左！ 依次执行，先平移在旋转，可能导致变换中心没有变动，变成一个45度大角度旋转
-# perspective
-三维变换
- transform: perspective();
- 注意 连接时候perspective 必须放在前面
- 后面常常配合旋转等。
- 数字越大表示从越远的地方看，3d 效果越不好https://3dtransforms.desandro.com/perspective
-# rotate3d
-三维旋转 https://theodinproject.com/lessons/node-path-advanced-html-and-css-transforms
- # 轴的说明：
- 坐标空间是一个有两个轴的坐标系：X轴水平向右增大； Y轴垂直向下增加。三维变换函数将此坐标空间扩展为三维，添加垂直于屏幕平面的 Z 轴，该轴朝观察者方向增加。
- # transform 很好的资料
- https://www.joshwcomeau.com/css/transforms/
- transform 会导致内部文本挤压。产生一个关闭电视的神奇效果
- # tranform origin 重要 变换原点
- 注意 变换远点始终不变
- transform-origin: x-axis y-axis z-axis;
+# 注意顺序是从右到左！ 依次执行，先平移在旋转，可能导致变换中心没有变动，变成一个 45 度大角度旋转
 
- # transition 过度
- # z-index 大的在上面
- # stacking context
- z-index仅在同一级别的stacking context work.
- 会创建上下文的情形：
- position relative | absolute + z-idnex;
- opcacity<1
- position 为fixed sticky
- https://www.joshwcomeau.com/css/stacking-contexts/ 
- look this
- 注意 堆栈上下文 。底层重绘会导致上层也重绘
- # z index 不一定依赖于position
- 如果实现flex grid 配合使用 z-inde也可也
- # 创建堆叠上下文：
- .wrapper {
-  isolation: isolate;
+# perspective
+
+三维变换
+transform: perspective();
+注意 连接时候 perspective 必须放在前面
+后面常常配合旋转等。
+数字越大表示从越远的地方看，3d 效果越不好https://3dtransforms.desandro.com/perspective
+
+# rotate3d
+
+三维旋转 https://theodinproject.com/lessons/node-path-advanced-html-and-css-transforms
+
+# 轴的说明：
+
+坐标空间是一个有两个轴的坐标系：X 轴水平向右增大； Y 轴垂直向下增加。三维变换函数将此坐标空间扩展为三维，添加垂直于屏幕平面的 Z 轴，该轴朝观察者方向增加。
+
+# transform 很好的资料
+
+https://www.joshwcomeau.com/css/transforms/
+transform 会导致内部文本挤压。产生一个关闭电视的神奇效果
+
+# tranform origin 重要 变换原点
+
+注意 变换远点始终不变
+transform-origin: x-axis y-axis z-axis;
+
+# transition 过度
+
+# z-index 大的在上面
+
+# stacking context
+
+z-index 仅在同一级别的 stacking context work.
+会创建上下文的情形：
+position relative | absolute + z-idnex;
+opcacity<1
+position 为 fixed sticky
+https://www.joshwcomeau.com/css/stacking-contexts/
+look this
+注意 堆栈上下文 。底层重绘会导致上层也重绘
+
+# z index 不一定依赖于 position
+
+如果实现 flex grid 配合使用 z-inde 也可也
+
+# 创建堆叠上下文：
+
+.wrapper {
+isolation: isolate;
 }
+
 # transition:
-# 为了效率 尽量使用transform+ opacity 其余的会影响效率。
+
+# 为了效率 尽量使用 transform+ opacity 其余的会影响效率。
+
 反之 height 的效率十分差
+
 # timing function:
+
 linear
 ease-out 刚开始块 后来满，适合东西进入
 ease-in 反过来
 ease-in-out 上述的组合
-ease 默认值 类似ease-in-out 稍微陡峭一点
+ease 默认值 类似 ease-in-out 稍微陡峭一点
 自定义速度函数：贝塞尔曲线：
 https://www.joshwcomeau.com/animation/css-transitions/
-# 通常动画都是60fps
+
+# 通常动画都是 60fps
+
 浏览器对于内容有四个部分工作
 style
-layout 
+layout
 paint
 composite
-# 始终是GPU
-willchange硬件加速
+
+# 始终是 GPU
+
+willchange 硬件加速
 .btn {
-  will-change: transform;
+will-change: transform;
 }
+
 # 效果器和触发器分离 可以防止 快速触发动画
+
 https://www.joshwcomeau.com/animation/css-transitions/
+
 ```css
 <button class="btn">
   <span class="background">
@@ -2461,26 +2626,33 @@ https://www.joshwcomeau.com/animation/css-transitions/
     will-change: transform;
     transition: transform 450ms;
   }
-  
+
   .btn:hover .background { btn是触发器  内部background是效果器
     transition: transform 150ms;
     transform: translateY(-10px);
   }
-  
+
   /* Toggle me on for a clue! */
   .btn {
-    outline: auto; 
+    outline: auto;
   }
 </style>
 ```
-# 查看repaint 区域：
-使用esc 打开 打开左边工具三个点 里的rendering painting tool 可以显示paint。
+
+# 查看 repaint 区域：
+
+使用 esc 打开 打开左边工具三个点 里的 rendering painting tool 可以显示 paint。
+
 # zindex:
-relative元素默认比static zindex大
-默认后面的元素遮掩前面的 想想他的zindex为0
+
+relative 元素默认比 static zindex 大
+默认后面的元素遮掩前面的 想想他的 zindex 为 0
 可以变成负的，这样会跑到下面去
+
 # 动画
+
 属性一览：
+
 ```css
 #ball {
   /* ... other CSS properties ... */
@@ -2490,31 +2662,38 @@ relative元素默认比static zindex大
   animation-direction: alternate;
 }
 ```
+
 具体动画的形式：
+
 ```css
 @keyframes change-color {
-  from { //指示动画事件 0妙处 0% 
+  from {
+    //指示动画事件 0妙处 0%
     background-color: red;
   }
 
-  to { //2妙处 200%
+  to {
+    //2妙处 200%
     background-color: green;
   }
 }
 ```
+
 可以用百分比
 支持多个值。
+
 ```css
 animation-name: fadeInOut, moveLeft300px, bounce;
 animation-duration: 2.5s, 5s, 1s;
 animation-iteration-count: 2, 1, 5;
-
 ```
+
 infinite + alternate:
-会来回，如果配合次数 那就是来回算一次iter
-direction可选的其他选项reverse。
+会来回，如果配合次数 那就是来回算一次 iter
+direction 可选的其他选项 reverse。
 
 动画事件
+
 ```js
 const element = document.getElementById("watch-me");
 element.addEventListener("animationstart", listener, false);
@@ -2522,11 +2701,14 @@ element.addEventListener("animationend", listener, false);
 element.addEventListener("animationiteration", listener, false);
 
 element.className = "slide-in";
-
 ```
+
 注意这里类的设置放在后面。保证 事件绑定之后，动画才开始。
-# 淡入淡出 配合display彻底消失
-注意！ display配合transition是不行的！
+
+# 淡入淡出 配合 display 彻底消失
+
+注意！ display 配合 transition 是不行的！
+
 ```js
 @keyframes fade-in {
   0% {
@@ -2561,60 +2743,87 @@ function showHide() {
   }
 }
 ```
+
 注意他不是最后突然消失出现，做了优化
+
 # keyframe 细节：
-没有cascade，按照最后一个
+
+没有 cascade，按照最后一个
 但是内部出现相同百分比值 出现级联，覆盖现象
+
 # animation 同样支持事件函数：
+
 animation-timing-function
 注意正对的是每一段，而不是总体
+
 # shorthand:
+
 延迟时间出现在持续时间之后，其余顺序无所谓
 .box {
-  animation: grow-and-shrink 2000ms ease-in-out infinite alternate;
-  animation-delay: 500ms;
+animation: grow-and-shrink 2000ms ease-in-out infinite alternate;
+animation-delay: 500ms;
 }
+
 # 另外注意的一点。
-animation的属性一旦时间结束就会结束。
+
+animation 的属性一旦时间结束就会结束。
 解决方法，在普通属性中加入结束值。
 或者：
-  animation-fill-mode: forwards;
-# 添加animation-delay同样可能导致提前出现问题：
-  使用backward。理解方法：fill 根据动画值 向动画出现前填充，之后填充。
-  或者both 双向填充
-# 为什么keyframe 优先使用
-规范规定的。据说有8论比较。
+animation-fill-mode: forwards;
+
+# 添加 animation-delay 同样可能导致提前出现问题：
+
+使用 backward。理解方法：fill 根据动画值 向动画出现前填充，之后填充。
+或者 both 双向填充
+
+# 为什么 keyframe 优先使用
+
+规范规定的。据说有 8 论比较。
+
 # 可以配合变量
+
 # a11y:
+
 https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-the-web-content-accessibility-guidelines-wcag
 https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-semantic-html
+
 # nav footer aside
-主要内容header main
+
+主要内容 header main
+
 # use button instead of div
+
 语义 + 聚焦功能
-div 可以通过添加tagindex获得聚焦功能
+div 可以通过添加 tagindex 获得聚焦功能
 tabindex:
 正整数：tabindex="1"、tabindex="2" 等，数字越大，焦点越早获得。当用户按 Tab 键时，元素会依次获得焦点，数字越小的元素会优先获得焦点。
-但是不推荐，推荐重组dom
+但是不推荐，推荐重组 dom
 0：tabindex="0" 表示元素按默认顺序获得焦点，这通常用于那些可以获得焦点的元素，如 <a> 或 <button> 等。
 负数：tabindex="-1" 使元素不能通过 Tab 键获得焦点，但仍然可以通过 JavaScript 或其他方式设置焦点。
-隐藏内容记得加上这个tabindex=-1
+隐藏内容记得加上这个 tabindex=-1
 或者使用 display:none;
 visibility:hidden
+
 # 使用的链接形式最好是：
+
 ```html
 <!-- Example 1: Now the user is aware that this link will open or download a PDF file. -->
-<a href='...'>2021 Sign Up Statistics (PDF, 1MB)</a>
+<a href="...">2021 Sign Up Statistics (PDF, 1MB)</a>
 
 <!-- Example 2: And now the user knows this link opens in a new tab! -->
-<a href='...'>GitHub (opens in new tab)</a>
-
+<a href="...">GitHub (opens in new tab)</a>
 ```
+
 保证语义
-# 可以focus  可以tab切换上去并且勇敢键盘操作
-tab顺序取决于DOM 与CSS 无关。造成奇怪的顺序情况
+
+# 可以 focus 可以 tab 切换上去并且勇敢键盘操作
+
+tab 顺序取决于 DOM 与 CSS 无关。造成奇怪的顺序情况
+
 # 保留 或者 替换 焦点样式
+
 # ARIA 人工语义元素：
+
 Always use native HTML elements and attributes over ARIA when possible.
 尽可能使用原生 HTML 元素和属性而不是 ARIA。
 
@@ -2625,167 +2834,215 @@ All interactive ARIA controls must be usable with a keyboard.
 所有交互式 ARIA 控件都必须可通过键盘使用。
 
 Never use role='presentation' or aria-hidden='true' on focusable elements.
-切勿在可聚焦元素上使用role='presentation'或aria-hidden='true' 。
+切勿在可聚焦元素上使用 role='presentation'或 aria-hidden='true' 。
 
 All interactive elements must have an accessible name.
 所有交互元素都必须有一个易于访问的名
+
 # aria-label:
-常用于button label.
-注意div span 无效
+
+常用于 button label.
+注意 div span 无效
 让屏幕阅读器读出来这个。
-# aia-labelledby 
-覆盖label + aira labelledby/
-连接多个有id 的标签的语义，同一个不能多次传入，不同的可以
+
+# aia-labelledby
+
+覆盖 label + aira labelledby/
+连接多个有 id 的标签的语义，同一个不能多次传入，不同的可以
+
 ```html
 h2 id='label'>Shirts</h2>
 
 <!-- And here's the labeled element. Note the order of the ID references passed in -->
 <button type='button' id='shop-btn' aria-labelledby='label shop-btn'>Shop Now</button>
 ```
+
 发音是连接的：
 shirts shop Now。
-类似label 中的for id 组合。
-没有focus功能，同时支持隐藏元素的输出
+类似 label 中的 for id 组合。
+没有 focus 功能，同时支持隐藏元素的输出
+
 # aria-describedby
+
 屏幕阅读器主要读两部分，Name description
-这个就是修改description的
+这个就是修改 description 的
+
 ```html
-<label>Password:
-  <input type='password' aria-describedby='password-requirements' />
+<label
+  >Password:
+  <input type="password" aria-describedby="password-requirements" />
 </label>
 
 <!-- Meaningful text + ARIA! -->
-<span id='password-requirements'>Password must be at least 10 characters long.</span>
-
+<span id="password-requirements"
+  >Password must be at least 10 characters long.</span
+>
 ```
+
 # aria-hidden:
+
 不会读出的部分内容。
+
 ```html
 <!-- Example 1 -->
-<button type='button'>
-  <span class='material-icons'>add</span>
+<button type="button">
+  <span class="material-icons">add</span>
   Add Book
 </button>
 
 <!-- Example 2 -->
-<button type='button'>
-  <span class='material-icons' aria-hidden='true'>add</span>
+<button type="button">
+  <span class="material-icons" aria-hidden="true">add</span>
   Add Book
 </button>
-
 ```
+
 父类遮掩子类
 https://www.theodinproject.com/lessons/node-path-advanced-html-and-css-accessibility-auditing
-# x响应式设计：
-默认html 就是响应式的
+
+# x 响应式设计：
+
+默认 html 就是响应式的
 首先加上这个：
+
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
+
 这个保证网页初始宽度设置为设备宽度。防止手机浏览器自行调整。
+
 ## 避免使用固定大小：
-px是不好的。
-使用max-width代替传统的width 和 height
-太小的时候：max-width自动缩小以适应。太大的时候不会超出
+
+px 是不好的。
+使用 max-width 代替传统的 width 和 height
+太小的时候：max-width 自动缩小以适应。太大的时候不会超出
 min-height:字体过大的时候防止溢出的
+
 ### Avoid heights altogether 完全避免高度
+
 转而使用填充。
-### 固定width不好说 一般而言 小的比较合适
-# 不用百分比默认也可以获得一定的responseive：
+
+### 固定 width 不好说 一般而言 小的比较合适
+
+# 不用百分比默认也可以获得一定的 responseive：
+
 https://codyloyd.com/2021/percentages/
 
 如果使用百分比： margin 两侧会发生变换。
-例子：文章中的padding 定死了，从而在缩小的时候导致margin 也会发生变换。
-默认去掉width 的效果也不错。
-注意区别于2100%width。原因是 有的是content box 你这样设置会导致超出。 如果是border-box 那也无所谓 一样的。
+例子：文章中的 padding 定死了，从而在缩小的时候导致 margin 也会发生变换。
+默认去掉 width 的效果也不错。
+注意区别于 2100%width。原因是 有的是 content box 你这样设置会导致超出。 如果是 border-box 那也无所谓 一样的。
+
 # 图像响应式
-不要同时设置宽度高度，使用一个auto
+
+不要同时设置宽度高度，使用一个 auto
 另一种： resolution swicth + art direction:
 前者根据设备分辨率和屏幕尺寸加载不同版本
 后者根据屏幕进行裁剪上面的不同版本
 根据尺寸调整的例子：
-```html
 
+```html
 <img
   srcset="elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w"
   sizes="(max-width: 600px) 480px,
          800px"
   src="elva-fairy-800w.jpg"
-  alt="Elva dressed as a fairy" />
-
+  alt="Elva dressed as a fairy"
+/>
 ```
+
 srcset 格式 文件名+空格+宽度
-注意是w单位，固有宽度 intrinsic width
+注意是 w 单位，固有宽度 intrinsic width
 
-sizes条件：
-media选择+空格+图像宽度。注意排序，以及默认选项的位置
+sizes 条件：
+media 选择+空格+图像宽度。注意排序，以及默认选项的位置
+
 ## 分辨率切换的例子：
-```html
-<img
-  srcset="elva-fairy-320w.jpg, elva-fairy-480w.jpg 1.5x, elva-fairy-640w.jpg 2x"//可供选择的版本
-  src="elva-fairy-640w.jpg"//默认选择
-  alt="Elva dressed as a fairy" />
 
+```html
+<img srcset="elva-fairy-320w.jpg, elva-fairy-480w.jpg 1.5x, elva-fairy-640w.jpg
+2x"//可供选择的版本 src="elva-fairy-640w.jpg"//默认选择 alt="Elva dressed as a
+fairy" />
 ```
+
 后面的倍率是一种分辨率指示器:
 
 在 <img> 标签的 srcset 属性中，1x 和 1.5x 是 像素密度描述符（Pixel Density Descriptors），用于告诉浏览器这些图片适合不同的屏幕像素密度（也叫设备像素比，Device Pixel Ratio，简称 DPR）。
 
 1. 什么是像素密度描述符？
-1x：表示图片适合 标准屏幕（DPR = 1）的设备。
-1.5x：表示图片适合 DPR = 1.5 的屏幕，例如一些中分辨率屏幕。
-2x：表示图片适合 高分辨率屏幕（DPR = 2），例如 Retina 屏幕。
+   1x：表示图片适合 标准屏幕（DPR = 1）的设备。
+   1.5x：表示图片适合 DPR = 1.5 的屏幕，例如一些中分辨率屏幕。
+   2x：表示图片适合 高分辨率屏幕（DPR = 2），例如 Retina 屏幕。
 2. 设备像素比 (DPR)
-设备像素比是设备实际像素与 CSS 像素的比值。不同的设备可能有不同的 DPR：
+   设备像素比是设备实际像素与 CSS 像素的比值。不同的设备可能有不同的 DPR：
 
 DPR = 1：1 个 CSS 像素等于 1 个物理像素（标准屏幕）。
 DPR = 2：1 个 CSS 像素等于 2 个物理像素（如 Retina 屏幕）。
 DPR = 3：1 个 CSS 像素等于 3 个物理像素（如一些高端手机屏幕）。
+
 ## 提供不同裁剪版本呢：
+
 ```html
 <picture>
   <source media="(max-width: 799px)" srcset="elva-480w-close-portrait.jpg" />
   <source media="(min-width: 800px)" srcset="elva-800w.jpg" />
   <img src="elva-800w.jpg" alt="Chris standing up holding his daughter Elva" />
 </picture>
-
 ```
-# 整个body 弄个display
-里面的grid 可能出现问题
-# 制作中间布局，推荐用margin 而不是padding:
-制作边框内嵌 文字使用padding
-# clip-path 制作div 形状喵喵工具：
+
+# 整个 body 弄个 display
+
+里面的 grid 可能出现问题
+
+# 制作中间布局，推荐用 margin 而不是 padding:
+
+制作边框内嵌 文字使用 padding
+
+# clip-path 制作 div 形状喵喵工具：
+
 https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
+
 # float:https://internetingishard.netlify.app/html-and-css/floats/#after-a-float
+
 float:left right 浮动父元素的左右测，后续元素会上来
-多个float 会叠加。注意float 会删除文件流。
+多个 float 会叠加。注意 float 会删除文件流。
+
 # 如何避免元素围绕浮动？：
+
 claer:both;
 清除左右。
 或者仅仅清楚一边。
-# 如果一个容器内所有元素都是浮动的 高度为0.为此可以通过添加overflow:hidden,恢复实际高度。
+
+# 如果一个容器内所有元素都是浮动的 高度为 0.为此可以通过添加 overflow:hidden,恢复实际高度。
+
 典型结构：
 nav
-content 
-  具体内容
+content
+具体内容
 footer
+
 # 不要使用浮动+ flexbox;
-transform 等变换动作 都是在flex  浮动 出现之后的
-# 使用object position 和 fit 要小心：
+
+transform 等变换动作 都是在 flex 浮动 出现之后的
+
+# 使用 object position 和 fit 要小心：
+
 .work img.projectimage {
-  height:100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
-  overflow: hidden;
+height:100%;
+width: 100%;
+object-fit: cover;
+object-position: center;
+overflow: hidden;
 }
-如果没有指定本省的size 无效
+如果没有指定本省的 size 无效
 
 # React Part:
 
-React组件必须要大写.
-React的语法：
-1. 多组件不可以，必须一个组件： <>叫做fragment 片段
+React 组件必须要大写.
+React 的语法：
+
+1. 多组件不可以，必须一个组件： <>叫做 fragment 片段
+
 ```jsx
 function App() {
   // Could replace <></> with <div></div>
@@ -2797,36 +3054,38 @@ function App() {
   );
 }
 ```
+
 2. 必须显示关闭标签：
-即使是img input
+   即使是 img input
 3. 使用驼峰命名,而不是破折号：
+
 ```jsx
 function App() {
   return (
-  <div className="container">
-    <svg>
-      <circle cx="25" cy="75" r="20" stroke="green" strokeWidth="2" />
-    </svg>
-  </div>
+    <div className="container">
+      <svg>
+        <circle cx="25" cy="75" r="20" stroke="green" strokeWidth="2" />
+      </svg>
+    </div>
   );
 }
-
 ```
-由于历史原因， aria-*和data-*属性的编写方式与 HTML 中一样，带有破折号.
-另外 className === class
-4. 转换器
+
+由于历史原因， aria-*和 data-*属性的编写方式与 HTML 中一样，带有破折号.
+另外 className === class 4. 转换器
 https://transform.tools/html-to-jsx
 
 ## 一些语法：
+
 - 内容不需要引号
   属性需要。like html.
 - 变量值：需要用{}
   任何 JavaScript 表达式都可以在大括号之间工作
   - 注意 标签不行。<{tag}>不行
-- 对象双括号（临时对象的情况下如style={{red=123}}），别忘记仍然是驼峰法。
-
+- 对象双括号（临时对象的情况下如 style={{red=123}}），别忘记仍然是驼峰法。
 
 # React has the ability to render Arrays:
+
 ```jsx
 function App() {
   const animals = ["Lion", "Cow", "Snake", "Lizard"];
@@ -2842,14 +3101,16 @@ function App() {
     </div>
   );
 }
-
 ```
-the code is the same if we change  "{...map}" to a speific Array {Array}.
+
+the code is the same if we change "{...map}" to a speific Array {Array}.
 **NOTE**:note that we add key to the li tag. that is important if we want the list to be dynamic.
+
 # how to pass argument:
+
 ```jsx
 function ListItem(props) {
-  return <li>{props.animal}</li>
+  return <li>{props.animal}</li>;
 }
 
 function List(props) {
@@ -2873,17 +3134,22 @@ function App() {
   );
 }
 ```
+
 the name of the attirbute is not opnonated,you can change it.
-but as we use "prop.animals " in List we need to define it "animals". 
+but as we use "prop.animals " in List we need to define it "animals".
 **Key**: the the prop argument is the dict of all the attribute in html tag.
+
 # conditional render:
+
 &&:
 in js, if the let value is false, the whole expr is false.
 Otherwise,it return the right value.
 **React won't render false,null undefined.**
 **Don’t put numbers on the left side of &&.**
 this is because it will render 0.
+
 # add guard to component:
+
 ```jsx
 function List(props) {
   if (!props.animals) {
@@ -2913,41 +3179,49 @@ function App() {
     </div>
   );
 }
-
-
 ```
 
 # JSX context should be wrapped in branket!
+
 (
-  JSX
+JSX
 );
-# JSX  can contain multiline of bracket in one tag:
+
+# JSX can contain multiline of bracket in one tag:
+
 ```jsx
 function Item({ name, importance }) {
   return (
     <li className="item">
       {name}
-      {importance!=0&&" "}
-      {importance!=0&&importance}
+      {importance != 0 && " "}
+      {importance != 0 && importance}
     </li>
   );
 }
-
 ```
+
 # arrow function review:
+
 ()=>returnvalue;
 ()=>{return returnvalue}
-you must write return explicitly if your => is followed by a  curly brace!
+you must write return explicitly if your => is followed by a curly brace!
+
 # if you want to render multiline at one time :
+
 The short <>...</> Fragment syntax won’t let you pass a key, so you need to either group them into a single <div>, or use the slightly longer and more explicit <Fragment> syntax:
 **Fragment won't show in the final DOM**
+
 # rule of the key:
+
 constant.
 unique.
 Another Things need to concern:
 **Note that your components won’t receive key as a prop. It’s only used as a hint by React itself. If your component needs an ID, you have to pass it as a separate prop: <Profile key={id} userId={id} />.**
 KEY WONT BE PASSED
+
 # sth from doc:
+
 ```JSX
 import { recipes } from './data.js';
 
@@ -2978,99 +3252,117 @@ export default function RecipeList() {
 }
 
 ```
+
 note where add key.
 you have a array of Recipe. SO you need add it out.
- {...recipe} is a shortcut for passing all property 
- # remember:add key in the ~~outest~~ "Array"opponenet
- outermost innermost NOT outest 
- ```jsx
- import { Fragment } from 'react';
+{...recipe} is a shortcut for passing all property
+
+# remember:add key in the ~~outest~~ "Array"opponenet
+
+outermost innermost NOT outest
+
+```jsx
+import { Fragment } from "react";
 
 const poem = {
   lines: [
-    'I write, erase, rewrite',
-    'Erase again, and then',
-    'A poppy blooms.'
-  ]
+    "I write, erase, rewrite",
+    "Erase again, and then",
+    "A poppy blooms.",
+  ],
 };
 
 export default function Poem() {
   return (
     <article>
-      {poem.lines.map((line, i) =>
+      {poem.lines.map((line, i) => (
         <Fragment key={i}>
           {i > 0 && <hr />}
           <p>{line}</p>
         </Fragment>
-      )}
+      ))}
     </article>
   );
 }
+```
 
- ```
- # 键值创建的方便函数：
- crypto.randomUUID() function 。
- 使用键值的好处：只会在键值发生变换的时候渲染变化部分
- 注意，不要即时渲染，也就是不要：key={生成随机ID}
- # key的使用时机：
- 适用场景：
+# 键值创建的方便函数：
+
+crypto.randomUUID() function 。
+使用键值的好处：只会在键值发生变换的时候渲染变化部分
+注意，不要即时渲染，也就是不要：key={生成随机 ID}
+
+# key 的使用时机：
+
+适用场景：
 重新渲染时：只有在列表重新渲染时，key 才会被用来匹配元素。初次渲染时，key 并不起作用。
 邻近元素的同类型：当一组“同类型”的元素（如多个 <li>、多个 <div>）在列表中并排存在时，key 用于区分它们。
 这种胶片做平坦列表
 
 平坦的列表：强调“平坦的列表”是因为嵌套结构的处理稍微复杂一些（嵌套时需要对子元素递归分配 key）。
+
 # re render 具体流程：
-1. 如果key 存在，使用。
-2. 如果不再，使用默认index
 
- 删除所有移除的key
- 安装新的key 新建之前不存在key的项目
+1. 如果 key 存在，使用。
+2. 如果不再，使用默认 index
 
- 保留旧的项目（根据key 保留）
- https://www.developerway.com/posts/react-key-attribute
- 如果使用index 进行重新排序，相当于每个tag 原地重新渲染。
- 如果使用独特id 那么相当于交换位置。
- # 使用index 比较合适的时机：
- 分页器。如果每个物品不同id 那么每次换页都是重新渲染所有
- 反之，如果只使用index 那么指示渲染部分
- # react 渲染算法reconition:
- ```jsx jsx这样的对象 经过React就像是：
- const Input = () => {
-  return (
-    <>
-      <label htmlFor={id}>{label}</label>
-      <input type="text" id={id} />
-    </>
-  );
+删除所有移除的 key
+安装新的 key 新建之前不存在 key 的项目
+
+保留旧的项目（根据 key 保留）
+https://www.developerway.com/posts/react-key-attribute
+如果使用 index 进行重新排序，相当于每个 tag 原地重新渲染。
+如果使用独特 id 那么相当于交换位置。
+
+# 使用 index 比较合适的时机：
+
+分页器。如果每个物品不同 id 那么每次换页都是重新渲染所有
+反之，如果只使用 index 那么指示渲染部分
+
+# react 渲染算法 reconition:
+
+```jsx jsx这样的对象 经过React就像是：
+const Input = () => {
+ return (
+   <>
+     <label htmlFor={id}>{label}</label>
+     <input type="text" id={id} />
+   </>
+ );
 };
- [
-  {
-    type: 'label',
-    ... // other stuff
-  },
-  {
-    type: 'input',
-    ... // other stuff
-  }
-]
- ```
- 如果是生层次组件：
- ```jsx
+[
  {
-  type: Input, // reference to that Input function we declared earlier
-  ... // other stuff
+   type: 'label',
+   ... // other stuff
+ },
+ {
+   type: 'input',
+   ... // other stuff
+ }
+]
+```
+
+如果是生层次组件：
+
+```jsx
+{
+ type: Input, // reference to that Input function we declared earlier
+ ... // other stuff
 }
- ```
- 会迭代调用=>
- const Component = () => {
-  return (
-    <div>
-      <Input placeholder="Text1" id="1" />
-      <Input placeholder="Text2" id="2" />
-    </div>
-  );
+```
+
+会迭代调用=>
+const Component = () => {
+return (
+
+<div>
+<Input placeholder="Text1" id="1" />
+<Input placeholder="Text2" id="2" />
+</div>
+);
 };
 最终返回这个树：
+
 ```jsx
 {
   type: 'div',
@@ -3089,31 +3381,42 @@ export default function Poem() {
   }
 }
 ```
+
 ## 重新渲染的时候：
+
 从变动状态的地方开始遍历。
-首先比较type 如果type相同，那么就是之前所说的更新。
+首先比较 type 如果 type 相同，那么就是之前所说的更新。
 如果不同，那么就是卸载+删除 unmount.
+
 ## 奇怪的反转问题：
+
 https://www.developerway.com/posts/reconciliation-in-react
-原因就是type 相同，从而使用了同一个input 只更新了一下内容而已.
+原因就是 type 相同，从而使用了同一个 input 只更新了一下内容而已.
+
 ## 解决方式
+
 数组，这里指的是：
 React 的 JSX 语法允许在 <></> 或任何容器组件（比如 <div>）中放置多个子元素。虽然我们在编写代码时直接写成多个 JSX 标签，React 在内部会将这些标签转换成一个包含这些元素的数组。这样，React 就可以对这些子元素进行遍历、渲染以及更新。
 这种情况下会遍历过去，然后检查前后属性，按照前面规则，更新还是重载。
+
 ### 使用数组可以解决
+
 ### 另一个解决方式：key
-为什么要用key的原因也在这里：
-jsx数组树会返回这样一个对象
+
+为什么要用 key 的原因也在这里：
+jsx 数组树会返回这样一个对象
 [
-  { type: Input }, // "2" data item now, but React doesn't know that
-  { type: Input }, // "1" data item now, but React doesn't know that
+{ type: Input }, // "2" data item now, but React doesn't know that
+{ type: Input }, // "1" data item now, but React doesn't know that
 ];
-为了区分哪一个哪一个素以要key
+为了区分哪一个哪一个素以要 key
 [
-  { type: Input, key: '2' }, // "2" data item, React knows that because of "key"
-  { type: Input, key: '1' }, // "1" data item, React knows that because of "key"
+{ type: Input, key: '2' }, // "2" data item, React knows that because of "key"
+{ type: Input, key: '1' }, // "1" data item, React knows that because of "key"
 ];
+
 ### 通过数组创建的是动态的 而外面的不是，可以区分
+
 ```
 
   // the entire dynamic array is the first position in the children's array
@@ -3126,16 +3429,20 @@ jsx数组树会返回这样一个对象
   },
 ];
 
-``` 
-# 不能在component 内部定义component:
+```
+
+# 不能在 component 内部定义 component:
+
 https://www.developerway.com/posts/reconciliation-in-react
-原自于函数比较始终是false
+原自于函数比较始终是 false
+
 # 参数化组件：
+
 ```jsx
 function Button({ text, color, fontSize }) {
   const buttonStyle = {
     color: color,
-    fontSize: fontSize + "px"
+    fontSize: fontSize + "px",
   };
 
   return <button style={buttonStyle}>{text}</button>;
@@ -3150,17 +3457,20 @@ export default function App() {
     </div>
   );
 }
-
 ```
+
 解耦格式 更简单
+
 ## 提供默认值有两种格式：
+
 1. 参数默认值。
-2. 外置一个defaulProps
+2. 外置一个 defaulProps
+
 ```jsx
 function Button({ text, color, fontSize }) {
   const buttonStyle = {
     color: color,
-    fontSize: fontSize + "px"
+    fontSize: fontSize + "px",
   };
 
   return <button style={buttonStyle}>{text}</button>;
@@ -3169,7 +3479,7 @@ function Button({ text, color, fontSize }) {
 Button.defaultProps = {
   text: "Click Me!",
   color: "blue",
-  fontSize: 12
+  fontSize: 12,
 };
 
 export default function App() {
@@ -3182,15 +3492,19 @@ export default function App() {
   );
 }
 ```
+
 ## 传递函数 固定的好说，传递遍历即可
+
 带参数的？
 传递闭包(curry)
 function curry(parameter){
-  return ()=>{
-    func(parameter);
-  }
+return ()=>{
+func(parameter);
 }
-## 传递组件作为参数。注意这个组件属性叫做children
+}
+
+## 传递组件作为参数。注意这个组件属性叫做 children
+
 ```jsx
 import Avatar from './Avatar.js';
 
@@ -3207,7 +3521,7 @@ export default function Profile() {
     <Card>
       <Avatar
         size={100}
-        person={{ 
+        person={{
           name: 'Katsuko Saruhashi',
           imageId: 'YfeOqp2'
         }}
@@ -3215,39 +3529,56 @@ export default function Profile() {
     </Card>
   );
 ```
+
 # React 实现组件变化的机制：
+
 注意，组件本省并不可辨，只是传递的属性变了
+
 # State:
+
 代码格式
+
 ```jsx
 const [stateValue, setStateValue] = useState(initialValue);
 
 // adapted for our use case:
 const [backgroundColor, setBackgroundColor] = useState(initialColor);
-
 ```
-# re-render and reconciliation:
-https://www.theodinproject.com/lessons/node-path-react-new-introduction-to-state
-# 关于闭包在React中的亮点说明：
 
-Local variables don’t persist between renders. 
+# re-render and reconciliation:
+
+https://www.theodinproject.com/lessons/node-path-react-new-introduction-to-state
+
+# 关于闭包在 React 中的亮点说明：
+
+Local variables don’t persist between renders.
 When React renders this component a second time, it renders it from scratch—it doesn’t consider any changes to the local variables.
 传统闭包无效。整个函数重新调用
-对局部变量的更改不会触发渲染。 
+对局部变量的更改不会触发渲染。
 React 没有意识到它需要使用新数据再次渲染组件。
+
 # Use State 两个返回值的意义。
+
 1. 在渲染之间保存的值。
 2. 触发渲染
+
 # 使用 from official doc:
+
 import { useState } from 'react';
-# use l类函数称之为hook
+
+# use l 类函数称之为 hook
+
 仅在渲染时候可用。
-Hooks（以use开头的函数）只能在组件或您自己的 Hooks 的顶层调用。
+Hooks（以 use 开头的函数）只能在组件或您自己的 Hooks 的顶层调用。
 您不能在条件、循环或其他嵌套函数内调用 Hook。挂钩是函数，但将它们视为有关组件需求的无条件声明会很有帮助。您可以在组件顶部“使用”React 功能，
 类似于在文件顶部“导入”模块的方式
-# 把hook 的用法看成是导入XXX 始终在component 顶部使用 不要再循环或者if中使用
+
+# 把 hook 的用法看成是导入 XXX 始终在 component 顶部使用 不要再循环或者 if 中使用
+
 请记住，必须无条件调用 Hook，并且始终以相同的顺序调用！
-# state  内部机理：
+
+# state 内部机理：
+
 ```js
 let componentHooks = [];
 let currentHookIndex = 0;
@@ -3279,15 +3610,19 @@ function useState(initialState) {
   currentHookIndex++;
   return pair;
 }
-
 ```
-注意 state 是每个组件私有的
-# React内部渲染：
-https://medium.com/javarevisited/react-reconciliation-algorithm-86e3e22c1b40
-通过操作虚拟DOM整个中间层很好的优化了性能.
 
-# 使用STATE 注意事项：
-如果操作的是对象。想要set 能够触发出rerender:
+注意 state 是每个组件私有的
+
+# React 内部渲染：
+
+https://medium.com/javarevisited/react-reconciliation-algorithm-86e3e22c1b40
+通过操作虚拟 DOM 整个中间层很好的优化了性能.
+
+# 使用 STATE 注意事项：
+
+如果操作的是对象。想要 set 能够触发出 rerender:
+
 ```jsx
 function Person() {
   const [person, setPerson] = useState({ name: "John", age: 100 });
@@ -3318,29 +3653,39 @@ function Person() {
 }
 
 ```
-必须传递新对象，否则根据object.is无法触发rerender.
-# Set之后马上渲染吗？
+
+必须传递新对象，否则根据 object.is 无法触发 rerender.
+
+# Set 之后马上渲染吗？
+
 不是，queue
-# State在单个render的处理：
-调用函数，函数返回JSX片段，React会处理（下一次render）.
+
+# State 在单个 render 的处理：
+
+调用函数，函数返回 JSX 片段，React 会处理（下一次 render）.
 核心就是：
-Setting state only changes it for the next render. 
-这就是所谓state is a snapshot的核心含义。
-状态值在一个已经render好的component 里是不会变得。
+Setting state only changes it for the next render.
+这就是所谓 state is a snapshot 的核心含义。
+状态值在一个已经 render 好的 component 里是不会变得。
+
 ## 如果想要改变呢？
-使用state updater:
+
+使用 state updater:
 具体而言 就是传入回调。
+
 ```jsx
 const handleIncreaseAge = () => {
   setPerson((prevPerson) => ({ ...prevPerson, age: prevPerson.age + 1 }));
   setPerson((prevPerson) => ({ ...prevPerson, age: prevPerson.age + 1 }));
 };
-
 ```
-回调参数就是那个hook variable。
 
-### 注意 就算是这样React也会替我们尽力合并成单次。
-人为获取input值得实时方式：
+回调参数就是那个 hook variable。
+
+### 注意 就算是这样 React 也会替我们尽力合并成单次。
+
+人为获取 input 值得实时方式：
+
 ```jsx
 function CustomInput() {
   const [value, setValue] = useState("");
@@ -3353,114 +3698,155 @@ function CustomInput() {
     />
   );
 }
-
 ```
+
 # State 原则：
+
 ## 尽量分组。
+
 ## 不要出现矛盾情况。如果某两个是同方向或者反方向，尽量放到一个变量里，避免出现之变动一个
+
 另一个忘记变了。
-## 不要复制prop 值到 State
+
+## 不要复制 prop 值到 State
+
 ```jsx
 function Message({ initialColor }) {
   // The `color` state variable holds the *first* value of `initialColor`.
   // Further changes to the `initialColor` prop are ignored.
   const [color, setColor] = useState(initialColor);
 ```
+
 要搞清楚，状态变量的初始值只会在第一次调用的时候有用。
+
 ## 不要重复状态。
+
 这样的话要同时修改两个 很麻烦。
-### 不要记录object 记录id
+
+### 不要记录 object 记录 id
+
 否则 === 容易出错
+
 ## 避免嵌套。使用子数组的方式扁平化：
+
 https://react.dev/learn/choosing-the-state-structure。
 
-## is missing in prop validation 
+## is missing in prop validation
+
 查一下怎么搞
 
-# FUCK YOU VITE 
-逆天VITE 服务器不报错，在浏览器的console 才报错。
-有些错误要去console
+# FUCK YOU VITE
+
+逆天 VITE 服务器不报错，在浏览器的 console 才报错。
+有些错误要去 console
+
 # 动画是进入的时候播放一次 transition
-# CSS 导入问题 子文件导入CSS 会影响夫文件吗：
+
+# CSS 导入问题 子文件导入 CSS 会影响夫文件吗：
+
 与 JavaScript 不同，CSS 是通过文件引入的，且如果一个 CSS 文件 A 被 B 导入了，文件 A 中的样式会被添加到文件 B 的样式中。但父文件并不会自动得到子文件中 @import 的文件的样式。并且是子文件优先?先加载夫文件,在加载子文件（GPT）
+
 # Another hook function:effect:
-useEffect有连个个参数：
+
+useEffect 有连个个参数：
 绑定者，依赖者，析构函数（绑定这返回）
-绑定者会在第一次render后运行。 
-默认情况下，每次render都会启用一次effect
+绑定者会在第一次 render 后运行。
+默认情况下，每次 render 都会启用一次 effect
 除非我们指定第二个参数依赖数组，可以在这些依赖项变动的时候重新启动
-析构函数：两个运行时机：组件写在，或者下一个effect 产生之前。
+析构函数：两个运行时机：组件写在，或者下一个 effect 产生之前。
+
 # effect:
+
 ```jsx
 Effects let you specify side effects that are caused by rendering itself, rather than by a particular event. Sending a message in the chat is an event because it is directly caused by the user clicking a specific button. However, setting up a server connection is an Effect because it should happen no matter which interaction caused the component to appear. Effects run at the end of a commit after the screen updates. This is a good time to synchronize the React components with some external system (like network or a third-party library).
 ```
-effect处理的是组件的出现（render 引起的副作用）
+
+effect 处理的是组件的出现（render 引起的副作用）
 do sth impure which cant be do in render
+
 ## 不需要的场景：
+
 渲染期间就可以得出结果。
+
 # 组件的生命周期：
-添加的时候安装（mount） 
-state 被设置 或者new prop 传入会更新 (update)
+
+添加的时候安装（mount）
+state 被设置 或者 new prop 传入会更新 (update)
 组件移除 被卸载（unmount）
+
 # effect 作用机理
+
 每次渲染查看依赖项数组
 代码中的每个效果都应该代表一个单独且独立的同步过程。
-如果为[]那么就是mount 一次，demount 一次 update 不变
-但是 如果是development不一定，可能有多次。如strictMode的一次检查（在devekop过程中，React 总是重新安装每个组件一次。）。
+如果为[]那么就是 mount 一次，demount 一次 update 不变
+但是 如果是 development 不一定，可能有多次。如 strictMode 的一次检查（在 devekop 过程中，React 总是重新安装每个组件一次。）。
+
 # reactive value:
+
 渲染期间变动值。
-# 哪些值不能作为react dependecy:
+
+# 哪些值不能作为 react dependecy:
+
 全局变量，以及通过全局变量访问
+
 # effect 存在的意义：
+
 一个组件已经产生了，仍然需要运行一些代码
+
 # React effect TIPS:
+
 1. Don't transform data which is used to update component in effect.
-DIRECTYLY IN component code to solve it.
-Because: it runs twice! first,it run due to prop or state change. then it run because the effect!
+   DIRECTYLY IN component code to solve it.
+   Because: it runs twice! first,it run due to prop or state change. then it run because the effect!
+
 ```jsx
 function Form() {
-  const [firstName, setFirstName] = useState('Taylor');
-  const [lastName, setLastName] = useState('Swift');
+  const [firstName, setFirstName] = useState("Taylor");
+  const [lastName, setLastName] = useState("Swift");
 
   // 🔴 Avoid: redundant state and unnecessary Effect
-  const [fullName, setFullName] = useState('');
+  const [fullName, setFullName] = useState("");
   useEffect(() => {
-    setFullName(firstName + ' ' + lastName);
+    setFullName(firstName + " " + lastName);
   }, [firstName, lastName]);
   // ...
 }
 ```
+
 A way to measure time:
+
 ```jsx
-console.time('filter array');
+console.time("filter array");
 const visibleTodos = getFilteredTodos(todos, filter);
-console.timeEnd('filter array');
+console.timeEnd("filter array");
 ```
+
 2. if you want to cache expensive calculation:
-the best way is to use **useMem** instead of effect.
-the inner func won't rerun until the dependency array'selement changed.
+   the best way is to use **useMem** instead of effect.
+   the inner func won't rerun until the dependency array'selement changed.
 3. reseting state when prop change.
-dont use effect. there is a easier way to solve this:
-use a key which is the same to the prop. 
-**By passing a diffrent a key,it will be seen as two diffrent components.Thus,all the state will be cleaned**
-the upper occasion can be concluded: dont change state in effect. ALWAYS:reset by key.and cal during rendering.
-if  you want to change state :
+   dont use effect. there is a easier way to solve this:
+   use a key which is the same to the prop.
+   **By passing a diffrent a key,it will be seen as two diffrent components.Thus,all the state will be cleaned**
+   the upper occasion can be concluded: dont change state in effect. ALWAYS:reset by key.and cal during rendering.
+   if you want to change state :
 
 ```jsx
 When you update a component during rendering, React throws away the returned JSX and immediately retries rendering. To avoid very slow cascading retries, React only lets you update the same component’s state during a render. If you update another component’s state during a render, you’ll see an error. A condition like items !== prevItems is necessary to avoid loops. You may adjust state like this, but any other side effects (like changing the DOM or setting timeouts) should stay in event handlers or Effects to keep components pure.
 ```
+
 通过这种方式，setSelection 是在渲染时直接调用的。React 会在 return 语句执行后立即重新渲染 List，此时 React 尚未渲染子组件或更新 DOM，因此子组件可以跳过渲染旧的 selection 值。
 React 渲染流程：
 计算函数： React 执行组件代码，生成虚拟 DOM。
 返回 JSX： React 将 JSX 转换为虚拟 DOM。
 Diff 比较： React 比较新旧虚拟 DOM，找出差异。
 更新 DOM： React 更新真实 DOM，并运行副作用代码。
-因此 如果在函数中途触发新render 不会进行DOM更新。取而代之的是，如果你在effect中触发，那么会进行DOM 更新。
-4. run once:
+因此 如果在函数中途触发新 render 不会进行 DOM 更新。取而代之的是，如果你在 effect 中触发，那么会进行 DOM 更新。 4. run once:
 just use a top variable to follow this.
 
 5. dont pass data from child to parent
 6. useignoreTo ignore:
+
 ```jsx
 function SearchResults({ query }) {
   const [page, setPage] = useState(1);
@@ -3479,8 +3865,8 @@ function useData(url) {
   useEffect(() => {
     let ignore = false;
     fetch(url)
-      .then(response => response.json())
-      .then(json => {
+      .then((response) => response.json())
+      .then((json) => {
         if (!ignore) {
           setData(json);
         }
@@ -3492,28 +3878,37 @@ function useData(url) {
 
   return data;
 }
-
 ```
+
 例如，当您快速输入 "hello" 时，query 会依次变为 "h", "he", "hel", "hell", 和 "hello"，这会触发多次数据获取。由于无法保证请求的响应顺序，可能会出现 "hell" 的响应晚于 "hello" 的响应，最终显示的结果可能是错误的。
-# 无线effect避免：
-1. 使用ref
-const ref = useRef(0)
-ref.current++;不会update 组件
-2. 使用primitive:
-使用object 导致对象每次都不一样.
+
+# 无线 effect 避免：
+
+1. 使用 ref
+   const ref = useRef(0)
+   ref.current++;不会 update 组件
+2. 使用 primitive:
+   使用 object 导致对象每次都不一样.
+
 # React 环境搭建：
+
 npm create vite@latest . -- --template react
-# strict模式执行两次造成的问题
-注意 strict模式的重复执行 导致回调出现多次。为此使用ignore。
-先运行渲染阶段的jsx 再运行effect.
+
+# strict 模式执行两次造成的问题
+
+注意 strict 模式的重复执行 导致回调出现多次。为此使用 ignore。
+先运行渲染阶段的 jsx 再运行 effect.
+
 # ref
-ref 是一个escape hatch
+
+ref 是一个 escape hatch
 {
-  current: initial
+current: initial
 }
 example:
+
 ```jsx
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 
 export default function Stopwatch() {
   const [startTime, setStartTime] = useState(null);
@@ -3542,25 +3937,24 @@ export default function Stopwatch() {
   return (
     <>
       <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
-      <button onClick={handleStart}>
-        Start
-      </button>
-      <button onClick={handleStop}>
-        Stop
-      </button>
+      <button onClick={handleStart}>Start</button>
+      <button onClick={handleStop}>Stop</button>
     </>
   );
 }
-
 ```
+
 ref store the IntervalId and when the stop is pressed,it clear by the id
+
 # diffrence between ref and state:
--  ref is mutable while state is immutable and you must change it by its set function.
+
+- ref is mutable while state is immutable and you must change it by its set function.
 - ref is a varible that dosnt involve render.
-so you shouldnt operate it while render.
-state is the oppsite. you can operate it but it is a snapshot of every render.
+  so you shouldnt operate it while render.
+  state is the oppsite. you can operate it but it is a snapshot of every render.
+
 ```jsx
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export default function Counter() {
   let countRef = useRef(0);
@@ -3571,64 +3965,89 @@ export default function Counter() {
   }
 
   return (
-    <button onClick={handleClick}>
-      You clicked {countRef.current} times
-    </button>
+    <button onClick={handleClick}>You clicked {countRef.current} times</button>
   );
 }
-
 ```
+
 hey you use ref here.and the ref wont re-render so the val wont change.
+
 # when to use ref:
+
 interval ID.
 DOMS
+
 # two key rules:
+
 - dont use ref too much.
 - dont use it during rendering.
+
 # note that ref is a escape hatch,it is diffrent from state:
+
 it is not a snap shot. it changed immediately.
+
 # React render:
+
 三个步骤：
 trigger
 render（run code）
 commit to dom
+
 ## trigger:
+
 2 resons:
 initial trigger，
 component's ancestor's or itself's state changed.
-### root's initial render,thus render every thing:
-```jsx
-import Image from './Image.js';
-import { createRoot } from 'react-dom/client';
 
-const root = createRoot(document.getElementById('root'))
+### root's initial render,thus render every thing:
+
+```jsx
+import Image from "./Image.js";
+import { createRoot } from "react-dom/client";
+
+const root = createRoot(document.getElementById("root"));
 root.render(<Image />);
 ```
+
 ### when state chanegd.
+
 the render queued.
+
 ## specified render:
+
 run code:
 recursively:
 if the component return otehr component,React keeps render the component,until there is nothing.
+
 ### TIPS:
+
 render func should be pure func.
 dont cause side effect. dont change global var.
 **this is why STrict Mode executes twice: to find some impure function.**
+
 # future READ:https://legacy.reactjs.org/docs/optimizing-performance.html
+
 for better performance
 
 # commit to DOM.
+
 hey mention here is virtual dom. react will choose the most minimal way to change DOM tree.
 there is a pitfall:dom tree includes component's type if type dosen'tchange,it will remain the state of the old component
+
 # the browser painting the website. finally
+
 # 批处理（batch process）
+
 only when all then code of the render solved,will the ul changed.
-however multi click isnt the smae 
+however multi click isnt the smae
 
 thinking it as a queue:(all the state change store in a queue`)
 including state updater(must be pure)
+
 # PITFALL of effect:
+
 The behaviors without the dependency array and with an empty [] dependency array are different:
+
 ```jsx
 useEffect(() => {
   // This runs after every render
@@ -3642,11 +4061,16 @@ useEffect(() => {
   // This runs on mount *and also* if either a or b have changed since the last render
 }, [a, b]);
 ```
-# strictMode 运行两次effect的解决：
+
+# strictMode 运行两次 effect 的解决：
+
 是如何修复效果，而不是避免运行两次
 通常是实现清理函数接口。
+
 ## 对于普通器具：
+
 比较好处理，对于网络请求：
+
 ```jsx
 useEffect(() => {
   let ignore = false;
@@ -3665,10 +4089,14 @@ useEffect(() => {
   };
 }, [userId]);
 ```
+
 ignore 解决。
+
 # 只执行一次 可以在全局写：
+
 ```jsx
-if (typeof window !== 'undefined') { // Check if we're running in the browser.
+if (typeof window !== "undefined") {
+  // Check if we're running in the browser.
   checkAuthToken();
   loadDataFromLocalStorage();
 }
@@ -3677,9 +4105,13 @@ function App() {
   // ...
 }
 ```
+
 # ignore 无法解决的，买两次物品。
-使用event 逻辑
-# 基于类的component:老式代码：
+
+使用 event 逻辑
+
+# 基于类的 component:老式代码：
+
 ```jsx
 import { Component } from "react";
 
@@ -3698,9 +4130,10 @@ class ClassInput extends Component {
 */
 
 export default ClassInput;
-
 ```
-## 构造函数：别忘记super传递：
+
+## 构造函数：别忘记 super 传递：
+
 ```jsx
   constructor(props) {
     super(props);
@@ -3714,8 +4147,10 @@ export default ClassInput;
     };
   }
 ```
+
 另外，state 也要在这个地方设置.
 除此之外，事件监听器也要在这里绑定：
+
 ```jsx
    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -3736,7 +4171,9 @@ export default ClassInput;
     }));
   }
 ```
-## render方法：具体渲染组件：
+
+## render 方法：具体渲染组件：
+
 ```jsx
   render() {
     return (
@@ -3756,13 +4193,18 @@ export default ClassInput;
   }
 }
 ```
-# todoLists中的一个解决：
-要求edit现存任务。
-切换状态不难满足，创建一个state 来决定渲染什么类型的框。
-使用autoFocus+一个状态配合，来autoFocus,但是这有一个问题，无法输入中文，会被打断
-原因是受控组件，下放state 是否能够解决？
+
+# todoLists 中的一个解决：
+
+要求 edit 现存任务。
+切换状态不难满足，创建一个 state 来决定渲染什么类型的框。
+使用 autoFocus+一个状态配合，来 autoFocus,但是这有一个问题，无法输入中文，会被打断
+原因是受控组件，下放 state 是否能够解决？
+
 ## 更好的解决方案：
+
 子组件保存状态。从而不会重新渲染。
+
 ```jsx
 function MyInput({ todo, deleteClick, setState, oldState, index }) {
   let [inputVal, setInputVal] = useState(todo);
@@ -3795,3 +4237,568 @@ function MyInput({ todo, deleteClick, setState, oldState, index }) {
   );
 }
 ```
+
+# effect 的实质是在某些阶段回调函数：
+
+https://www.theodinproject.com/lessons/node-path-react-new-component-lifecycle-methods
+
+# component 生命周期：mount update unmount
+
+# render 是一些生命周期做的事情：触发 render 执行 render commit
+
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+什么时候 render？ 初始化，uodate 的时候 uu
+
+# react 环境搭建：
+
+```shell
+npm create vite@latest . -- --template react
+```
+
+# react 测试环境 搭建
+
+```shell
+npm install vitest --save-dev
+```
+
+加一个 test 脚本
+
+```
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+```
+
+安装 React 测试库：
+
+```shell
+npm install jsdom --save-dev
+npm install @testing-library/react @testing-library/jest-dom --save-dev
+npm install @testing-library/user-event --save-dev
+```
+
+React 提供 react 访问基础工作
+jest-dom 一共一些断言函数
+user-event 模拟用户交互时间。
+
+## 添加一个 setup 文件，自动在每个测试前导入：
+
+setup 文件：
+
+```js
+import { expect, afterEach } from "vitest";
+import { cleanup } from "@testing-library/react";
+import * as matchers from "@testing-library/jest-dom/matchers";
+
+expect.extend(matchers);
+
+afterEach(() => {
+  cleanup();
+});
+```
+
+vite 配置
+
+```js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./tests/setup.js",
+  },
+});
+```
+
+## React Test 详解：
+
+```jsx
+// App.test.jsx
+
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+
+describe("App component", () => {
+  it("renders correct heading", () => {
+    render(<App />);
+    expect(screen.getByRole("heading").textContent).toMatch(/our first test/i);
+  });
+});
+```
+
+例子。
+getBy 查询：如果没找到或者找到多个 抛出错误。
+queryBy 如果没找到 null 多个抛出错误
+findBy 返回一个 promise 如果在 1000ms（默认值） 内找到元素，那么 resolve,反之则拒绝。
+以上都是单个元素
+如果要多个元素那么就 XXAllBy
+
+### best practice:
+
+https://testing-library.com/docs/dom-testing-library/cheatsheet/
+https://testing-library.com/docs/queries/about/
+getByRole。
+最后选择：
+https://testing-library.com/docs/queries/bytestid/
+
+#### 什么是 Role：
+
+这个 role 貌似是一种 tag 自带的属性
+
+getByLabelText 表单
+getByPlaceholderText
+getByTextxx
+
+再一个测试的例子：
+
+```jsx
+// App.test.jsx
+
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import App from "./App";
+
+describe("App component", () => {
+  it("renders magnificent monkeys", () => {
+    // since screen does not have the container property, we'll destructure render to obtain a container for this test
+    const { container } = render(<App />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it("renders radical rhinos after button click", async () => {
+    const user = userEvent.setup();
+
+    render(<App />);
+    const button = screen.getByRole("button", { name: "Click Me" });
+
+    await user.click(button);
+
+    expect(screen.getByRole("heading").textContent).toMatch(/radical rhinos/i);
+  });
+});
+```
+
+### snapshot 的说明： 第一次运行会产生一个快照文件
+
+以后每次修改会导致错误。
+
+# 测试说明
+
+不要测试实现：
+
+```jsx
+test("setOpenIndex sets the open index state properly", () => {
+  const wrapper = mount(<Accordion items={[]} />);
+  expect(wrapper.state("openIndexes")).toEqual([0]);
+  wrapper.instance().setOpenIndex(1);
+  expect(wrapper.state("openIndexes")).toEqual([1]);
+});
+```
+
+如过 state 名称变动，测试会失败。
+
+# 测试的更多历次 mock 函数：
+
+```jsx
+// CustomButton.test.jsx
+
+import { vi, describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import CustomButton from "./CustomButton";
+
+describe("CustomButton", () => {
+  it("should render a button with the text 'Click me'", () => {
+    render(<CustomButton onClick={() => {}} />);
+
+    const button = screen.getByRole("button", { name: "Click me" });
+
+    expect(button).toBeInTheDocument();
+  });
+
+  it("should call the onClick function when clicked", async () => {
+    const onClick = vi.fn();
+    const user = userEvent.setup();
+    render(<CustomButton onClick={onClick} />);
+
+    const button = screen.getByRole("button", { name: "Click me" });
+
+    await user.click(button);
+
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it("should not call the onClick function when it isn't clicked", async () => {
+    const onClick = vi.fn();
+    render(<CustomButton onClick={onClick} />);
+
+    expect(onClick).not.toHaveBeenCalled();
+  });
+});
+```
+
+注释：推荐在 render 之前 测试本生中调用 const user = userEvent.setup()。或者在 seup 函数https://www.theodinproject.com/lessons/node-path-react-new-mocking-callbacks-and-components
+component 也可以 mock 用到的时候再看。
+
+# 组件测试中碰到 effect 的问题：
+
+effect 在 expect resolve 之后才运行 https://github.com/mrdulin/react-act-examples/blob/master/sync.md。
+为此在测试中使用 act：
+
+```jsx
+it("should render 1", () => {
+  const el = document.createElement("div");
+  act(() => {
+    ReactDOM.render(<App />, el);
+  });
+  expect(el.innerHTML).toBe("1"); // this passes!
+});
+```
+
+保证 effect 在断言之前执行完毕。
+然而 遇到事件呢：
+例子：加上 act 反而报错？？
+
+### 事件示例
+
+我们来看另一个例子，这次是关于事件的：
+
+```javascript
+function App() {
+  let [counter, setCounter] = useState(0);
+  return <button onClick={() => setCounter(counter + 1)}>{counter}</button>;
+}
+```
+
+我认为这非常简单：一个按钮，用于增加计数器。你可以像以前一样将其渲染到浏览器中。
+
+**一个按钮被点击的动画，内容从 0 增加到 10。**
+
+到目前为止，一切都很顺利。现在让我们为它编写一个测试。
+
+```javascript
+it("should increment a counter", () => {
+  const el = document.createElement("div");
+  document.body.appendChild(el);
+  // 我们将元素附加到 document.body，以确保事件能够生效
+  ReactDOM.render(<App />, el);
+  const button = el.childNodes[0];
+  for (let i = 0; i < 3; i++) {
+    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  }
+  expect(button.innerHTML).toBe("3");
+});
+```
+
+这段代码“按预期”工作。对于由“真实”事件处理程序调用的 `setState`，不会触发警告，并且从所有目的上看，这段代码实际上是没问题的。
+
+但你开始怀疑，并且因为 Sunil 提醒过你，所以你对测试做了一些调整：
+
+```javascript
+act(() => {
+  for (let i = 0; i < 3; i++) {
+    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  }
+});
+expect(button.innerHTML).toBe(3); // 测试失败，结果实际上是 "1"！
+```
+
+测试失败了，`button.innerHTML` 显示的结果竟然是 `"1"`！  
+嗯，糟糕吧？一开始这看起来让人很烦恼。但 `act` 在这里揭示了一个潜在的问题——如果事件处理程序的调用间隔很短，处理程序可能会使用**过时的数据**，从而导致错过一些增量操作。
+
+修复方法很简单：我们将 `setState` 的调用改为使用更新器形式，例如：
+
+```javascript
+setCounter((x) => x + 1);
+```
+
+然后测试就能通过了。  
+这展示了 `act` 的价值：通过分组和执行交互，它能够帮助我们写出更“正确”的代码。  
+耶！谢谢你，`act`！
+
+# 解决程序中的记时事件 promise 等待：。。。
+
+https://github.com/mrdulin/react-act-examples/blob/master/sync.md
+
+# 这 B 测试看的我头昏眼花恹恹欲睡，几把以后估计也不会写多少。
+
+# Prop types 检查程序：
+
+注意：报错是在 console 而不是 vscode 中
+默认值 defaultProps 也受约束。另外只在生产环境起作用.
+
+# 和 ts 的区别是这个是运行时
+
+```npx
+npm install --save prop-types
+
+```
+
+## Example
+
+```jsx
+import PropTypes from "prop-types";
+
+const RenderName = (props) => {
+  return <div>{props.name}</div>;
+};
+
+RenderName.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default RenderName;
+```
+
+## 可以传递 default prop
+
+优先于 js 自带
+
+```
+RenderName.defaultProps = {
+  name: 'Zach',
+};
+```
+
+注意：如果配合函数组件 export 不能写在声明里。要放在最后，prop 之后
+关于更多类型限制：https://legacy.reactjs.org/docs/typechecking-with-proptypes.html
+自定义 prop:
+https://blog.logrocket.com/validate-react-props-proptypes/
+
+# 客户端路由：
+
+切换页面+URL 但是不刷新页面的技术
+路由库：
+
+```
+npm install react-router-dom
+```
+
+客户端路由的好处：不会清空页面而是在此基础之上进行修改，可以添加过长动画，因为不需要请求新的文档+CSS
+配置路由的第一步：
+main.jsx 配置路由：
+import {
+createBrowserRouter,
+RouterProvider,
+} from "react-router-dom";
+主程序换成路由器：
+```jsx
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>, // 配置根元素
+  },
+]);
+<>
+<RouterProvider router="{router}" />
+</>
+```
+## 错误页面元素添加
+```jsx
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+  },
+```
+# 配置其他路由，往列表里加入字典：
+```jsx
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,（基于跟路径，如果访问出错）
+  },
+  {
+    path: "contacts/:contactId",
+    element: <Contact />,
+  },
+]);
+```
+# 配合OutLet实现上面的 不用清空父页面的所有元素，而是更新：
+使用OutLet组件
+```jsx
+import { Outlet } from "react-router-dom";
+export default function Root() {
+  return (
+    <>
+      {/* all the other elements */}
+      <div id="detail">
+        <Outlet />
+      </div>
+    </>
+  );
+}
+```
+而且要配置为children 路由（嵌套路由）：
+如果要配置默认：
+可以这样的：
+```jsx
+  { index: true, element: <DefaultProfile /> },
+```
+```jsx
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "contacts/:contactId",
+        element: <Contact />,
+      },
+    ],
+  },
+]);
+```
+使用Link 确保不请求新的文档
+# 路由中的动态段：
+```jsx
+  {
+    path: "profile/:name",
+    element: <Profile />,
+  },
+```
+组件可以这样获取：
+import { useParams } from "react-router-dom";
+  const { name } = useParams();
+# Outlet数据处理：
+outlet 有一个 context的prop 父组件传递后，子组件可以使用：
+ const { name, age, occupation } = useOutletContext();
+ 来获取
+ # navigae:
+ 绑定到事件或者副作用上的自动导航：
+ ```jsx
+ import { useNavigate } from "react-router";
+
+export function LoginPage() {
+  let navigate = useNavigate();
+
+  return (
+    <>
+      <MyHeader />
+      <MyLoginForm
+        onSuccess={() => {
+          navigate("/dashboard");
+        }}
+      />
+      <MyFooter />
+    </>
+  );
+}
+ ```
+ # TODO:https://blog.webdevsimplified.com/2022-07/react-router/
+ # 请求的处理：
+ 先处理response.status 是否有404 外部挂一个error state 作为渲染时候处理错误用
+ ```jsx
+ useEffect(() => {
+  fetch("https://jsonplaceholder.typicode.com/photos", { mode: "cors" })
+    .then((response) => {
+      if (response.status >= 400) {
+        throw new Error("server error");
+      }
+      return response.json();
+    })
+    .then((response) => setImageURL(response[0].url))
+    .catch((error) => setError(error));
+}, []);
+ ```
+ 进一步升级，还可以设置一个loading 状态：
+ ```jsx
+ useEffect(() => {
+  fetch("https://jsonplaceholder.typicode.com/photos", { mode: "cors" })
+    .then((response) => {
+      if (response.status >= 400) {
+        throw new Error("server error");
+      }
+      return response.json();
+    })
+    .then((response) => setImageURL(response[0].url))
+    .catch((error) => setError(error));
+}, []);
+ ```
+ # waterfall requests请求瀑布
+ 如果子父都有请求，那么子的请求会额外等待父的请求结束
+ 需要注意的是试图调换顺序是不行的：
+ ```jsx
+ const Parent = () => {
+  // set loading to true initially
+  const [isLoading, setIsLoading] = useState(true);
+
+  // child is now here! before return
+  const child = <Child />;
+
+  if (isLoading) return 'loading';
+
+  return child;
+};
+ ```
+ 解决方法：提升：
+ ```jsx
+ useEffect(async () => {
+  const [sidebar, issue, comments] = await Promise.all([
+    fetch('/get-sidebar'),
+    fetch('/get-issue'),
+    fetch('/get-comments'),
+  ]);
+}, []);
+或者分布等待，使用老式的then:
+
+ ```
+ # 自定义狗子：
+ useXXX 函数，内部调用effect。
+ React只允许 狗子调用狗子，或者component
+ ```jsx
+ useEffect(() => {
+  fetch("https://jsonplaceholder.typicode.com/photos", { mode: "cors" })
+    .then((response) => {
+      if (response.status >= 400) {
+        throw new Error("server error");
+      }
+      return response.json();
+    })
+    .then((response) => setImageURL(response[0].url))
+    .catch((error) => setError(error));
+}, []);
+ ```
+ # 终止异步请求：
+ 注意不同于ignore  这种是完全制止
+ ```jsx
+ useEffect(() => {
+  const controller = new AbortController();
+
+  const fetchSinglePost = async () => {
+    try {
+      const postData = await getRequestWithNativeFetch(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        controller.signal
+      );
+      // ...
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('Aborted');
+        return;
+      }
+      // ...
+    } finally {}
+  };
+
+  fetchSinglePost();
+
+  return () => controller.abort();
+}, [postId]);
+ ```
+ https://blog.logrocket.com/modern-api-data-fetching-methods-react/
+ free API:https://jsonplaceholder.typicode.com/
+
+ # TODO:https://www.developerway.com/posts/how-to-fetch-data-in-react#part5
