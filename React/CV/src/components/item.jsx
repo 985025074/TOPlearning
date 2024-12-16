@@ -26,8 +26,8 @@ export default function Item({ title,items}) {
     <div className={title}>
       <h3 className="smalltitle">{title}</h3>
       {
-        items.map((item)=>{
-            return <InnerItem key={item.id} time={item.time} where={item.where} description={item.description} />
+        items.map((item,index)=>{
+            return <InnerItem key={index} time={item[0]} where={item[1]} description={item[2]} />
         })
       }
     </div>

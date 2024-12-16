@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Header from "./header.jsx";
 import Item from "./item.jsx";
-export default function CV({ name, tel, email, location, itemspack }) {
+export default function CV({ name, tel, email, location, itemspack=[]}) {
   return (
     <>
       <div className="cv">

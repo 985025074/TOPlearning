@@ -9,3 +9,22 @@ input:focus{
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 添加阴影效果 */
     transition: border .25s, box-shadow .25s;
 }
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.divs{
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.divs > div {
+    display: flex;
+    
+    padding: 10px;
+    background-color: #f3f4f6;
+    border: 2px solid #d1d5db; /* 边框颜色 */
+    border-radius: 8px; /* 边框圆角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}

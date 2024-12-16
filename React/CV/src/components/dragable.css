@@ -15,12 +15,12 @@
     transform : rotate(0deg);
     transition: transform 0.3s ease-in-out;
 }
-
+/* why reverse the exsiting animation didn't work? */
 .dragable.notshow .hidden{
-    animation: hidden 0.5s ease-in-out both  ;
+    animation: hidden 0.3s ease-in-out both  ; 
  }
 .dragable.show .hidden{
-   animation: showhidden 0.5s ease-in-out both ;
+   animation: showhidden 0.3s ease-in-out both ;
 }
 .dragable.unclick .hidden{
     display: none;

@@ -1,0 +1,9 @@
+.together{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.together .cv{
+    flex: 0 0 auto;
+}

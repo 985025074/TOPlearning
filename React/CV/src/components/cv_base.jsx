@@ -14,6 +14,3 @@ let experience={
     time: "2010-2015",
     description: "Worked on various projects in the field of software development."
 }
-export default function CV(){
-    
-}

@@ -42,13 +42,9 @@
 .cv main>div .item>div:last-child{
     text-align: left;
 }
-.builder .personaldetails{
-    display: flex;
-    flex-direction: column;
-    gap:20px;
-}
-.builder .labinp{
-    display: flex;
-    flex-direction: column;
-    gap:5px;
+
+.cv {
+    width: 800px;
+    height: 900px;;
+    background-color: lightgray;
 }
